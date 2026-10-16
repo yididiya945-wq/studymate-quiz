@@ -2,214 +2,925 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101b35">
-<title>StudyMate Quiz</title>
-<style>
-:root{--bg:#101b35;--card:#192846;--blue:#5485ff;--green:#22c785;--red:#ff6475;--text:#f5f7ff;--muted:#aab7d0}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:linear-gradient(145deg,#101b35,#0c1428);font-family:Arial,sans-serif;color:var(--text);padding:20px}
-.container{max-width:520px;margin:0 auto}
-header{text-align:center;padding:16px 0 22px}
-.logo{width:58px;height:58px;border-radius:18px;background:var(--blue);display:grid;place-items:center;font-size:28px;margin:auto auto 12px}
-h1{font-size:27px;margin:0 0 8px}
-.subtitle{color:var(--muted);font-size:14px}
-.card{background:var(--card);border:1px solid #2a3a5a;border-radius:22px;padding:23px;box-shadow:0 12px 35px #0002}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.pill{background:#25385c;color:#dce6ff;padding:8px 12px;border-radius:20px;font-size:13px}
-.track{height:7px;background:#30405e;border-radius:20px;margin:20px 0 25px;overflow:hidden}
-#bar{height:100%;width:0;background:var(--blue);transition:width .2s}
-#question{font-size:21px;line-height:1.45;margin:0 0 22px}
-.answers{display:grid;gap:12px}
-.answer{width:100%;text-align:left;padding:15px;border:1px solid #3a4b6c;background:#203252;color:var(--text);border-radius:13px;font-size:15px;cursor:pointer;transition:.15s}
-.answer:focus-visible,.primary:focus-visible{outline:3px solid #9db8ff;outline-offset:3px}
-.answer:disabled{cursor:default}
-.answer.correct{background:#124c3c;border-color:var(--green)}
-.answer.wrong{background:#572b3a;border-color:var(--red)}
-#feedback{min-height:24px;margin-top:16px;font-size:14px;color:var(--muted);line-height:1.5}
-.primary{width:100%;border:0;border-radius:13px;padding:15px;background:var(--blue);color:white;font-weight:700;font-size:16px;cursor:pointer;margin-top:17px}
-.primary:disabled{opacity:.45;cursor:not-allowed}
-.hidden{display:none!important}
-.result{text-align:center;padding:18px 0}
-.score-circle{width:116px;height:116px;border:7px solid var(--blue);border-radius:50%;display:grid;place-items:center;margin:20px auto;font-size:32px;font-weight:700}
-#resultMessage{color:var(--muted);line-height:1.6}
-footer{text-align:center;color:#8392ae;font-size:12px;padding:22px 0}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080d1b" />
+  <meta name="description" content="StudyMate Quiz — practice smarter, learn faster, and track your progress." />
+  <title>StudyMate Quiz | Learn Smarter</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    :root {
+      --bg: #080d1b;
+      --panel: #111a2e;
+      --panel2: #17233b;
+      --text: #f3f6ff;
+      --muted: #9ba9c4;
+      --primary: #7c6cff;
+      --cyan: #42d9e8;
+      --green: #36d399;
+      --red: #ff6b81;
+      --border: rgba(255,255,255,.09);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(ellipse at 10% 0%, #25205b 0%, transparent 38%),
+        radial-gradient(ellipse at 100% 35%, #103b50 0%, transparent 30%),
+        var(--bg);
+    }
+
+    button, select { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .app {
+      width: min(100% - 28px, 720px);
+      margin: auto;
+      padding: 25px 0 38px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--primary), #3bcde4);
+      font-size: 24px;
+      box-shadow: 0 8px 28px #6558ff35;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      margin: 0;
+      letter-spacing: -.5px;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #ffffff08;
+      color: var(--muted);
+      padding: 9px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 25px 22px;
+      border: 1px solid #9388ff38;
+      border-radius: 27px;
+      background: linear-gradient(125deg, #28225b, #152c46 72%, #123644);
+      margin-bottom: 22px;
+    }
+
+    .hero:after {
+      content: "✦";
+      position: absolute;
+      right: 22px;
+      top: 9px;
+      font-size: 95px;
+      color: #ffffff0b;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      color: #b9b1ff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      font-size: clamp(26px, 6vw, 37px);
+      letter-spacing: -1.3px;
+      line-height: 1.12;
+      margin: 13px 0 10px;
+      max-width: 430px;
+    }
+
+    .hero p {
+      color: #c3cde2;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0;
+      max-width: 420px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 19px 0 27px;
+    }
+
+    .stat {
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 14px 10px;
+      background: #ffffff06;
+      text-align: center;
+    }
+
+    .stat .number {
+      font-size: 22px;
+      font-weight: 850;
+      letter-spacing: -.5px;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 0 13px;
+    }
+
+    .section-head h3 {
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .level {
+      color: var(--text);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 15px 7px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .level .emoji { font-size: 24px; }
+    .level strong { display: block; margin: 9px 0 4px; font-size: 13px; }
+    .level small { color: var(--muted); font-size: 10px; }
+
+    .level.active {
+      background: #7465ff1c;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px #7c6cff15;
+    }
+
+    .level:active, .answer:active, .primary:active {
+      transform: scale(.985);
+    }
+
+    .primary {
+      border: 0;
+      color: white;
+      background: linear-gradient(110deg, #7767ff, #4d9df8);
+      border-radius: 15px;
+      padding: 16px 18px;
+      font-weight: 800;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 18px;
+      box-shadow: 0 9px 25px #6e63ff25;
+      transition: transform .15s;
+    }
+
+    .primary:focus-visible, button:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 3px;
+    }
+
+    .secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--panel2);
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #141f35, #0f1728);
+      padding: 20px;
+      box-shadow: 0 15px 45px #00000015;
+    }
+
+    .hidden { display: none !important; }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .progress-track {
+      height: 7px;
+      border-radius: 99px;
+      background: #ffffff10;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--cyan));
+      transition: width .3s ease;
+    }
+
+    .question {
+      font-size: clamp(20px, 5vw, 26px);
+      letter-spacing: -.5px;
+      line-height: 1.4;
+      margin: 0 0 22px;
+    }
+
+    .answers {
+      display: grid;
+      gap: 11px;
+    }
+
+    .answer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      padding: 14px;
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: #ffffff04;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .letter {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      color: #c8c1ff;
+      background: #7767ff20;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .answer.correct {
+      border-color: var(--green);
+      background: #36d39912;
+    }
+
+    .answer.correct .letter {
+      color: #061c15;
+      background: var(--green);
+    }
+
+    .answer.wrong {
+      border-color: var(--red);
+      background: #ff6b8110;
+    }
+
+    .answer.wrong .letter {
+      color: #fff;
+      background: var(--red);
+    }
+
+    .answer:disabled { cursor: default; }
+
+    .feedback {
+      padding: 15px;
+      margin-top: 16px;
+      border-radius: 14px;
+      line-height: 1.65;
+      font-size: 13px;
+      background: #ffffff08;
+      border: 1px solid var(--border);
+    }
+
+    .feedback.good { border-color: #36d39960; }
+    .feedback.bad { border-color: #ff6b8160; }
+
+    .feedback strong { display: block; margin-bottom: 4px; }
+
+    .quiz-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .quiz-actions button { margin: 0; }
+
+    .result {
+      text-align: center;
+      padding: 26px 20px;
+    }
+
+    .result-icon { font-size: 60px; }
+
+    .result h2 {
+      font-size: 28px;
+      margin: 12px 0 8px;
+    }
+
+    .result p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .score-ring {
+      width: 150px;
+      height: 150px;
+      margin: 24px auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--cyan) var(--score, 0%), #ffffff12 0);
+      position: relative;
+    }
+
+    .score-ring:before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border-radius: 50%;
+      background: #121d31;
+    }
+
+    .score-inner { position: relative; }
+    .score-inner strong { display: block; font-size: 35px; }
+    .score-inner span { color: var(--muted); font-size: 12px; }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 22px 0;
+    }
+
+    .result-stat {
+      border-radius: 15px;
+      background: #ffffff07;
+      padding: 15px 8px;
+    }
+
+    .result-stat strong { display: block; font-size: 21px; }
+    .result-stat span { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; }
+
+    .history-list { display: grid; gap: 9px; }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 13px;
+      background: #ffffff06;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      font-size: 12px;
+    }
+
+    .history-item span { color: var(--muted); }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #7f8da8;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 380px) {
+      .app { width: calc(100% - 20px); }
+      .hero { padding: 21px 17px; }
+      .card { padding: 15px; }
+      .pill { font-size: 10px; padding: 8px; }
+      .stat .number { font-size: 19px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
-<header>
-  <div class="logo">📘</div>
-  <h1>StudyMate Quiz</h1>
-  <div class="subtitle">Learn smarter. Improve every day.</div>
-</header>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🎓</div>
+        <div>
+          <h1>StudyMate Quiz</h1>
+          <p>Learn smarter. Grow every day.</p>
+        </div>
+      </div>
+      <div class="pill">✦ SMART LEARNING</div>
+    </header>
 
-<main class="card" id="quiz">
-  <div class="row">
-    <span class="pill" id="counter">Question 1 / 10</span>
-    <span class="pill" id="score">⭐ Score: 0</span>
-  </div>
-  <div class="track"><div id="bar"></div></div>
-  <h2 id="question">Loading question...</h2>
-  <div class="answers" id="answers"></div>
-  <div id="feedback" aria-live="polite"></div>
-  <button class="primary" id="next" disabled>Next Question →</button>
-</main>
+    <section id="home">
+      <div class="hero">
+        <div class="eyebrow">YOUR LEARNING JOURNEY</div>
+        <h2>Small steps.<br />Big achievements.</h2>
+        <p>Challenge yourself, improve your English, and turn every question into an opportunity to learn.</p>
+      </div>
 
-<section class="card hidden" id="results" aria-live="polite">
-  <div class="result">
-    <div style="font-size:48px" id="resultIcon">🏆</div>
-    <h2 id="resultTitle">Quiz Complete!</h2>
-    <div class="score-circle" id="finalScore">0/10</div>
-    <p id="resultMessage"></p>
-  </div>
-  <button class="primary" id="retry">↻ Try Again</button>
-</section>
-<footer>StudyMate Quiz · Keep learning, keep growing</footer>
-</div>
+      <div class="stats">
+        <div class="stat">
+          <div class="number" id="totalPlayed">0</div>
+          <div class="label">Quizzes played</div>
+        </div>
+        <div class="stat">
+          <div class="number" id="bestScore">0/10</div>
+          <div class="label">Best score</div>
+        </div>
+        <div class="stat">
+          <div class="number" id="accuracy">0%</div>
+          <div class="label">Overall accuracy</div>
+        </div>
+      </div>
 
-<script>
-"use strict";
+      <div class="section-head">
+        <h3>Choose your level</h3>
+        <span>10 questions per quiz</span>
+      </div>
 
-const bank = [
-{q:"What is the capital city of Ethiopia?",a:["Adama","Addis Ababa","Hawassa","Bahir Dar"],c:1},
-{q:"Which planet is known as the Red Planet?",a:["Venus","Jupiter","Mars","Mercury"],c:2},
-{q:"How many days are there in a week?",a:["5","6","7","8"],c:2},
-{q:"What is 12 × 8?",a:["84","92","96","108"],c:2},
-{q:"Which gas do plants absorb from the atmosphere?",a:["Oxygen","Carbon dioxide","Hydrogen","Nitrogen"],c:1},
-{q:"Which is the largest ocean on Earth?",a:["Atlantic","Indian","Arctic","Pacific"],c:3},
-{q:"How many sides does a hexagon have?",a:["5","6","7","8"],c:1},
-{q:"Which organ pumps blood around the human body?",a:["Lungs","Brain","Heart","Liver"],c:2},
-{q:"What is the opposite of 'ancient'?",a:["Old","Modern","Historic","Past"],c:1},
-{q:"Which language is mainly used to structure web pages?",a:["HTML","SQL","Python","C++"],c:0},
-{q:"What is 100 divided by 4?",a:["20","25","40","50"],c:1},
-{q:"Which continent is Ethiopia in?",a:["Asia","Europe","Africa","South America"],c:2},
-{q:"What is the chemical formula for water?",a:["CO2","O2","H2O","NaCl"],c:2},
-{q:"How many minutes are in one hour?",a:["30","45","60","100"],c:2},
-{q:"Which star is closest to Earth?",a:["Sirius","The Sun","Polaris","Vega"],c:1}
-];
+      <div class="levels">
+        <button class="level active" data-level="Easy" type="button">
+          <span class="emoji">🌱</span>
+          <strong>Easy</strong>
+          <small>Start strong</small>
+        </button>
+        <button class="level" data-level="Medium" type="button">
+          <span class="emoji">⚡</span>
+          <strong>Medium</strong>
+          <small>Build skills</small>
+        </button>
+        <button class="level" data-level="Hard" type="button">
+          <span class="emoji">🔥</span>
+          <strong>Hard</strong>
+          <small>Test yourself</small>
+        </button>
+      </div>
 
-const TOTAL = 10;
-let questions = [];
-let index = 0;
-let points = 0;
-let answered = false;
-let finished = false;
+      <button class="primary" id="startBtn" type="button">Start Your Quiz →</button>
 
-const $ = id => document.getElementById(id);
-const quiz = $("quiz");
-const results = $("results");
-const questionEl = $("question");
-const answersEl = $("answers");
-const nextBtn = $("next");
+      <div class="section-head">
+        <h3>Recent activity</h3>
+        <span>Your device history</span>
+      </div>
+      <div class="card">
+        <div id="history" class="history-list">
+          <p style="color:var(--muted);font-size:13px;margin:0">Your completed quizzes will appear here.</p>
+        </div>
+      </div>
+    </section>
 
-function shuffle(items) {
-  const arr = [...items];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+    <section id="quiz" class="hidden">
+      <div class="section-head">
+        <h3>🧠 Smart Quiz</h3>
+        <span id="levelLabel">Easy level</span>
+      </div>
 
-function startQuiz() {
-  questions = shuffle(bank).slice(0, TOTAL);
-  index = 0;
-  points = 0;
-  answered = false;
-  finished = false;
-  quiz.classList.remove("hidden");
-  results.classList.add("hidden");
-  renderQuestion();
-}
+      <div class="card">
+        <div class="quiz-meta">
+          <span id="questionCounter">QUESTION 1 OF 10</span>
+          <span id="liveScore">⭐ 0 points</span>
+        </div>
 
-function renderQuestion() {
-  answered = false;
-  const item = questions[index];
-  $("counter").textContent = `Question ${index + 1} / ${TOTAL}`;
-  $("score").textContent = `⭐ Score: ${points}`;
-  $("bar").style.width = `${index / TOTAL * 100}%`;
-  questionEl.textContent = item.q;
-  $("feedback").textContent = "";
-  answersEl.replaceChildren();
-  nextBtn.disabled = true;
-  nextBtn.textContent = index === TOTAL - 1 ? "See Results →" : "Next Question →";
+        <div class="progress-track">
+          <div id="progress" class="progress-fill"></div>
+        </div>
 
-  item.a.forEach((answer, i) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "answer";
-    btn.textContent = `${String.fromCharCode(65 + i)}. ${answer}`;
-    btn.addEventListener("click", () => chooseAnswer(i, btn));
-    answersEl.appendChild(btn);
-  });
-}
+        <h2 id="questionText" class="question"></h2>
+        <div id="answers" class="answers"></div>
+        <div id="feedback" class="feedback hidden" aria-live="polite"></div>
 
-function chooseAnswer(choice, selectedButton) {
-  if (answered || finished) return;
-  answered = true;
+        <div class="quiz-actions">
+          <button id="exitBtn" class="secondary" type="button">← Exit</button>
+          <button id="nextBtn" class="primary hidden" type="button">Next Question →</button>
+        </div>
+      </div>
+    </section>
 
-  const item = questions[index];
-  const buttons = [...answersEl.querySelectorAll("button")];
-  buttons.forEach((btn, i) => {
-    btn.disabled = true;
-    if (i === item.c) btn.classList.add("correct");
-  });
+    <section id="results" class="hidden">
+      <div class="section-head">
+        <h3>Quiz complete</h3>
+        <span id="resultLevel">Easy level</span>
+      </div>
 
-  if (choice === item.c) {
-    points++;
-    $("feedback").textContent = "✓ Correct! Well done.";
-    $("feedback").style.color = "var(--green)";
-  } else {
-    selectedButton.classList.add("wrong");
-    $("feedback").textContent = `✗ Not quite. Correct answer: ${item.a[item.c]}`;
-    $("feedback").style.color = "var(--red)";
-  }
+      <div class="card result">
+        <div id="resultIcon" class="result-icon">🏆</div>
+        <h2 id="resultTitle">Excellent work!</h2>
+        <p id="resultMessage">Every question is a step forward.</p>
 
-  $("score").textContent = `⭐ Score: ${points}`;
-  nextBtn.disabled = false;
-}
+        <div id="scoreRing" class="score-ring">
+          <div class="score-inner">
+            <strong id="finalScore">0/10</strong>
+            <span>YOUR SCORE</span>
+          </div>
+        </div>
 
-function showResults() {
-  finished = true;
-  quiz.classList.add("hidden");
-  results.classList.remove("hidden");
-  $("bar").style.width = "100%";
-  $("finalScore").textContent = `${points}/${TOTAL}`;
+        <div class="result-stats">
+          <div class="result-stat">
+            <strong id="correctCount">0</strong>
+            <span>Correct answers</span>
+          </div>
+          <div class="result-stat">
+            <strong id="finalAccuracy">0%</strong>
+            <span>Accuracy</span>
+          </div>
+        </div>
 
-  let title, icon, message;
-  if (points >= 8) {
-    title = "Excellent Work!";
-    icon = "🏆";
-    message = "Outstanding result! Keep challenging yourself and continue learning.";
-  } else if (points >= 5) {
-    title = "Good Job!";
-    icon = "🌟";
-    message = "Good effort! Review what you missed and try again to improve.";
-  } else {
-    title = "Keep Practicing!";
-    icon = "📚";
-    message = "Every attempt helps you learn. Review the topics and give it another try.";
-  }
-  $("resultTitle").textContent = title;
-  $("resultIcon").textContent = icon;
-  $("resultMessage").textContent = `You answered ${points} out of ${TOTAL} questions correctly. ${message}`;
-}
+        <button class="primary" id="retryBtn" type="button">Play Again ↻</button>
+        <button class="secondary" id="homeBtn" type="button" style="width:100%;margin-top:10px">Back to Dashboard</button>
+      </div>
+    </section>
 
-nextBtn.addEventListener("click", () => {
-  if (!answered || finished) return;
-  if (index >= TOTAL - 1) {
-    showResults();
-    return;
-  }
-  index++;
-  renderQuestion();
-});
+    <footer class="footer">
+      <div>🎓 <strong>StudyMate Quiz</strong></div>
+      Practice consistently. Progress confidently.<br />
+      <span>Quiz records are saved on this device.</span>
+    </footer>
+  </main>
 
-$("retry").addEventListener("click", startQuiz);
+  <script>
+    (() => {
+      "use strict";
 
-startQuiz();
-</script>
+      const tg = window.Telegram?.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        try {
+          if (tg.themeParams?.bg_color) {
+            document.documentElement.style.setProperty("--bg", tg.themeParams.bg_color);
+          }
+        } catch (_) {}
+      }
+
+      const questions = [
+        // EASY
+        {level:"Easy",q:"What is the opposite of “hot”?",a:["Warm","Cold","Dry","Bright"],c:1,e:"“Cold” is the opposite of “hot.”"},
+        {level:"Easy",q:"Choose the correct sentence.",a:["She go to school.","She going school.","She goes to school.","She gone to school."],c:2,e:"With he, she, or it in the present simple, we usually add -s to the verb."},
+        {level:"Easy",q:"What is the past tense of “go”?",a:["Goed","Gone","Going","Went"],c:3,e:"“Went” is the simple past tense of “go.”"},
+        {level:"Easy",q:"Which word is a noun?",a:["Beautiful","Quickly","Teacher","Run"],c:2,e:"A teacher is a person, so “teacher” is a noun."},
+        {level:"Easy",q:"Complete: I ___ a student.",a:["am","is","are","be"],c:0,e:"Use “I am” when introducing yourself."},
+        {level:"Easy",q:"What does “begin” mean?",a:["Finish","Start","Forget","Wait"],c:1,e:"“Begin” means “start.”"},
+        {level:"Easy",q:"Choose the plural of “child.”",a:["Childs","Childes","Children","Childrens"],c:2,e:"The plural form of “child” is “children.”"},
+        {level:"Easy",q:"Which word means the same as “happy”?",a:["Glad","Angry","Tired","Afraid"],c:0,e:"“Glad” and “happy” have similar meanings."},
+        {level:"Easy",q:"Complete: They ___ playing football.",a:["is","am","be","are"],c:3,e:"Use “are” with the subject “they.”"},
+        {level:"Easy",q:"Which is a question word?",a:["Because","Although","Where","During"],c:2,e:"“Where” asks about a place."},
+        {level:"Easy",q:"What is the opposite of “early”?",a:["Fast","Late","Soon","First"],c:1,e:"“Late” is the opposite of “early.”"},
+        {level:"Easy",q:"Complete: She has ___ apple.",a:["a","an","thee","are"],c:1,e:"Use “an” before a vowel sound, as in “apple.”"},
+        {level:"Easy",q:"Which word is an adjective?",a:["Slowly","Happiness","Beautiful","Speak"],c:2,e:"“Beautiful” describes a noun, so it is an adjective."},
+        {level:"Easy",q:"What is the past tense of “eat”?",a:["Eated","Ate","Eating","Eaten"],c:1,e:"“Ate” is the simple past tense of “eat.”"},
+        {level:"Easy",q:"Choose the correct greeting for the morning.",a:["Good night","Good evening","Good morning","Goodbye"],c:2,e:"“Good morning” is used as a greeting in the morning."},
+
+        // MEDIUM
+        {level:"Medium",q:"If I ___ more time, I would learn another language.",a:["have","had","will have","am having"],c:1,e:"The second conditional uses “if + past simple” and “would + verb.”"},
+        {level:"Medium",q:"Choose the correct sentence.",a:["He has lived here for 2020.","He lives here since 2020.","He has lived here since 2020.","He living here since 2020."],c:2,e:"Use present perfect with “since” to describe something that started in the past and continues now."},
+        {level:"Medium",q:"What does “reliable” mean?",a:["Can be trusted","Very expensive","Often late","Difficult to see"],c:0,e:"A reliable person or thing can be trusted."},
+        {level:"Medium",q:"Choose the correct passive form: “They built the bridge.”",a:["The bridge built them.","The bridge was built by them.","The bridge is build by them.","The bridge has building."],c:1,e:"Past simple passive: was/were + past participle."},
+        {level:"Medium",q:"She is interested ___ learning English.",a:["on","at","in","for"],c:2,e:"The correct expression is “interested in.”"},
+        {level:"Medium",q:"Which word is closest to “essential”?",a:["Optional","Necessary","Unusual","Temporary"],c:1,e:"“Essential” means necessary or extremely important."},
+        {level:"Medium",q:"By the time we arrived, the film ___.",a:["starts","has started","had started","starting"],c:2,e:"Past perfect describes an earlier past action: “had started.”"},
+        {level:"Medium",q:"Choose the grammatically correct option.",a:["There is fewer people today.","There are less people today.","There are fewer people today.","There be fewer people today."],c:2,e:"Use “fewer” with countable plural nouns such as people."},
+        {level:"Medium",q:"What does “despite” express?",a:["Contrast","Purpose","Time only","Possession"],c:0,e:"“Despite” introduces a contrast or an unexpected result."},
+        {level:"Medium",q:"If she studies hard, she ___ the exam.",a:["passed","would passed","will pass","passing"],c:2,e:"The first conditional uses present simple after “if” and “will” for the result."},
+        {level:"Medium",q:"Choose the correct reported speech: He said, “I am tired.”",a:["He said he is tire.","He said that he was tired.","He says he tired.","He said I was tired."],c:1,e:"In standard reported speech, “am” usually shifts to “was.”"},
+        {level:"Medium",q:"Which is a synonym for “improve”?",a:["Worsen","Enhance","Ignore","Remove"],c:1,e:"“Enhance” means to improve or increase quality."},
+        {level:"Medium",q:"You ___ wear a seat belt; it is the law.",a:["might","could","must","would"],c:2,e:"“Must” expresses a strong obligation."},
+        {level:"Medium",q:"Neither the teacher nor the students ___ ready.",a:["was","is","were","be"],c:2,e:"With “neither…nor,” the verb commonly agrees with the nearer subject, “students.”"},
+        {level:"Medium",q:"Choose the correct word: The instructions were very ___.",a:["clearly","clarity","clear","clears"],c:2,e:"After “were,” use the adjective “clear.”"},
+
+        // HARD
+        {level:"Hard",q:"Had I known about the delay, I ___ earlier.",a:["would leave","would have left","will leave","had left"],c:1,e:"Third conditional result: would have + past participle."},
+        {level:"Hard",q:"Which sentence is grammatically correct?",a:["No sooner I arrived than it rained.","No sooner had I arrived than it began to rain.","No sooner did I arrived than it rained.","No sooner I had arrive than it rained."],c:1,e:"“No sooner” at the beginning requires inversion: “had I arrived.”"},
+        {level:"Hard",q:"What does “ambiguous” mean?",a:["Easy to prove","Having more than one possible meaning","Completely false","Extremely brief"],c:1,e:"An ambiguous statement can be understood in more than one way."},
+        {level:"Hard",q:"Choose the correct sentence.",a:["Each of the students have a book.","Each of the students has a book.","Each students has a book.","Each of students have a book."],c:1,e:"“Each” is grammatically singular, so use “has.”"},
+        {level:"Hard",q:"The proposal, along with its supporting documents, ___ submitted yesterday.",a:["were","have been","was","are"],c:2,e:"The main subject is singular: “the proposal.” The phrase between commas does not change the subject."},
+        {level:"Hard",q:"Which word best completes: Her argument was persuasive because it was supported by ___ evidence.",a:["anecdotal only","empirical","imaginary","irrelevant"],c:1,e:"Empirical evidence is based on observation or experience."},
+        {level:"Hard",q:"Choose the correct inversion.",a:["Rarely I have seen such skill.","Rarely have I seen such skill.","Rarely seen I have such skill.","Rarely did I have saw such skill."],c:1,e:"Negative adverbs such as “rarely” at the beginning trigger subject–auxiliary inversion."},
+        {level:"Hard",q:"What does “mitigate” mean?",a:["Make less severe","Make impossible","Repeat exactly","Exaggerate"],c:0,e:"To mitigate means to reduce the severity or impact of something."},
+        {level:"Hard",q:"The manager demanded that every report ___ submitted by Friday.",a:["is","was","be","has been"],c:2,e:"After verbs such as “demand,” formal English may use the subjunctive base form “be.”"},
+        {level:"Hard",q:"Which sentence correctly uses a defining relative clause?",a:["The person which called is my tutor.","The person who called is my tutor.","The person where called is my tutor.","The person whose called is my tutor."],c:1,e:"Use “who” for a person performing the action."},
+        {level:"Hard",q:"If the data ___ accurate, the conclusion would be different.",a:["was","were","is being","has"],c:1,e:"“If the data were…” is a standard hypothetical construction."},
+        {level:"Hard",q:"Which word is closest to “meticulous”?",a:["Careless","Thorough and precise","Impatient","Uncertain"],c:1,e:"A meticulous person pays close attention to details."},
+        {level:"Hard",q:"Not only ___ the deadline, but she also improved the final result.",a:["she met","did she meet","she did met","met she"],c:1,e:"“Not only” at the beginning requires inversion: “did she meet.”"},
+        {level:"Hard",q:"What is the meaning of “inevitable”?",a:["Impossible to understand","Certain to happen","Easy to prevent","Already forgotten"],c:1,e:"“Inevitable” means certain to happen or unavoidable."}
+      ];
+
+      const $ = id => document.getElementById(id);
+      const views = ["home", "quiz", "results"];
+      let level = "Easy";
+      let deck = [];
+      let index = 0;
+      let score = 0;
+      let answered = false;
+      let sessionCorrect = 0;
+
+      const STORAGE_KEY = "studymate_quiz_stats_v2";
+
+      function loadStats() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          return {
+            played: Number(saved.played) || 0,
+            best: Number(saved.best) || 0,
+            correct: Number(saved.correct) || 0,
+            total: Number(saved.total) || 0,
+            history: Array.isArray(saved.history) ? saved.history.slice(0, 8) : []
+          };
+        } catch (_) {
+          return {played:0,best:0,correct:0,total:0,history:[]};
+        }
+      }
+
+      let stats = loadStats();
+
+      function saveStats() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+        } catch (_) {}
+      }
+
+      function renderDashboard() {
+        $("totalPlayed").textContent = stats.played;
+        $("bestScore").textContent = `${stats.best}/10`;
+        $("accuracy").textContent = stats.total
+          ? `${Math.round(stats.correct / stats.total * 100)}%`
+          : "0%";
+
+        const history = $("history");
+        if (!stats.history.length) {
+          history.innerHTML = '<p style="color:var(--muted);font-size:13px;margin:0">Complete your first quiz to see your results here.</p>';
+          return;
+        }
+
+        history.replaceChildren();
+        stats.history.forEach(item => {
+          const row = document.createElement("div");
+          row.className = "history-item";
+
+          const left = document.createElement("div");
+          const title = document.createElement("strong");
+          title.textContent = `${item.level} • ${item.score}/10`;
+          const date = document.createElement("div");
+          date.style.marginTop = "5px";
+          date.style.color = "var(--muted)";
+          date.textContent = item.date;
+          left.append(title, date);
+
+          const right = document.createElement("strong");
+          right.textContent = `${item.score * 10}%`;
+
+          row.append(left, right);
+          history.append(row);
+        });
+      }
+
+      function showView(view) {
+        views.forEach(name => $(name).classList.toggle("hidden", name !== view));
+        window.scrollTo({top:0,behavior:"smooth"});
+      }
+
+      document.querySelectorAll(".level").forEach(button => {
+        button.addEventListener("click", () => {
+          level = button.dataset.level;
+          document.querySelectorAll(".level").forEach(b => {
+            b.classList.toggle("active", b === button);
+          });
+        });
+      });
+
+      function shuffle(items) {
+        const copy = [...items];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function startQuiz() {
+        const pool = questions.filter(q => q.level === level);
+        if (pool.length < 10) {
+          alert("Not enough questions for this level yet.");
+          return;
+        }
+
+        deck = shuffle(pool).slice(0, 10);
+        index = 0;
+        score = 0;
+        sessionCorrect = 0;
+        $("levelLabel").textContent = `${level} level`;
+        showView("quiz");
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        answered = false;
+        const q = deck[index];
+
+        $("questionCounter").textContent = `QUESTION ${index + 1} OF ${deck.length}`;
+        $("liveScore").textContent = `⭐ ${score} points`;
+        $("progress").style.width = `${index / deck.length * 100}%`;
+        $("questionText").textContent = q.q;
+        $("feedback").className = "feedback hidden";
+        $("feedback").textContent = "";
+        $("nextBtn").classList.add("hidden");
+        $("answers").replaceChildren();
+
+        q.a.forEach((answer, i) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "answer";
+
+          const letter = document.createElement("span");
+          letter.className = "letter";
+          letter.textContent = String.fromCharCode(65 + i);
+
+          const label = document.createElement("span");
+          label.textContent = answer;
+
+          button.append(letter, label);
+          button.addEventListener("click", () => chooseAnswer(i));
+          $("answers").append(button);
+        });
+      }
+
+      function chooseAnswer(choice) {
+        if (answered) return;
+        answered = true;
+
+        const q = deck[index];
+        const buttons = [...$("answers").querySelectorAll("button")];
+
+        buttons.forEach((button, i) => {
+          button.disabled = true;
+          if (i === q.c) button.classList.add("correct");
+          if (i === choice && choice !== q.c) button.classList.add("wrong");
+        });
+
+        const correct = choice === q.c;
+        if (correct) {
+          score++;
+          sessionCorrect++;
+          $("liveScore").textContent = `⭐ ${score} points`;
+        }
+
+        const feedback = $("feedback");
+        feedback.className = `feedback ${correct ? "good" : "bad"}`;
+
+        const heading = document.createElement("strong");
+        heading.textContent = correct ? "✓ Correct answer!" : "✕ Not quite — learn from it!";
+        const explanation = document.createElement("span");
+        explanation.textContent = q.e;
+        feedback.replaceChildren(heading, explanation);
+
+        $("progress").style.width = `${(index + 1) / deck.length * 100}%`;
+        $("nextBtn").textContent = index === deck.length - 1 ? "See My Results →" : "Next Question →";
+        $("nextBtn").classList.remove("hidden");
+      }
+
+      function nextQuestion() {
+        if (!answered) return;
+        index++;
+        if (index < deck.length) {
+          renderQuestion();
+        } else {
+          finishQuiz();
+        }
+      }
+
+      function finishQuiz() {
+        const percent = score * 10;
+        const previousBest = stats.best;
+
+        stats.played++;
+        stats.best = Math.max(stats.best, score);
+        stats.correct += sessionCorrect;
+        stats.total += deck.length;
+        stats.history.unshift({
+          level,
+          score,
+          date: new Date().toLocaleDateString(undefined, {
+            year:"numeric", month:"short", day:"numeric"
+          })
+        });
+        stats.history = stats.history.slice(0, 8);
+        saveStats();
+        renderDashboard();
+
+        let icon = "📚";
+        let title = "Keep learning!";
+        let message = "Every attempt helps you improve. Review the explanations and try again.";
+
+        if (score >= 9) {
+          icon = "🏆";
+          title = "Outstanding work!";
+          message = "Excellent performance! Your hard work is paying off.";
+        } else if (score >= 7) {
+          icon = "🌟";
+          title = "Great job!";
+          message = "You are making strong progress. Keep challenging yourself.";
+        } else if (score >= 5) {
+          icon = "💪";
+          title = "Good effort!";
+          message = "You are building your skills. A little more practice will help.";
+        }
+
+        if (score > previousBest && score > 0) {
+          message += " New personal best!";
+        }
+
+        $("resultIcon").textContent = icon;
+        $("resultTitle").textContent = title;
+        $("resultMessage").textContent = message;
+        $("finalScore").textContent = `${score}/10`;
+        $("correctCount").textContent = `${score}/10`;
+        $("finalAccuracy").textContent = `${percent}%`;
+        $("scoreRing").style.setProperty("--score", `${percent}%`);
+        $("resultLevel").textContent = `${level} level`;
+        $("progress").style.width = "100%";
+
+        showView("results");
+      }
+
+      $("startBtn").addEventListener("click", startQuiz);
+      $("nextBtn").addEventListener("click", nextQuestion);
+
+      $("exitBtn").addEventListener("click", () => {
+        if (confirm("Exit this quiz? Your current score will not be saved.")) {
+          showView("home");
+        }
+      });
+
+      $("retryBtn").addEventListener("click", startQuiz);
+      $("homeBtn").addEventListener("click", () => {
+        renderDashboard();
+        showView("home");
+      });
+
+      renderDashboard();
+    })();
+  </script>
 </body>
 </html>
