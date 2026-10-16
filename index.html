@@ -2,180 +2,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>StudyMate Quiz</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 24px 18px;
-      font-family: Arial, sans-serif;
-      background: #101827;
-      color: white;
-    }
-    .app { max-width: 480px; margin: auto; }
-    .brand { color: #72e6c1; font-size: 14px; font-weight: bold; }
-    h1 { font-size: 29px; margin-bottom: 8px; }
-    .muted { color: #aab7ca; line-height: 1.5; }
-    .card {
-      background: #1c293b;
-      padding: 20px;
-      border-radius: 18px;
-      margin-top: 22px;
-    }
-    .tag { color: #72e6c1; font-size: 13px; }
-    .option {
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 12px;
-      padding: 15px;
-      border: 1px solid #42516a;
-      border-radius: 12px;
-      background: #26364b;
-      color: white;
-      text-align: left;
-      font-size: 16px;
-    }
-    .option:disabled { opacity: 0.8; }
-    .primary {
-      width: 100%;
-      padding: 15px;
-      margin-top: 18px;
-      border: 0;
-      border-radius: 12px;
-      background: #72e6c1;
-      color: #10221f;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    #feedback { min-height: 24px; margin-top: 14px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101b35">
+<title>StudyMate Quiz</title>
+<style>
+:root{--bg:#101b35;--card:#192846;--blue:#5485ff;--green:#22c785;--red:#ff6475;--text:#f5f7ff;--muted:#aab7d0}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(145deg,#101b35,#0c1428);font-family:Arial,sans-serif;color:var(--text);padding:20px}
+.container{max-width:520px;margin:0 auto}
+header{text-align:center;padding:16px 0 22px}
+.logo{width:58px;height:58px;border-radius:18px;background:var(--blue);display:grid;place-items:center;font-size:28px;margin:auto auto 12px}
+h1{font-size:27px;margin:0 0 8px}
+.subtitle{color:var(--muted);font-size:14px}
+.card{background:var(--card);border:1px solid #2a3a5a;border-radius:22px;padding:23px;box-shadow:0 12px 35px #0002}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pill{background:#25385c;color:#dce6ff;padding:8px 12px;border-radius:20px;font-size:13px}
+.track{height:7px;background:#30405e;border-radius:20px;margin:20px 0 25px;overflow:hidden}
+#bar{height:100%;width:0;background:var(--blue);transition:width .2s}
+#question{font-size:21px;line-height:1.45;margin:0 0 22px}
+.answers{display:grid;gap:12px}
+.answer{width:100%;text-align:left;padding:15px;border:1px solid #3a4b6c;background:#203252;color:var(--text);border-radius:13px;font-size:15px;cursor:pointer;transition:.15s}
+.answer:focus-visible,.primary:focus-visible{outline:3px solid #9db8ff;outline-offset:3px}
+.answer:disabled{cursor:default}
+.answer.correct{background:#124c3c;border-color:var(--green)}
+.answer.wrong{background:#572b3a;border-color:var(--red)}
+#feedback{min-height:24px;margin-top:16px;font-size:14px;color:var(--muted);line-height:1.5}
+.primary{width:100%;border:0;border-radius:13px;padding:15px;background:var(--blue);color:white;font-weight:700;font-size:16px;cursor:pointer;margin-top:17px}
+.primary:disabled{opacity:.45;cursor:not-allowed}
+.hidden{display:none!important}
+.result{text-align:center;padding:18px 0}
+.score-circle{width:116px;height:116px;border:7px solid var(--blue);border-radius:50%;display:grid;place-items:center;margin:20px auto;font-size:32px;font-weight:700}
+#resultMessage{color:var(--muted);line-height:1.6}
+footer{text-align:center;color:#8392ae;font-size:12px;padding:22px 0}
+</style>
 </head>
 <body>
-  <main class="app">
-    <div class="brand">STUDYMATE • DAILY LEARNING</div>
-    <h1>Daily Quiz 🎯</h1>
-    <p class="muted">Learn something new every day. Choose your answer and test your knowledge.</p>
+<div class="container">
+<header>
+  <div class="logo">📘</div>
+  <h1>StudyMate Quiz</h1>
+  <div class="subtitle">Learn smarter. Improve every day.</div>
+</header>
 
-    <section class="card">
-      <div class="tag" id="progress">QUESTION 1 OF 3</div>
-      <h2 id="question">Loading question...</h2>
-      <div id="options"></div>
-      <p id="feedback" aria-live="polite"></p>
-      <button class="primary" id="next" hidden>Next question →</button>
-    </section>
-    <p class="muted" id="score">Your score: 0</p>
-  </main>
+<main class="card" id="quiz">
+  <div class="row">
+    <span class="pill" id="counter">Question 1 / 10</span>
+    <span class="pill" id="score">⭐ Score: 0</span>
+  </div>
+  <div class="track"><div id="bar"></div></div>
+  <h2 id="question">Loading question...</h2>
+  <div class="answers" id="answers"></div>
+  <div id="feedback" aria-live="polite"></div>
+  <button class="primary" id="next" disabled>Next Question →</button>
+</main>
 
-  <script>
-    const tg = window.Telegram && window.Telegram.WebApp;
-    if (tg) {
-      tg.ready();
-      tg.expand();
-    }
+<section class="card hidden" id="results" aria-live="polite">
+  <div class="result">
+    <div style="font-size:48px" id="resultIcon">🏆</div>
+    <h2 id="resultTitle">Quiz Complete!</h2>
+    <div class="score-circle" id="finalScore">0/10</div>
+    <p id="resultMessage"></p>
+  </div>
+  <button class="primary" id="retry">↻ Try Again</button>
+</section>
+<footer>StudyMate Quiz · Keep learning, keep growing</footer>
+</div>
 
-    const questions = [
-      {
-        q: "Which planet is known as the Red Planet?",
-        a: ["Venus", "Mars", "Jupiter"],
-        correct: 1
-      },
-      {
-        q: "What is 8 × 7?",
-        a: ["54", "56", "64"],
-        correct: 1
-      },
-      {
-        q: "Which language is mainly used to structure web pages?",
-        a: ["HTML", "SQL", "Python"],
-        correct: 0
-      }
-    ];
+<script>
+"use strict";
 
-    let current = 0;
-    let points = 0;
-    let answered = false;
+const bank = [
+{q:"What is the capital city of Ethiopia?",a:["Adama","Addis Ababa","Hawassa","Bahir Dar"],c:1},
+{q:"Which planet is known as the Red Planet?",a:["Venus","Jupiter","Mars","Mercury"],c:2},
+{q:"How many days are there in a week?",a:["5","6","7","8"],c:2},
+{q:"What is 12 × 8?",a:["84","92","96","108"],c:2},
+{q:"Which gas do plants absorb from the atmosphere?",a:["Oxygen","Carbon dioxide","Hydrogen","Nitrogen"],c:1},
+{q:"Which is the largest ocean on Earth?",a:["Atlantic","Indian","Arctic","Pacific"],c:3},
+{q:"How many sides does a hexagon have?",a:["5","6","7","8"],c:1},
+{q:"Which organ pumps blood around the human body?",a:["Lungs","Brain","Heart","Liver"],c:2},
+{q:"What is the opposite of 'ancient'?",a:["Old","Modern","Historic","Past"],c:1},
+{q:"Which language is mainly used to structure web pages?",a:["HTML","SQL","Python","C++"],c:0},
+{q:"What is 100 divided by 4?",a:["20","25","40","50"],c:1},
+{q:"Which continent is Ethiopia in?",a:["Asia","Europe","Africa","South America"],c:2},
+{q:"What is the chemical formula for water?",a:["CO2","O2","H2O","NaCl"],c:2},
+{q:"How many minutes are in one hour?",a:["30","45","60","100"],c:2},
+{q:"Which star is closest to Earth?",a:["Sirius","The Sun","Polaris","Vega"],c:1}
+];
 
-    const question = document.getElementById("question");
-    const options = document.getElementById("options");
-    const feedback = document.getElementById("feedback");
-    const next = document.getElementById("next");
-    const progress = document.getElementById("progress");
-    const score = document.getElementById("score");
+const TOTAL = 10;
+let questions = [];
+let index = 0;
+let points = 0;
+let answered = false;
+let finished = false;
 
-    function renderQuestion() {
-      answered = false;
-      const item = questions[current];
-      progress.textContent = `QUESTION ${current + 1} OF ${questions.length}`;
-      question.textContent = item.q;
-      feedback.textContent = "";
-      options.innerHTML = "";
-      next.hidden = true;
+const $ = id => document.getElementById(id);
+const quiz = $("quiz");
+const results = $("results");
+const questionEl = $("question");
+const answersEl = $("answers");
+const nextBtn = $("next");
 
-      item.a.forEach((answer, index) => {
-        const button = document.createElement("button");
-        button.className = "option";
-        button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
-        button.onclick = () => chooseAnswer(index);
-        options.appendChild(button);
-      });
-    }
+function shuffle(items) {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
-    function chooseAnswer(index) {
-      if (answered) return;
-      answered = true;
+function startQuiz() {
+  questions = shuffle(bank).slice(0, TOTAL);
+  index = 0;
+  points = 0;
+  answered = false;
+  finished = false;
+  quiz.classList.remove("hidden");
+  results.classList.add("hidden");
+  renderQuestion();
+}
 
-      const correct = questions[current].correct;
-      if (index === correct) {
-        points++;
-        feedback.textContent = "✅ Correct! Well done.";
-      } else {
-        feedback.textContent =
-          `❌ Not quite. Correct answer: ${questions[current].a[correct]}`;
-      }
+function renderQuestion() {
+  answered = false;
+  const item = questions[index];
+  $("counter").textContent = `Question ${index + 1} / ${TOTAL}`;
+  $("score").textContent = `⭐ Score: ${points}`;
+  $("bar").style.width = `${index / TOTAL * 100}%`;
+  questionEl.textContent = item.q;
+  $("feedback").textContent = "";
+  answersEl.replaceChildren();
+  nextBtn.disabled = true;
+  nextBtn.textContent = index === TOTAL - 1 ? "See Results →" : "Next Question →";
 
-      [...options.children].forEach(button => button.disabled = true);
-      score.textContent = `Your score: ${points}`;
-      next.hidden = false;
-      next.textContent = current === questions.length - 1
-        ? "See results →" : "Next question →";
-    }
+  item.a.forEach((answer, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "answer";
+    btn.textContent = `${String.fromCharCode(65 + i)}. ${answer}`;
+    btn.addEventListener("click", () => chooseAnswer(i, btn));
+    answersEl.appendChild(btn);
+  });
+}
 
-    next.onclick = () => {
-      if (current < questions.length - 1) {
-        current++;
-        renderQuestion();
-      } else {
-        question.textContent = `Quiz complete! ${points}/${questions.length}`;
-        progress.textContent = "DAILY CHALLENGE COMPLETE";
-        options.innerHTML = "";
-        feedback.textContent = points === questions.length
-          ? "Excellent work! You got every answer right."
-          : "Good effort! Try again to improve your score.";
-        next.textContent = "Try again";
-        next.hidden = false;
-        next.onclick = () => {
-          current = 0;
-          points = 0;
-          score.textContent = "Your score: 0";
-          next.onclick = advance;
-          renderQuestion();
-        };
-      }
-    };
+function chooseAnswer(choice, selectedButton) {
+  if (answered || finished) return;
+  answered = true;
 
-    function advance() {
-      if (current < questions.length - 1) {
-        current++;
-        renderQuestion();
-      } else {
-        renderQuestion();
-      }
-    }
+  const item = questions[index];
+  const buttons = [...answersEl.querySelectorAll("button")];
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === item.c) btn.classList.add("correct");
+  });
 
-    renderQuestion();
-  </script>
+  if (choice === item.c) {
+    points++;
+    $("feedback").textContent = "✓ Correct! Well done.";
+    $("feedback").style.color = "var(--green)";
+  } else {
+    selectedButton.classList.add("wrong");
+    $("feedback").textContent = `✗ Not quite. Correct answer: ${item.a[item.c]}`;
+    $("feedback").style.color = "var(--red)";
+  }
+
+  $("score").textContent = `⭐ Score: ${points}`;
+  nextBtn.disabled = false;
+}
+
+function showResults() {
+  finished = true;
+  quiz.classList.add("hidden");
+  results.classList.remove("hidden");
+  $("bar").style.width = "100%";
+  $("finalScore").textContent = `${points}/${TOTAL}`;
+
+  let title, icon, message;
+  if (points >= 8) {
+    title = "Excellent Work!";
+    icon = "🏆";
+    message = "Outstanding result! Keep challenging yourself and continue learning.";
+  } else if (points >= 5) {
+    title = "Good Job!";
+    icon = "🌟";
+    message = "Good effort! Review what you missed and try again to improve.";
+  } else {
+    title = "Keep Practicing!";
+    icon = "📚";
+    message = "Every attempt helps you learn. Review the topics and give it another try.";
+  }
+  $("resultTitle").textContent = title;
+  $("resultIcon").textContent = icon;
+  $("resultMessage").textContent = `You answered ${points} out of ${TOTAL} questions correctly. ${message}`;
+}
+
+nextBtn.addEventListener("click", () => {
+  if (!answered || finished) return;
+  if (index >= TOTAL - 1) {
+    showResults();
+    return;
+  }
+  index++;
+  renderQuestion();
+});
+
+$("retry").addEventListener("click", startQuiz);
+
+startQuiz();
+</script>
 </body>
 </html>
