@@ -1,926 +1,349 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#080d1b" />
-  <meta name="description" content="StudyMate Quiz — practice smarter, learn faster, and track your progress." />
-  <title>StudyMate Quiz | Learn Smarter</title>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <style>
-    :root {
-      --bg: #080d1b;
-      --panel: #111a2e;
-      --panel2: #17233b;
-      --text: #f3f6ff;
-      --muted: #9ba9c4;
-      --primary: #7c6cff;
-      --cyan: #42d9e8;
-      --green: #36d399;
-      --red: #ff6b81;
-      --border: rgba(255,255,255,.09);
-      --radius: 22px;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      background:
-        radial-gradient(ellipse at 10% 0%, #25205b 0%, transparent 38%),
-        radial-gradient(ellipse at 100% 35%, #103b50 0%, transparent 30%),
-        var(--bg);
-    }
-
-    button, select { font: inherit; }
-    button { -webkit-tap-highlight-color: transparent; }
-
-    .app {
-      width: min(100% - 28px, 720px);
-      margin: auto;
-      padding: 25px 0 38px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .logo {
-      display: grid;
-      place-items: center;
-      width: 46px;
-      height: 46px;
-      border-radius: 15px;
-      background: linear-gradient(135deg, var(--primary), #3bcde4);
-      font-size: 24px;
-      box-shadow: 0 8px 28px #6558ff35;
-    }
-
-    .brand h1 {
-      font-size: 18px;
-      margin: 0;
-      letter-spacing: -.5px;
-    }
-
-    .brand p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .pill {
-      border: 1px solid var(--border);
-      background: #ffffff08;
-      color: var(--muted);
-      padding: 9px 12px;
-      border-radius: 99px;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 25px 22px;
-      border: 1px solid #9388ff38;
-      border-radius: 27px;
-      background: linear-gradient(125deg, #28225b, #152c46 72%, #123644);
-      margin-bottom: 22px;
-    }
-
-    .hero:after {
-      content: "✦";
-      position: absolute;
-      right: 22px;
-      top: 9px;
-      font-size: 95px;
-      color: #ffffff0b;
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      color: #b9b1ff;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .hero h2 {
-      font-size: clamp(26px, 6vw, 37px);
-      letter-spacing: -1.3px;
-      line-height: 1.12;
-      margin: 13px 0 10px;
-      max-width: 430px;
-    }
-
-    .hero p {
-      color: #c3cde2;
-      font-size: 14px;
-      line-height: 1.7;
-      margin: 0;
-      max-width: 420px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 19px 0 27px;
-    }
-
-    .stat {
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      padding: 14px 10px;
-      background: #ffffff06;
-      text-align: center;
-    }
-
-    .stat .number {
-      font-size: 22px;
-      font-weight: 850;
-      letter-spacing: -.5px;
-    }
-
-    .stat .label {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 5px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin: 26px 0 13px;
-    }
-
-    .section-head h3 {
-      font-size: 17px;
-      margin: 0;
-    }
-
-    .section-head span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .levels {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .level {
-      color: var(--text);
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      padding: 15px 7px;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .level .emoji { font-size: 24px; }
-    .level strong { display: block; margin: 9px 0 4px; font-size: 13px; }
-    .level small { color: var(--muted); font-size: 10px; }
-
-    .level.active {
-      background: #7465ff1c;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px #7c6cff15;
-    }
-
-    .level:active, .answer:active, .primary:active {
-      transform: scale(.985);
-    }
-
-    .primary {
-      border: 0;
-      color: white;
-      background: linear-gradient(110deg, #7767ff, #4d9df8);
-      border-radius: 15px;
-      padding: 16px 18px;
-      font-weight: 800;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 18px;
-      box-shadow: 0 9px 25px #6e63ff25;
-      transition: transform .15s;
-    }
-
-    .primary:focus-visible, button:focus-visible {
-      outline: 2px solid var(--cyan);
-      outline-offset: 3px;
-    }
-
-    .secondary {
-      border: 1px solid var(--border);
-      color: var(--text);
-      background: var(--panel2);
-      border-radius: 14px;
-      padding: 13px 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(145deg, #141f35, #0f1728);
-      padding: 20px;
-      box-shadow: 0 15px 45px #00000015;
-    }
-
-    .hidden { display: none !important; }
-
-    .quiz-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 14px;
-    }
-
-    .progress-track {
-      height: 7px;
-      border-radius: 99px;
-      background: #ffffff10;
-      overflow: hidden;
-      margin-bottom: 25px;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--primary), var(--cyan));
-      transition: width .3s ease;
-    }
-
-    .question {
-      font-size: clamp(20px, 5vw, 26px);
-      letter-spacing: -.5px;
-      line-height: 1.4;
-      margin: 0 0 22px;
-    }
-
-    .answers {
-      display: grid;
-      gap: 11px;
-    }
-
-    .answer {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      text-align: left;
-      padding: 14px;
-      color: var(--text);
-      border: 1px solid var(--border);
-      background: #ffffff04;
-      border-radius: 15px;
-      cursor: pointer;
-      transition: .18s ease;
-    }
-
-    .letter {
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      color: #c8c1ff;
-      background: #7767ff20;
-      font-size: 13px;
-      font-weight: 850;
-    }
-
-    .answer.correct {
-      border-color: var(--green);
-      background: #36d39912;
-    }
-
-    .answer.correct .letter {
-      color: #061c15;
-      background: var(--green);
-    }
-
-    .answer.wrong {
-      border-color: var(--red);
-      background: #ff6b8110;
-    }
-
-    .answer.wrong .letter {
-      color: #fff;
-      background: var(--red);
-    }
-
-    .answer:disabled { cursor: default; }
-
-    .feedback {
-      padding: 15px;
-      margin-top: 16px;
-      border-radius: 14px;
-      line-height: 1.65;
-      font-size: 13px;
-      background: #ffffff08;
-      border: 1px solid var(--border);
-    }
-
-    .feedback.good { border-color: #36d39960; }
-    .feedback.bad { border-color: #ff6b8160; }
-
-    .feedback strong { display: block; margin-bottom: 4px; }
-
-    .quiz-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .quiz-actions button { margin: 0; }
-
-    .result {
-      text-align: center;
-      padding: 26px 20px;
-    }
-
-    .result-icon { font-size: 60px; }
-
-    .result h2 {
-      font-size: 28px;
-      margin: 12px 0 8px;
-    }
-
-    .result p {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .score-ring {
-      width: 150px;
-      height: 150px;
-      margin: 24px auto;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: conic-gradient(var(--cyan) var(--score, 0%), #ffffff12 0);
-      position: relative;
-    }
-
-    .score-ring:before {
-      content: "";
-      position: absolute;
-      inset: 9px;
-      border-radius: 50%;
-      background: #121d31;
-    }
-
-    .score-inner { position: relative; }
-    .score-inner strong { display: block; font-size: 35px; }
-    .score-inner span { color: var(--muted); font-size: 12px; }
-
-    .result-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 22px 0;
-    }
-
-    .result-stat {
-      border-radius: 15px;
-      background: #ffffff07;
-      padding: 15px 8px;
-    }
-
-    .result-stat strong { display: block; font-size: 21px; }
-    .result-stat span { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; }
-
-    .history-list { display: grid; gap: 9px; }
-
-    .history-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 13px;
-      background: #ffffff06;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      font-size: 12px;
-    }
-
-    .history-item span { color: var(--muted); }
-
-    .footer {
-      text-align: center;
-      margin-top: 30px;
-      color: #7f8da8;
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    @media (max-width: 380px) {
-      .app { width: calc(100% - 20px); }
-      .hero { padding: 21px 17px; }
-      .card { padding: 15px; }
-      .pill { font-size: 10px; padding: 8px; }
-      .stat .number { font-size: 19px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="StudyMate Quiz - Learn English, Mathematics, Science and General Knowledge.">
+<title>StudyMate Quiz | Learn Every Day</title>
+<style>
+:root{--bg:#0b1020;--panel:#151d33;--panel2:#202b47;--line:#ffffff18;--text:#f5f7ff;--muted:#aab5d0;--purple:#8b7cff;--cyan:#55d6d1;--green:#3ddc97;--red:#ff7185;--gold:#ffc861}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top left,#30245a 0,transparent 38%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.app{width:min(1050px,100%);margin:auto;padding:18px 15px 40px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:46px;height:46px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,var(--purple),var(--cyan));font-size:24px}
+.brand h1{font-size:18px;margin:0}
+.brand small{font-size:11px;color:var(--muted)}
+.top-actions{display:flex;gap:8px;align-items:center}
+.pill,.iconbtn{border:1px solid var(--line);background:#ffffff09;color:var(--text);padding:10px 12px;border-radius:13px;font-size:12px;font-weight:750}
+.hero{padding:27px;border-radius:25px;border:1px solid var(--line);background:linear-gradient(120deg,#8b7cff35,#55d6d118),var(--panel);margin-bottom:17px}
+.eyebrow{font-size:11px;letter-spacing:1.5px;color:var(--cyan);font-weight:800}
+.hero h2{font-size:clamp(27px,5vw,40px);line-height:1.15;margin:12px 0}
+.hero p{color:#c3cbe0;line-height:1.7;font-size:14px;max-width:570px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.btn{border:0;border-radius:13px;padding:12px 16px;background:linear-gradient(135deg,var(--purple),#667fff);color:white;font-weight:800}
+.btn.secondary{background:#ffffff0b;border:1px solid var(--line)}
+.btn.small{padding:9px 12px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:18px 0 26px}
+.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:16px;min-width:0}
+.stat .emoji{font-size:20px}
+.stat strong{display:block;font-size:25px;margin:8px 0 3px}
+.stat span{color:var(--muted);font-size:11px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:25px 2px 13px}
+.sectionhead h3{font-size:17px;margin:0}
+.sectionhead p{font-size:12px;color:var(--muted);margin:5px 0 0}
+.subjects{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.subject{min-height:145px;text-align:left;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:19px;color:var(--text)}
+.subject:hover{border-color:var(--purple);transform:translateY(-2px)}
+.subject .emoji{display:grid;place-items:center;width:43px;height:43px;background:#8b7cff20;border-radius:14px;font-size:23px;margin-bottom:13px}
+.subject strong{display:block;font-size:14px}
+.subject small{display:block;color:var(--muted);font-size:11px;margin-top:6px}
+.columns{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}
+.daily{display:flex;gap:14px;align-items:flex-start}
+.dailyicon{font-size:31px;background:#ffc86116;padding:12px;border-radius:16px}
+.daily h4{margin:0 0 7px}
+.daily p{font-size:12px;color:var(--muted);line-height:1.6}
+.progress{height:7px;background:#ffffff15;border-radius:20px;overflow:hidden;margin:12px 0 6px}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .2s}
+.meta{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.badge{padding:12px 5px;text-align:center;border:1px solid var(--line);border-radius:14px;opacity:.42;filter:grayscale(1)}
+.badge.earned{opacity:1;filter:none;border-color:#ffc86170}
+.badge b{display:block;font-size:23px;margin-bottom:5px}
+.badge span{font-size:10px;color:var(--muted)}
+.history{display:grid;gap:9px}
+.historyitem{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;background:#ffffff06;border:1px solid var(--line);border-radius:14px}
+.historyitem strong{font-size:12px}
+.historyitem small{display:block;font-size:10px;color:var(--muted);margin-top:5px}
+.score{font-size:12px;color:var(--cyan);font-weight:800;white-space:nowrap}
+.empty{text-align:center;padding:20px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);font-size:12px}
+.view{display:none}
+.view.active{display:block}
+.quiz{max-width:750px;margin:auto}
+.quiztop{display:flex;justify-content:space-between;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0 17px}
+.qcard{padding:clamp(18px,4vw,29px);border:1px solid var(--line);border-radius:23px;background:var(--panel);margin-top:16px}
+.qkicker{font-size:11px;letter-spacing:1px;color:var(--cyan);font-weight:800}
+.qcard h2{font-size:clamp(21px,4vw,29px);line-height:1.4;margin:15px 0 22px}
+.options{display:grid;gap:10px}
+.option{display:flex;gap:12px;align-items:center;text-align:left;width:100%;min-height:55px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#ffffff05;color:var(--text)}
+.option:hover:not(:disabled){border-color:var(--purple)}
+.letter{width:31px;height:31px;flex-shrink:0;display:grid;place-items:center;background:#ffffff12;border-radius:9px;font-weight:800}
+.option.correct{border-color:var(--green);background:#3ddc9714}
+.option.wrong{border-color:var(--red);background:#ff718514}
+.feedback{display:none;margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:13px;font-size:13px;line-height:1.7}
+.feedback.show{display:block}
+.feedback.good{border-color:#3ddc9770}
+.feedback.bad{border-color:#ff718570}
+.feedback strong{display:block;margin-bottom:5px}
+.qcontrols{display:flex;justify-content:space-between;gap:10px;margin-top:17px}
+.result{text-align:center;padding:25px 12px}
+.result .big{font-size:52px}
+.result h2{margin:10px 0}
+.resultscore{font-size:43px;font-weight:900;color:var(--cyan);margin:15px 0}
+.resultgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:20px 0}
+.resultgrid div{background:#ffffff08;padding:13px 5px;border-radius:13px}
+.resultgrid strong{display:block;font-size:19px}
+.resultgrid small{font-size:10px;color:var(--muted)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#28334f;border:1px solid var(--line);padding:12px 17px;border-radius:13px;display:none;z-index:5;font-size:12px;max-width:90%}
+.toast.show{display:block}
+footer{text-align:center;color:#7f89a6;font-size:11px;line-height:1.8;margin-top:28px}
+@media(max-width:720px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.subjects{grid-template-columns:repeat(2,minmax(0,1fr))}.columns{grid-template-columns:1fr}}
+@media(max-width:390px){.app{padding:12px 10px 28px}.hero{padding:20px}.stat{padding:12px}.qcard{padding:15px}.pill{padding:8px}}
+</style>
 </head>
-
 <body>
-  <main class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo">🎓</div>
-        <div>
-          <h1>StudyMate Quiz</h1>
-          <p>Learn smarter. Grow every day.</p>
-        </div>
-      </div>
-      <div class="pill">✦ SMART LEARNING</div>
-    </header>
+<div class="app">
+<header>
+ <div class="brand"><div class="logo">✦</div><div><h1>StudyMate <span style="color:var(--cyan)">Quiz</span></h1><small id="tagline">Learn smarter. Grow every day.</small></div></div>
+ <div class="top-actions"><span class="pill">⚡ <span id="topXP">0 XP</span></span><button class="iconbtn" id="langBtn">አ/EN</button></div>
+</header>
 
-    <section id="home">
-      <div class="hero">
-        <div class="eyebrow">YOUR LEARNING JOURNEY</div>
-        <h2>Small steps.<br />Big achievements.</h2>
-        <p>Challenge yourself, improve your English, and turn every question into an opportunity to learn.</p>
-      </div>
+<main id="home" class="view active">
+<section class="hero">
+ <div class="eyebrow" id="eyebrow">YOUR DAILY LEARNING SPACE</div>
+ <h2 id="heroTitle">Small steps today.<br>Big knowledge tomorrow.</h2>
+ <p id="heroDesc">Practice every day, track your progress, and turn learning into a habit.</p>
+ <div class="actions"><button class="btn" id="dailyBtn">⚡ Start Daily Challenge</button><span id="streakText" style="font-size:12px;color:var(--muted)">🔥 0 day streak</span></div>
+</section>
 
-      <div class="stats">
-        <div class="stat">
-          <div class="number" id="totalPlayed">0</div>
-          <div class="label">Quizzes played</div>
-        </div>
-        <div class="stat">
-          <div class="number" id="bestScore">0/10</div>
-          <div class="label">Best score</div>
-        </div>
-        <div class="stat">
-          <div class="number" id="accuracy">0%</div>
-          <div class="label">Overall accuracy</div>
-        </div>
-      </div>
+<div class="stats">
+ <div class="stat"><div class="emoji">⚡</div><strong id="xpStat">0</strong><span id="xpLabel">Total XP</span></div>
+ <div class="stat"><div class="emoji">🎯</div><strong id="accuracy">0%</strong><span id="accuracyLabel">Accuracy</span></div>
+ <div class="stat"><div class="emoji">📚</div><strong id="quizCount">0</strong><span id="quizLabel">Quizzes completed</span></div>
+ <div class="stat"><div class="emoji">🔥</div><strong id="streakStat">0</strong><span id="streakLabel">Day streak</span></div>
+</div>
 
-      <div class="section-head">
-        <h3>Choose your level</h3>
-        <span>10 questions per quiz</span>
-      </div>
+<div class="sectionhead"><div><h3 id="chooseTitle">Choose your subject</h3><p id="chooseDesc">Build your knowledge, one quiz at a time.</p></div></div>
+<div class="subjects">
+ <button class="subject" data-subject="english"><span class="emoji">🔤</span><strong id="subEnglish">English</strong><small id="subEnglishDesc">Grammar & vocabulary</small></button>
+ <button class="subject" data-subject="math"><span class="emoji">➗</span><strong id="subMath">Mathematics</strong><small id="subMathDesc">Numbers & logic</small></button>
+ <button class="subject" data-subject="science"><span class="emoji">🧪</span><strong id="subScience">Science</strong><small id="subScienceDesc">Explore the world</small></button>
+ <button class="subject" data-subject="general"><span class="emoji">🌍</span><strong id="subGeneral">General Knowledge</strong><small id="subGeneralDesc">Facts & discovery</small></button>
+</div>
 
-      <div class="levels">
-        <button class="level active" data-level="Easy" type="button">
-          <span class="emoji">🌱</span>
-          <strong>Easy</strong>
-          <small>Start strong</small>
-        </button>
-        <button class="level" data-level="Medium" type="button">
-          <span class="emoji">⚡</span>
-          <strong>Medium</strong>
-          <small>Build skills</small>
-        </button>
-        <button class="level" data-level="Hard" type="button">
-          <span class="emoji">🔥</span>
-          <strong>Hard</strong>
-          <small>Test yourself</small>
-        </button>
-      </div>
+<div class="columns">
+<section>
+ <div class="sectionhead"><div><h3 id="dailyTitle">Daily Challenge</h3><p id="dailyDesc">A fresh challenge every day.</p></div></div>
+ <div class="card daily"><div class="dailyicon">🏆</div><div style="flex:1;min-width:0"><h4 id="dailyName">Daily Knowledge Sprint</h4><p id="dailyStatus">Answer 5 questions and earn bonus XP.</p><button class="btn small" id="playDaily">Play challenge →</button><div class="progress"><span id="dailyProgress"></span></div><div class="meta"><span id="dailyCount">0 / 5 completed</span><span>+50 XP</span></div></div></div>
+</section>
+<section>
+ <div class="sectionhead"><div><h3 id="badgesTitle">Achievements</h3><p id="badgesDesc">Earn badges as you progress.</p></div></div>
+ <div class="card"><div class="badges" id="badges"></div></div>
+</section>
+</div>
 
-      <button class="primary" id="startBtn" type="button">Start Your Quiz →</button>
+<div class="sectionhead"><div><h3 id="recentTitle">Recent activity</h3><p id="recentDesc">Your latest learning sessions.</p></div><button class="btn secondary small" id="reviewBtn">Review mistakes</button></div>
+<div class="history" id="history"></div>
+<footer>StudyMate Quiz · <span id="footerText">Your progress is saved on this device.</span><br>Single-file learning app · No account required</footer>
+</main>
 
-      <div class="section-head">
-        <h3>Recent activity</h3>
-        <span>Your device history</span>
-      </div>
-      <div class="card">
-        <div id="history" class="history-list">
-          <p style="color:var(--muted);font-size:13px;margin:0">Your completed quizzes will appear here.</p>
-        </div>
-      </div>
-    </section>
+<main id="quizView" class="view">
+<div class="quiz">
+ <div class="quiztop"><button class="btn secondary small" id="dashboardBtn">← Dashboard</button><span class="pill" id="quizSubject">English</span><span class="pill">⏱ <b id="timer">00:30</b></span></div>
+ <div class="meta" style="font-size:12px;margin-bottom:8px"><span id="questionCount">Question 1 of 5</span><span id="questionXP">0 XP</span></div>
+ <div class="progress"><span id="quizProgress"></span></div>
+ <section class="qcard" id="questionCard">
+  <div class="qkicker" id="qNumber">QUESTION 01</div>
+  <h2 id="questionText"></h2>
+  <div class="options" id="options"></div>
+  <div class="feedback" id="feedback"></div>
+  <div class="qcontrols"><button class="btn secondary" id="hintBtn">💡 Show hint</button><button class="btn" id="nextBtn" disabled>Next question →</button></div>
+ </section>
+ <section class="qcard result" id="resultCard" hidden>
+  <div class="big" id="resultEmoji">🎉</div><h2 id="resultTitle">Quiz complete!</h2><p id="resultDesc">Great effort!</p>
+  <div class="resultscore" id="resultPercent">80%</div><div style="font-size:10px;color:var(--muted)">ACCURACY</div>
+  <div class="resultgrid"><div><strong id="resultCorrect">4/5</strong><small>Correct answers</small></div><div><strong id="resultXP">+40</strong><small>XP earned</small></div><div><strong id="resultTime">00:30</strong><small>Time used</small></div></div>
+  <div class="actions" style="justify-content:center"><button class="btn" id="againBtn">Try again</button><button class="btn secondary" id="homeBtn">Dashboard</button></div>
+ </section>
+</div>
+</main>
 
-    <section id="quiz" class="hidden">
-      <div class="section-head">
-        <h3>🧠 Smart Quiz</h3>
-        <span id="levelLabel">Easy level</span>
-      </div>
+<main id="mistakesView" class="view">
+ <div class="quiz">
+  <div class="quiztop"><button class="btn secondary small" id="backMistakes">← Dashboard</button><span class="pill">🧠 Review mistakes</span></div>
+  <div class="sectionhead"><div><h3 id="mistakeTitle">Learn from your mistakes</h3><p id="mistakeDesc">Review questions you answered incorrectly.</p></div></div>
+  <div class="history" id="mistakesList"></div>
+  <div class="actions"><button class="btn" id="practiceMistakes">Practice missed questions</button><button class="btn secondary" id="clearMistakes">Clear list</button></div>
+ </div>
+</main>
+</div>
+<div class="toast" id="toast" role="status"></div>
 
-      <div class="card">
-        <div class="quiz-meta">
-          <span id="questionCounter">QUESTION 1 OF 10</span>
-          <span id="liveScore">⭐ 0 points</span>
-        </div>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const translations={
+en:{
+tagline:"Learn smarter. Grow every day.",eyebrow:"YOUR DAILY LEARNING SPACE",heroTitle:"Small steps today.<br>Big knowledge tomorrow.",heroDesc:"Practice every day, track your progress, and turn learning into a habit.",dailyBtn:"⚡ Start Daily Challenge",chooseTitle:"Choose your subject",chooseDesc:"Build your knowledge, one quiz at a time.",english:"English",englishDesc:"Grammar & vocabulary",math:"Mathematics",mathDesc:"Numbers & logic",science:"Science",scienceDesc:"Explore the world",general:"General Knowledge",generalDesc:"Facts & discovery",dailyTitle:"Daily Challenge",dailyDesc:"A fresh challenge every day.",dailyName:"Daily Knowledge Sprint",dailyStatus:"Answer 5 questions and earn bonus XP.",playDaily:"Play challenge →",badgesTitle:"Achievements",badgesDesc:"Earn badges as you progress.",recentTitle:"Recent activity",recentDesc:"Your latest learning sessions.",review:"Review mistakes",footer:"Your progress is saved on this device.",dashboard:"Dashboard",hint:"💡 Show hint",next:"Next question →",complete:"Quiz complete!",correct:"Correct!",wrong:"Not quite.",timeUp:"Time is up! The answer was marked incorrect.",todayDone:"Completed for today",alreadyDone:"You have completed today's challenge. Come back tomorrow!",dailyDone:"Daily challenge complete! You earned 50 bonus XP.",noHistory:"No quizzes yet. Choose a subject to start learning!",noMistakes:"No mistakes saved. Complete a quiz first!",emptyMistakes:"There are no missed questions to practice.",practice:"Practice missed questions",clear:"Clear list",cleared:"Mistake list cleared.",correctAnswers:"Correct answers",earned:"XP earned",timeUsed:"Time used",again:"Try another quiz",backHome:"Dashboard",wellDone:"Great work! Keep practicing to improve.",keepGoing:"Good start! Read the explanations and try again.",first:"First Quiz",focus:"Focused Learner",perfect:"Perfect Score",streakBadge:"3-Day Streak",scholar:"Knowledge Seeker",master:"XP Champion",firstD:"Finish a quiz",focusD:"Finish 5 quizzes",perfectD:"Get 100% once",streakD:"Study 3 days in a row",scholarD:"Try all 4 subjects",masterD:"Earn 500 XP",dailyLabel:"Daily Challenge",question:"Question",of:"of",hintTitle:"Hint",noQuestions:"No questions available.",streak:"day streak",dailyCount:"completed",wrongAnswer:"Your answer",rightAnswer:"Correct answer",resultTitle:"Quiz complete!",mistakeTitle:"Learn from your mistakes",mistakeDesc:"Review questions you answered incorrectly."
+},
+am:{
+tagline:"በብልሃት ተማር፤ በየቀኑ እደግ።",eyebrow:"የዕለት ተዕለት የትምህርት ቦታህ",heroTitle:"ዛሬ ትንሽ ጥረት።<br>ነገ ትልቅ እውቀት።",heroDesc:"በየቀኑ ተለማመድ፣ እድገትህን ተከታተል፣ መማርን ልማድ አድርግ።",dailyBtn:"⚡ የዛሬን ፈተና ጀምር",chooseTitle:"የትምህርት ዘርፍ ምረጥ",chooseDesc:"በእያንዳንዱ ፈተና እውቀትህን ገንባ።",english:"እንግሊዝኛ",englishDesc:"ሰዋሰውና ቃላት",math:"ሂሳብ",mathDesc:"ቁጥሮችና አመክንዮ",science:"ሳይንስ",scienceDesc:"ዓለምን እወቅ",general:"አጠቃላይ እውቀት",generalDesc:"እውነታዎችና ግኝቶች",dailyTitle:"የዕለቱ ተግዳሮት",dailyDesc:"በየቀኑ አዲስ ፈተና።",dailyName:"የዕለቱ እውቀት ፈተና",dailyStatus:"5 ጥያቄዎችን መልስና ተጨማሪ XP አግኝ።",playDaily:"ተግዳሮቱን ጀምር →",badgesTitle:"ስኬቶች",badgesDesc:"እድገት ሲያደርግ የስኬት ምልክቶችን አግኝ።",recentTitle:"የቅርብ ጊዜ እንቅስቃሴ",recentDesc:"የቅርብ ጊዜ የጥናት ልምምዶችህ።",review:"ስህተቶችን ድገም",footer:"እድገትህ በዚህ ስልክ ላይ ይቀመጣል።",dashboard:"ዋና ገጽ",hint:"💡 ፍንጭ አሳይ",next:"ቀጣይ ጥያቄ →",complete:"ፈተናው ተጠናቋል!",correct:"ትክክል!",wrong:"ትክክል አይደለም።",timeUp:"ጊዜው አልቋል! መልሱ እንደተሳሳተ ተመዝግቧል።",todayDone:"ዛሬ ተጠናቋል",alreadyDone:"የዛሬን ተግዳሮት ጨርሰሃል። ነገ ተመለስ።",dailyDone:"የዕለቱን ተግዳሮት ጨርሰሃል! 50 XP ተጨምሯል።",noHistory:"ገና ፈተና አልሞከርክም። ዘርፍ ምረጥና ጀምር!",noMistakes:"የተቀመጡ ስህተቶች የሉም። መጀመሪያ ፈተና ሞክር።",emptyMistakes:"ለመድገም የተሳሳቱ ጥያቄዎች የሉም።",practice:"የተሳሳቱትን ተለማመድ",clear:"ዝርዝሩን አጽዳ",cleared:"የስህተት ዝርዝሩ ተጠርጓል።",correctAnswers:"ትክክለኛ መልሶች",earned:"የተገኘ XP",timeUsed:"የተጠቀምከው ጊዜ",again:"ሌላ ፈተና ሞክር",backHome:"ዋና ገጽ",wellDone:"ጥሩ ስራ! ለማሻሻል ተለማመድ።",keepGoing:"ጥሩ ጅማሬ ነው! ማብራሪያዎቹን አንብብና እንደገና ሞክር።",first:"የመጀመሪያ ፈተና",focus:"ትጉህ ተማሪ",perfect:"ፍጹም ውጤት",streakBadge:"የ3 ቀን ተከታታይ",scholar:"እውቀት ፈላጊ",master:"የXP አሸናፊ",firstD:"አንድ ፈተና ጨርስ",focusD:"5 ፈተናዎችን ጨርስ",perfectD:"አንድ ጊዜ 100% አግኝ",streakD:"3 ቀናት በተከታታይ አጥና",scholarD:"4ቱንም ዘርፎች ሞክር",masterD:"500 XP አግኝ",dailyLabel:"የዕለቱ ተግዳሮት",question:"ጥያቄ",of:"ከ",hintTitle:"ፍንጭ",noQuestions:"ጥያቄዎች የሉም።",streak:"ተከታታይ ቀናት",dailyCount:"ተጠናቋል",wrongAnswer:"የአንተ መልስ",rightAnswer:"ትክክለኛ መልስ",resultTitle:"ፈተናው ተጠናቋል!",mistakeTitle:"ከስህተቶችህ ተማር",mistakeDesc:"የተሳሳቱትን ጥያቄዎች ድገም።"
+}
+};
 
-        <div class="progress-track">
-          <div id="progress" class="progress-fill"></div>
-        </div>
+const BANK={
+english:[
+{q:["Choose the correct sentence.","ትክክለኛውን ዓረፍተ ነገር ምረጥ።"],o:[["She goes to school every day.","እሷ በየቀኑ ወደ ትምህርት ቤት ትሄዳለች።"],["She go to school every day.","She go to school every day."],["She going to school every day.","She going to school every day."],["She gone to school every day.","She gone to school every day."]],a:0,h:["Check the verb ending with she.","ከshe ጋር የግሱን መጨረሻ ተመልከት።"],e:["In the simple present, she usually takes a verb ending in -s or -es.","በSimple Present ከshe ጋር ግሱ ብዙ ጊዜ -s ወይም -es ይወስዳል።"]},
+{q:["What is the past tense of teach?","የteach ያለፈ ጊዜ ምንድን ነው?"],o:[["Teached","Teached"],["Taught","Taught"],["Teaching","Teaching"],["Teaches","Teaches"]],a:1,h:["This is an irregular verb.","ይህ መደበኛ ያልሆነ ግስ ነው።"],e:["Teach → taught → taught.","Teach → taught → taught ነው።"]},
+{q:["Choose the synonym of rapid.","የrapid ተመሳሳይ ትርጉም ያለውን ቃል ምረጥ።"],o:[["Slow","ዝግተኛ"],["Quick","ፈጣን"],["Quiet","ጸጥ ያለ"],["Weak","ደካማ"]],a:1,h:["Think of a word meaning fast.","ፈጣን ማለት የሆነ ቃል አስብ።"],e:["Rapid means fast or quick.","Rapid ማለት ፈጣን ማለት ነው።"]},
+{q:["I have lived here ___ 2020.","I have lived here ___ 2020 ዓረፍተ ነገሩን ሙላ።"],o:[["for","for"],["since","since"],["during","during"],["by","by"]],a:1,h:["Choose the word for a starting point in time.","የጊዜ መጀመሪያ ነጥብን የሚያመለክተውን ቃል ምረጥ።"],e:["Use since with a starting point and for with a duration.","የመጀመሪያ ጊዜ ነጥብ ከsince፣ የጊዜ ርዝመት ከfor ጋር ይመጣል።"]},
+{q:["Which word is an adjective in The bright sun warmed us?","በዓረፍተ ነገሩ ውስጥ ቅጽል የሆነው ቃል የትኛው ነው?"],o:[["sun","sun"],["warmed","warmed"],["bright","bright"],["us","us"]],a:2,h:["An adjective describes a noun.","ቅጽል ስምን ይገልጻል።"],e:["Bright describes sun, so it is an adjective.","Bright የsunን ባህሪ ስለሚገልጽ ቅጽል ነው።"]},
+{q:["Choose the correct article: She is ___ honest person.","ትክክለኛውን article ምረጥ።"],o:[["a","a"],["an","an"],["the","the"],["no article","article የለም"]],a:1,h:["The h in honest is silent.","በhonest ውስጥ h ዝም ይላል።"],e:["Honest begins with a vowel sound, so use an.","Honest በአናባቢ ድምፅ ይጀምራል፤ ስለዚህ an ይጠቀማል።"]}
+],
+math:[
+{q:["What is 15% of 200?","የ200 15% ስንት ነው?"],o:[["15","15"],["20","20"],["30","30"],["35","35"]],a:2,h:["Find 10% and 5%, then add them.","10% እና 5% አግኝና ደምር።"],e:["0.15 × 200 = 30.","0.15 × 200 = 30 ነው።"]},
+{q:["Solve: 3x + 5 = 20.","ፍታ፦ 3x + 5 = 20።"],o:[["x = 3","x = 3"],["x = 5","x = 5"],["x = 7","x = 7"],["x = 15","x = 15"]],a:1,h:["Subtract 5, then divide by 3.","5 ቀንስና በ3 አካፍል።"],e:["3x = 15, so x = 5.","3x = 15 ስለሆነ x = 5 ነው።"]},
+{q:["What is the area of a rectangle 8 cm by 4 cm?","8 ሴ.ሜ በ4 ሴ.ሜ የሆነ ሬክታንግል ስፋት ስንት ነው?"],o:[["12 cm²","12 cm²"],["24 cm²","24 cm²"],["32 cm²","32 cm²"],["36 cm²","36 cm²"]],a:2,h:["Multiply length by width.","ርዝመትን በስፋት አባዛ።"],e:["Area = 8 × 4 = 32 cm².","ስፋት = 8 × 4 = 32 cm² ነው።"]},
+{q:["What is the square root of 144?","የ144 ካሬ ሥር ስንት ነው?"],o:[["10","10"],["11","11"],["12","12"],["14","14"]],a:2,h:["Find the number that multiplied by itself gives 144.","በራሱ ሲባዛ 144 የሚሆነውን ቁጥር ፈልግ።"],e:["12 × 12 = 144, so √144 = 12.","12 × 12 = 144 ነው።"]},
+{q:["Simplify 18/24.","18/24 ክፍልፋይን አቃልል።"],o:[["2/3","2/3"],["3/4","3/4"],["4/5","4/5"],["5/6","5/6"]],a:1,h:["Divide both numbers by 6.","ሁለቱንም በ6 አካፍል።"],e:["18 ÷ 6 = 3 and 24 ÷ 6 = 4, so 3/4.","18 ÷ 6 = 3 እና 24 ÷ 6 = 4 ስለሆነ 3/4 ነው።"]},
+{q:["A triangle has angles 50° and 60°. What is the third angle?","ሁለት ማዕዘኖች 50° እና 60° ከሆኑ ሦስተኛው ስንት ነው?"],o:[["60°","60°"],["70°","70°"],["80°","80°"],["90°","90°"]],a:1,h:["Triangle angles total 180°.","የሦስት ማዕዘን ድምር 180° ነው።"],e:["180° − 50° − 60° = 70°.","180° − 50° − 60° = 70° ነው።"]}
+],
+science:[
+{q:["Which gas do plants absorb for photosynthesis?","እፅዋት በፎቶሲንተሲስ የሚወስዱት ጋዝ የትኛው ነው?"],o:[["Oxygen","ኦክሲጅን"],["Carbon dioxide","ካርቦን ዳይኦክሳይድ"],["Nitrogen","ናይትሮጅን"],["Hydrogen","ሃይድሮጅን"]],a:1,h:["Think about the gas humans breathe out.","ሰዎች በእስትንፋስ ስለሚያወጡት ጋዝ አስብ።"],e:["Plants use carbon dioxide, water and light to make sugars.","እፅዋት ስኳር ለማምረት ካርቦን ዳይኦክሳይድ፣ ውሃና ብርሃን ይጠቀማሉ።"]},
+{q:["Which cell part contains most genetic material?","አብዛኛው የዘር ውርስ መረጃ በየትኛው የሴል ክፍል ይገኛል?"],o:[["Cell membrane","የሴል ሽፋን"],["Nucleus","ኒውክሊየስ"],["Cytoplasm","ሳይቶፕላዝም"],["Ribosome","ራይቦዞም"]],a:1,h:["It is often called the cell's control center.","የሴሉ መቆጣጠሪያ ማዕከል ተብሎ ይጠራል።"],e:["The nucleus contains most of a eukaryotic cell's DNA.","ኒውክሊየስ አብዛኛውን የeukaryotic ሴል DNA ይይዛል።"]},
+{q:["What is the chemical formula for water?","የውሃ ኬሚካላዊ ቀመር ምንድን ነው?"],o:[["CO₂","CO₂"],["O₂","O₂"],["H₂O","H₂O"],["NaCl","NaCl"]],a:2,h:["It contains hydrogen and oxygen.","ሃይድሮጅንና ኦክሲጅን ይይዛል።"],e:["A water molecule has two hydrogen atoms and one oxygen atom: H₂O.","ውሃ ሁለት የሃይድሮጅንና አንድ የኦክሲጅን አቶም አለው።"]},
+{q:["Which force pulls objects toward Earth?","ነገሮችን ወደ ምድር የሚስበው ኃይል የትኛው ነው?"],o:[["Friction","ግጭት"],["Magnetism","መግነጢሳዊ ኃይል"],["Gravity","ስበት"],["Buoyancy","ተንሳፋፊ ኃይል"]],a:2,h:["It also keeps planets in orbit.","ፕላኔቶችን በምህዋር ይይዛል።"],e:["Earth's gravity pulls objects toward its center.","የምድር ስበት ነገሮችን ወደ ማዕከሏ ይስባል።"]},
+{q:["At sea level, water boils at approximately what temperature?","በባሕር ወለል ውሃ በስንት ዲግሪ አካባቢ ይፈላል?"],o:[["0°C","0°C"],["50°C","50°C"],["100°C","100°C"],["150°C","150°C"]],a:2,h:["It is between 90 and 110 degrees Celsius.","በ90 እና 110 ዲግሪ መካከል ነው።"],e:["At standard atmospheric pressure, water boils at about 100°C.","በመደበኛ የአየር ግፊት ውሃ በ100°C አካባቢ ይፈላል።"]},
+{q:["Which organ pumps blood around the human body?","ደምን በሰውነት ውስጥ የሚያዘዋውረው አካል የትኛው ነው?"],o:[["Lungs","ሳንባ"],["Liver","ጉበት"],["Heart","ልብ"],["Kidney","ኩላሊት"]],a:2,h:["It contracts rhythmically.","በተደጋጋሚ ይጠበባል።"],e:["The heart pumps blood through the circulatory system.","ልብ ደምን በደም ዝውውር ስርዓት ውስጥ ያዘዋውራል።"]}
+],
+general:[
+{q:["What is the capital of Japan?","የጃፓን ዋና ከተማ የት ናት?"],o:[["Kyoto","ኪዮቶ"],["Tokyo","ቶኪዮ"],["Osaka","ኦሳካ"],["Nagoya","ናጎያ"]],a:1,h:["It is Japan's largest metropolitan area.","የጃፓን ትልቁ የከተማ ክልል ነው።"],e:["Tokyo is the capital of Japan.","ቶኪዮ የጃፓን ዋና ከተማ ናት።"]},
+{q:["Which is the largest ocean on Earth?","በምድር ላይ ትልቁ ውቅያኖስ የትኛው ነው?"],o:[["Atlantic","አትላንቲክ"],["Indian","የሕንድ"],["Pacific","ፓሲፊክ"],["Arctic","አርክቲክ"]],a:2,h:["It lies between Asia and the Americas.","በእስያና በአሜሪካዎች መካከል ይገኛል።"],e:["The Pacific is Earth's largest ocean.","ፓሲፊክ ትልቁ ውቅያኖስ ነው።"]},
+{q:["How many days are in a leap year?","በleap year ስንት ቀናት አሉ?"],o:[["365","365"],["366","366"],["364","364"],["360","360"]],a:1,h:["It has one extra day.","ከመደበኛው ዓመት አንድ ተጨማሪ ቀን አለው።"],e:["A leap year has 366 days.","Leap year 366 ቀናት አሉት።"]},
+{q:["Which planet is known as the Red Planet?","ቀይ ፕላኔት የሚባለው የትኛው ነው?"],o:[["Venus","ቬነስ"],["Mars","ማርስ"],["Jupiter","ጁፒተር"],["Mercury","ሜርኩሪ"]],a:1,h:["Its surface contains iron oxide.","በገጹ ላይ የብረት ኦክሳይድ አለ።"],e:["Mars appears red because of iron oxide on its surface.","ማርስ በገጹ ላይ ባለው የብረት ኦክሳይድ ምክንያት ቀይ ትታያለች።"]},
+{q:["Which continent is Ethiopia in?","ኢትዮጵያ በየትኛው አህጉር ትገኛለች?"],o:[["Asia","እስያ"],["Africa","አፍሪካ"],["Europe","አውሮፓ"],["South America","ደቡብ አሜሪካ"]],a:1,h:["Ethiopia is in the Horn of Africa.","ኢትዮጵያ በአፍሪካ ቀንድ ትገኛለች።"],e:["Ethiopia is a country in Africa.","ኢትዮጵያ በአፍሪካ የምትገኝ አገር ናት።"]},
+{q:["What is the currency of the United Kingdom?","የዩናይትድ ኪንግደም ገንዘብ ምንድን ነው?"],o:[["Euro","ዩሮ"],["Pound sterling","ፓውንድ ስተርሊንግ"],["Dollar","ዶላር"],["Franc","ፍራንክ"]],a:1,h:["Its symbol is £.","ምልክቱ £ ነው።"],e:["The currency is pound sterling (£).","ገንዘቡ ፓውንድ ስተርሊንግ (£) ነው።"]}
+]
+};
 
-        <h2 id="questionText" class="question"></h2>
-        <div id="answers" class="answers"></div>
-        <div id="feedback" class="feedback hidden" aria-live="polite"></div>
-
-        <div class="quiz-actions">
-          <button id="exitBtn" class="secondary" type="button">← Exit</button>
-          <button id="nextBtn" class="primary hidden" type="button">Next Question →</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="results" class="hidden">
-      <div class="section-head">
-        <h3>Quiz complete</h3>
-        <span id="resultLevel">Easy level</span>
-      </div>
-
-      <div class="card result">
-        <div id="resultIcon" class="result-icon">🏆</div>
-        <h2 id="resultTitle">Excellent work!</h2>
-        <p id="resultMessage">Every question is a step forward.</p>
-
-        <div id="scoreRing" class="score-ring">
-          <div class="score-inner">
-            <strong id="finalScore">0/10</strong>
-            <span>YOUR SCORE</span>
-          </div>
-        </div>
-
-        <div class="result-stats">
-          <div class="result-stat">
-            <strong id="correctCount">0</strong>
-            <span>Correct answers</span>
-          </div>
-          <div class="result-stat">
-            <strong id="finalAccuracy">0%</strong>
-            <span>Accuracy</span>
-          </div>
-        </div>
-
-        <button class="primary" id="retryBtn" type="button">Play Again ↻</button>
-        <button class="secondary" id="homeBtn" type="button" style="width:100%;margin-top:10px">Back to Dashboard</button>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div>🎓 <strong>StudyMate Quiz</strong></div>
-      Practice consistently. Progress confidently.<br />
-      <span>Quiz records are saved on this device.</span>
-    </footer>
-  </main>
-
-  <script>
-    (() => {
-      "use strict";
-
-      const tg = window.Telegram?.WebApp;
-      if (tg) {
-        tg.ready();
-        tg.expand();
-        try {
-          if (tg.themeParams?.bg_color) {
-            document.documentElement.style.setProperty("--bg", tg.themeParams.bg_color);
-          }
-        } catch (_) {}
-      }
-
-      const questions = [
-        // EASY
-        {level:"Easy",q:"What is the opposite of “hot”?",a:["Warm","Cold","Dry","Bright"],c:1,e:"“Cold” is the opposite of “hot.”"},
-        {level:"Easy",q:"Choose the correct sentence.",a:["She go to school.","She going school.","She goes to school.","She gone to school."],c:2,e:"With he, she, or it in the present simple, we usually add -s to the verb."},
-        {level:"Easy",q:"What is the past tense of “go”?",a:["Goed","Gone","Going","Went"],c:3,e:"“Went” is the simple past tense of “go.”"},
-        {level:"Easy",q:"Which word is a noun?",a:["Beautiful","Quickly","Teacher","Run"],c:2,e:"A teacher is a person, so “teacher” is a noun."},
-        {level:"Easy",q:"Complete: I ___ a student.",a:["am","is","are","be"],c:0,e:"Use “I am” when introducing yourself."},
-        {level:"Easy",q:"What does “begin” mean?",a:["Finish","Start","Forget","Wait"],c:1,e:"“Begin” means “start.”"},
-        {level:"Easy",q:"Choose the plural of “child.”",a:["Childs","Childes","Children","Childrens"],c:2,e:"The plural form of “child” is “children.”"},
-        {level:"Easy",q:"Which word means the same as “happy”?",a:["Glad","Angry","Tired","Afraid"],c:0,e:"“Glad” and “happy” have similar meanings."},
-        {level:"Easy",q:"Complete: They ___ playing football.",a:["is","am","be","are"],c:3,e:"Use “are” with the subject “they.”"},
-        {level:"Easy",q:"Which is a question word?",a:["Because","Although","Where","During"],c:2,e:"“Where” asks about a place."},
-        {level:"Easy",q:"What is the opposite of “early”?",a:["Fast","Late","Soon","First"],c:1,e:"“Late” is the opposite of “early.”"},
-        {level:"Easy",q:"Complete: She has ___ apple.",a:["a","an","thee","are"],c:1,e:"Use “an” before a vowel sound, as in “apple.”"},
-        {level:"Easy",q:"Which word is an adjective?",a:["Slowly","Happiness","Beautiful","Speak"],c:2,e:"“Beautiful” describes a noun, so it is an adjective."},
-        {level:"Easy",q:"What is the past tense of “eat”?",a:["Eated","Ate","Eating","Eaten"],c:1,e:"“Ate” is the simple past tense of “eat.”"},
-        {level:"Easy",q:"Choose the correct greeting for the morning.",a:["Good night","Good evening","Good morning","Goodbye"],c:2,e:"“Good morning” is used as a greeting in the morning."},
-
-        // MEDIUM
-        {level:"Medium",q:"If I ___ more time, I would learn another language.",a:["have","had","will have","am having"],c:1,e:"The second conditional uses “if + past simple” and “would + verb.”"},
-        {level:"Medium",q:"Choose the correct sentence.",a:["He has lived here for 2020.","He lives here since 2020.","He has lived here since 2020.","He living here since 2020."],c:2,e:"Use present perfect with “since” to describe something that started in the past and continues now."},
-        {level:"Medium",q:"What does “reliable” mean?",a:["Can be trusted","Very expensive","Often late","Difficult to see"],c:0,e:"A reliable person or thing can be trusted."},
-        {level:"Medium",q:"Choose the correct passive form: “They built the bridge.”",a:["The bridge built them.","The bridge was built by them.","The bridge is build by them.","The bridge has building."],c:1,e:"Past simple passive: was/were + past participle."},
-        {level:"Medium",q:"She is interested ___ learning English.",a:["on","at","in","for"],c:2,e:"The correct expression is “interested in.”"},
-        {level:"Medium",q:"Which word is closest to “essential”?",a:["Optional","Necessary","Unusual","Temporary"],c:1,e:"“Essential” means necessary or extremely important."},
-        {level:"Medium",q:"By the time we arrived, the film ___.",a:["starts","has started","had started","starting"],c:2,e:"Past perfect describes an earlier past action: “had started.”"},
-        {level:"Medium",q:"Choose the grammatically correct option.",a:["There is fewer people today.","There are less people today.","There are fewer people today.","There be fewer people today."],c:2,e:"Use “fewer” with countable plural nouns such as people."},
-        {level:"Medium",q:"What does “despite” express?",a:["Contrast","Purpose","Time only","Possession"],c:0,e:"“Despite” introduces a contrast or an unexpected result."},
-        {level:"Medium",q:"If she studies hard, she ___ the exam.",a:["passed","would passed","will pass","passing"],c:2,e:"The first conditional uses present simple after “if” and “will” for the result."},
-        {level:"Medium",q:"Choose the correct reported speech: He said, “I am tired.”",a:["He said he is tire.","He said that he was tired.","He says he tired.","He said I was tired."],c:1,e:"In standard reported speech, “am” usually shifts to “was.”"},
-        {level:"Medium",q:"Which is a synonym for “improve”?",a:["Worsen","Enhance","Ignore","Remove"],c:1,e:"“Enhance” means to improve or increase quality."},
-        {level:"Medium",q:"You ___ wear a seat belt; it is the law.",a:["might","could","must","would"],c:2,e:"“Must” expresses a strong obligation."},
-        {level:"Medium",q:"Neither the teacher nor the students ___ ready.",a:["was","is","were","be"],c:2,e:"With “neither…nor,” the verb commonly agrees with the nearer subject, “students.”"},
-        {level:"Medium",q:"Choose the correct word: The instructions were very ___.",a:["clearly","clarity","clear","clears"],c:2,e:"After “were,” use the adjective “clear.”"},
-
-        // HARD
-        {level:"Hard",q:"Had I known about the delay, I ___ earlier.",a:["would leave","would have left","will leave","had left"],c:1,e:"Third conditional result: would have + past participle."},
-        {level:"Hard",q:"Which sentence is grammatically correct?",a:["No sooner I arrived than it rained.","No sooner had I arrived than it began to rain.","No sooner did I arrived than it rained.","No sooner I had arrive than it rained."],c:1,e:"“No sooner” at the beginning requires inversion: “had I arrived.”"},
-        {level:"Hard",q:"What does “ambiguous” mean?",a:["Easy to prove","Having more than one possible meaning","Completely false","Extremely brief"],c:1,e:"An ambiguous statement can be understood in more than one way."},
-        {level:"Hard",q:"Choose the correct sentence.",a:["Each of the students have a book.","Each of the students has a book.","Each students has a book.","Each of students have a book."],c:1,e:"“Each” is grammatically singular, so use “has.”"},
-        {level:"Hard",q:"The proposal, along with its supporting documents, ___ submitted yesterday.",a:["were","have been","was","are"],c:2,e:"The main subject is singular: “the proposal.” The phrase between commas does not change the subject."},
-        {level:"Hard",q:"Which word best completes: Her argument was persuasive because it was supported by ___ evidence.",a:["anecdotal only","empirical","imaginary","irrelevant"],c:1,e:"Empirical evidence is based on observation or experience."},
-        {level:"Hard",q:"Choose the correct inversion.",a:["Rarely I have seen such skill.","Rarely have I seen such skill.","Rarely seen I have such skill.","Rarely did I have saw such skill."],c:1,e:"Negative adverbs such as “rarely” at the beginning trigger subject–auxiliary inversion."},
-        {level:"Hard",q:"What does “mitigate” mean?",a:["Make less severe","Make impossible","Repeat exactly","Exaggerate"],c:0,e:"To mitigate means to reduce the severity or impact of something."},
-        {level:"Hard",q:"The manager demanded that every report ___ submitted by Friday.",a:["is","was","be","has been"],c:2,e:"After verbs such as “demand,” formal English may use the subjunctive base form “be.”"},
-        {level:"Hard",q:"Which sentence correctly uses a defining relative clause?",a:["The person which called is my tutor.","The person who called is my tutor.","The person where called is my tutor.","The person whose called is my tutor."],c:1,e:"Use “who” for a person performing the action."},
-        {level:"Hard",q:"If the data ___ accurate, the conclusion would be different.",a:["was","were","is being","has"],c:1,e:"“If the data were…” is a standard hypothetical construction."},
-        {level:"Hard",q:"Which word is closest to “meticulous”?",a:["Careless","Thorough and precise","Impatient","Uncertain"],c:1,e:"A meticulous person pays close attention to details."},
-        {level:"Hard",q:"Not only ___ the deadline, but she also improved the final result.",a:["she met","did she meet","she did met","met she"],c:1,e:"“Not only” at the beginning requires inversion: “did she meet.”"},
-        {level:"Hard",q:"What is the meaning of “inevitable”?",a:["Impossible to understand","Certain to happen","Easy to prevent","Already forgotten"],c:1,e:"“Inevitable” means certain to happen or unavoidable."}
-      ];
-
-      const $ = id => document.getElementById(id);
-      const views = ["home", "quiz", "results"];
-      let level = "Easy";
-      let deck = [];
-      let index = 0;
-      let score = 0;
-      let answered = false;
-      let sessionCorrect = 0;
-
-      const STORAGE_KEY = "studymate_quiz_stats_v2";
-
-      function loadStats() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-          return {
-            played: Number(saved.played) || 0,
-            best: Number(saved.best) || 0,
-            correct: Number(saved.correct) || 0,
-            total: Number(saved.total) || 0,
-            history: Array.isArray(saved.history) ? saved.history.slice(0, 8) : []
-          };
-        } catch (_) {
-          return {played:0,best:0,correct:0,total:0,history:[]};
-        }
-      }
-
-      let stats = loadStats();
-
-      function saveStats() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
-        } catch (_) {}
-      }
-
-      function renderDashboard() {
-        $("totalPlayed").textContent = stats.played;
-        $("bestScore").textContent = `${stats.best}/10`;
-        $("accuracy").textContent = stats.total
-          ? `${Math.round(stats.correct / stats.total * 100)}%`
-          : "0%";
-
-        const history = $("history");
-        if (!stats.history.length) {
-          history.innerHTML = '<p style="color:var(--muted);font-size:13px;margin:0">Complete your first quiz to see your results here.</p>';
-          return;
-        }
-
-        history.replaceChildren();
-        stats.history.forEach(item => {
-          const row = document.createElement("div");
-          row.className = "history-item";
-
-          const left = document.createElement("div");
-          const title = document.createElement("strong");
-          title.textContent = `${item.level} • ${item.score}/10`;
-          const date = document.createElement("div");
-          date.style.marginTop = "5px";
-          date.style.color = "var(--muted)";
-          date.textContent = item.date;
-          left.append(title, date);
-
-          const right = document.createElement("strong");
-          right.textContent = `${item.score * 10}%`;
-
-          row.append(left, right);
-          history.append(row);
-        });
-      }
-
-      function showView(view) {
-        views.forEach(name => $(name).classList.toggle("hidden", name !== view));
-        window.scrollTo({top:0,behavior:"smooth"});
-      }
-
-      document.querySelectorAll(".level").forEach(button => {
-        button.addEventListener("click", () => {
-          level = button.dataset.level;
-          document.querySelectorAll(".level").forEach(b => {
-            b.classList.toggle("active", b === button);
-          });
-        });
-      });
-
-      function shuffle(items) {
-        const copy = [...items];
-        for (let i = copy.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [copy[i], copy[j]] = [copy[j], copy[i]];
-        }
-        return copy;
-      }
-
-      function startQuiz() {
-        const pool = questions.filter(q => q.level === level);
-        if (pool.length < 10) {
-          alert("Not enough questions for this level yet.");
-          return;
-        }
-
-        deck = shuffle(pool).slice(0, 10);
-        index = 0;
-        score = 0;
-        sessionCorrect = 0;
-        $("levelLabel").textContent = `${level} level`;
-        showView("quiz");
-        renderQuestion();
-      }
-
-      function renderQuestion() {
-        answered = false;
-        const q = deck[index];
-
-        $("questionCounter").textContent = `QUESTION ${index + 1} OF ${deck.length}`;
-        $("liveScore").textContent = `⭐ ${score} points`;
-        $("progress").style.width = `${index / deck.length * 100}%`;
-        $("questionText").textContent = q.q;
-        $("feedback").className = "feedback hidden";
-        $("feedback").textContent = "";
-        $("nextBtn").classList.add("hidden");
-        $("answers").replaceChildren();
-
-        q.a.forEach((answer, i) => {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "answer";
-
-          const letter = document.createElement("span");
-          letter.className = "letter";
-          letter.textContent = String.fromCharCode(65 + i);
-
-          const label = document.createElement("span");
-          label.textContent = answer;
-
-          button.append(letter, label);
-          button.addEventListener("click", () => chooseAnswer(i));
-          $("answers").append(button);
-        });
-      }
-
-      function chooseAnswer(choice) {
-        if (answered) return;
-        answered = true;
-
-        const q = deck[index];
-        const buttons = [...$("answers").querySelectorAll("button")];
-
-        buttons.forEach((button, i) => {
-          button.disabled = true;
-          if (i === q.c) button.classList.add("correct");
-          if (i === choice && choice !== q.c) button.classList.add("wrong");
-        });
-
-        const correct = choice === q.c;
-        if (correct) {
-          score++;
-          sessionCorrect++;
-          $("liveScore").textContent = `⭐ ${score} points`;
-        }
-
-        const feedback = $("feedback");
-        feedback.className = `feedback ${correct ? "good" : "bad"}`;
-
-        const heading = document.createElement("strong");
-        heading.textContent = correct ? "✓ Correct answer!" : "✕ Not quite — learn from it!";
-        const explanation = document.createElement("span");
-        explanation.textContent = q.e;
-        feedback.replaceChildren(heading, explanation);
-
-        $("progress").style.width = `${(index + 1) / deck.length * 100}%`;
-        $("nextBtn").textContent = index === deck.length - 1 ? "See My Results →" : "Next Question →";
-        $("nextBtn").classList.remove("hidden");
-      }
-
-      function nextQuestion() {
-        if (!answered) return;
-        index++;
-        if (index < deck.length) {
-          renderQuestion();
-        } else {
-          finishQuiz();
-        }
-      }
-
-      function finishQuiz() {
-        const percent = score * 10;
-        const previousBest = stats.best;
-
-        stats.played++;
-        stats.best = Math.max(stats.best, score);
-        stats.correct += sessionCorrect;
-        stats.total += deck.length;
-        stats.history.unshift({
-          level,
-          score,
-          date: new Date().toLocaleDateString(undefined, {
-            year:"numeric", month:"short", day:"numeric"
-          })
-        });
-        stats.history = stats.history.slice(0, 8);
-        saveStats();
-        renderDashboard();
-
-        let icon = "📚";
-        let title = "Keep learning!";
-        let message = "Every attempt helps you improve. Review the explanations and try again.";
-
-        if (score >= 9) {
-          icon = "🏆";
-          title = "Outstanding work!";
-          message = "Excellent performance! Your hard work is paying off.";
-        } else if (score >= 7) {
-          icon = "🌟";
-          title = "Great job!";
-          message = "You are making strong progress. Keep challenging yourself.";
-        } else if (score >= 5) {
-          icon = "💪";
-          title = "Good effort!";
-          message = "You are building your skills. A little more practice will help.";
-        }
-
-        if (score > previousBest && score > 0) {
-          message += " New personal best!";
-        }
-
-        $("resultIcon").textContent = icon;
-        $("resultTitle").textContent = title;
-        $("resultMessage").textContent = message;
-        $("finalScore").textContent = `${score}/10`;
-        $("correctCount").textContent = `${score}/10`;
-        $("finalAccuracy").textContent = `${percent}%`;
-        $("scoreRing").style.setProperty("--score", `${percent}%`);
-        $("resultLevel").textContent = `${level} level`;
-        $("progress").style.width = "100%";
-
-        showView("results");
-      }
-
-      $("startBtn").addEventListener("click", startQuiz);
-      $("nextBtn").addEventListener("click", nextQuestion);
-
-      $("exitBtn").addEventListener("click", () => {
-        if (confirm("Exit this quiz? Your current score will not be saved.")) {
-          showView("home");
-        }
-      });
-
-      $("retryBtn").addEventListener("click", startQuiz);
-      $("homeBtn").addEventListener("click", () => {
-        renderDashboard();
-        showView("home");
-      });
-
-      renderDashboard();
-    })();
-  </script>
+const SUBJECTS={english:["English","እንግሊዝኛ"],math:["Mathematics","ሂሳብ"],science:["Science","ሳይንስ"],general:["General Knowledge","አጠቃላይ እውቀት"]};
+const BADGES=[
+["first","🏁","first","firstD",s=>s.history.length>=1],
+["focus","🎯","focus","focusD",s=>s.history.length>=5],
+["perfect","💎","perfect","perfectD",s=>s.history.some(h=>h.percent===100)],
+["streak","🔥","streakBadge","streakD",s=>s.streak>=3],
+["scholar","🌍","scholar","scholarD",s=>new Set(s.history.map(h=>h.subject)).size>=4],
+["master","👑","master","masterD",s=>s.xp>=500]
+];
+const KEY="studymate_quiz_data_v3";
+const dateKey=()=>{const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
+const yesterday=()=>{const d=new Date();d.setDate(d.getDate()-1);return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
+function load(){try{return Object.assign({xp:0,history:[],mistakes:[],streak:0,lastStudy:"",dailyDate:"",dailyDone:false,totalCorrect:0,totalAnswered:0,lang:"en"},JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){return {xp:0,history:[],mistakes:[],streak:0,lastStudy:"",dailyDate:"",dailyDone:false,totalCorrect:0,totalAnswered:0,lang:"en"}}}
+let state=load(),lang=state.lang||"en",session=null,questions=[],timerId=null,remaining=30,answered=false,mistakeMode=false;
+const t=k=>translations[lang][k]||translations.en[k]||k;
+const local=a=>a[lang==="am"?1:0];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");clearTimeout(toast.id);toast.id=setTimeout(()=>$("toast").classList.remove("show"),2600)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function showView(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));$(id).classList.add("active");window.scrollTo(0,0)}
+function render(){
+$("tagline").textContent=t("tagline");$("eyebrow").textContent=t("eyebrow");$("heroTitle").innerHTML=t("heroTitle");$("heroDesc").textContent=t("heroDesc");$("dailyBtn").textContent=t("dailyBtn");
+$("chooseTitle").textContent=t("chooseTitle");$("chooseDesc").textContent=t("chooseDesc");
+$("subEnglish").textContent=t("english");$("subEnglishDesc").textContent=t("englishDesc");$("subMath").textContent=t("math");$("subMathDesc").textContent=t("mathDesc");$("subScience").textContent=t("science");$("subScienceDesc").textContent=t("scienceDesc");$("subGeneral").textContent=t("general");$("subGeneralDesc").textContent=t("generalDesc");
+$("dailyTitle").textContent=t("dailyTitle");$("dailyDesc").textContent=t("dailyDesc");$("dailyName").textContent=t("dailyName");$("badgesTitle").textContent=t("badgesTitle");$("badgesDesc").textContent=t("badgesDesc");$("recentTitle").textContent=t("recentTitle");$("recentDesc").textContent=t("recentDesc");$("reviewBtn").textContent=t("review");$("footerText").textContent=t("footer");
+$("xpLabel").textContent=t("xp");$("accuracyLabel").textContent=t("accuracy")||"Accuracy";$("quizLabel").textContent=t("quizzes")||"Quizzes completed";$("streakLabel").textContent=t("streak")||"Day streak";
+document.documentElement.lang=lang;$("langBtn").textContent=lang==="en"?"አ/EN":"EN/አ";
+$("topXP").textContent=state.xp+" XP";$("xpStat").textContent=state.xp;$("quizCount").textContent=state.history.length;$("streakStat").textContent=state.streak;$("streakText").textContent="🔥 "+state.streak+" "+t("streak");
+$("accuracy").textContent=(state.totalAnswered?Math.round(state.totalCorrect/state.totalAnswered*100):0)+"%";
+const done=state.dailyDate===dateKey()&&state.dailyDone;
+$("dailyStatus").textContent=done?t("todayDone"):t("dailyStatus");$("dailyProgress").style.width=done?"100%":"0%";$("dailyCount").textContent=done?"5 / 5": "0 / 5 "+t("dailyCount");$("dailyBtn").disabled=done;$("playDaily").disabled=done;$("dailyBtn").textContent=done?"✓ "+t("todayDone"):t("dailyBtn");$("playDaily").textContent=done?t("todayDone"):t("playDaily");
+renderBadges();renderHistory();save();
+}
+function renderBadges(){
+$("badges").innerHTML=BADGES.map(b=>`<div class="badge ${b[4](state)?"earned":""}" title="${esc(t(b[3]))}"><b>${b[1]}</b><span>${esc(t(b[2]))}</span></div>`).join("");
+}
+function renderHistory(){
+if(!state.history.length){$("history").innerHTML=`<div class="empty">${esc(t("noHistory"))}</div>`;return}
+$("history").innerHTML=state.history.slice(0,5).map(h=>`<div class="historyitem"><div><strong>${esc(SUBJECTS[h.subject]?SUBJECTS[h.subject][lang==="am"?1:0]:h.subject)}</strong><small>${esc(h.date)} · ${h.correct}/${h.total} ${esc(t("correctAnswers"))}</small></div><span class="score">${h.percent}% · +${h.xp} XP</span></div>`).join("");
+}
+function prepare(q,subject){
+return {q,subject,qText:local(q.q),opts:q.o.map((o,i)=>({label:local(o),original:i})),hintText:local(q.h),explainText:local(q.e),correctIndex:q.a,id:subject+"_"+q.q[0]};
+}
+function startQuiz(subject,review=false){
+clearInterval(timerId);mistakeMode=review;
+if(review){
+questions=shuffle(state.mistakes.map(m=>m.question).filter(Boolean)).slice(0,10);
+if(!questions.length){toast(t("emptyMistakes"));return}
+questions=questions.map(q=>({...q,opts:shuffle(q.opts)}));
+}else{
+const all=subject==="daily"?Object.keys(BANK).flatMap(s=>BANK[s].map(q=>prepare(q,s))):(BANK[subject]||[]).map(q=>prepare(q,subject));
+questions=shuffle(all).slice(0,5);
+}
+if(!questions.length){toast(t("noQuestions"));return}
+session={subject,idx:0,correct:0,xp:0,start:Date.now(),daily:subject==="daily",answers:[]};
+showView("quizView");$("questionCard").hidden=false;$("resultCard").hidden=true;
+$("quizSubject").textContent=session.daily?t("dailyLabel"):review?t("review"):SUBJECTS[subject][lang==="am"?1:0];
+showQuestion();
+}
+function showQuestion(){
+answered=false;remaining=30;const q=questions[session.idx];
+$("questionCount").textContent=t("question")+" "+(session.idx+1)+" "+t("of")+" "+questions.length;
+$("questionXP").textContent=session.xp+" XP";$("quizProgress").style.width=(session.idx/questions.length*100)+"%";$("qNumber").textContent="QUESTION "+String(session.idx+1).padStart(2,"0");
+$("questionText").textContent=q.qText||local(q.q);$("options").innerHTML="";$("feedback").className="feedback";$("feedback").textContent="";$("hintBtn").disabled=false;$("nextBtn").disabled=true;$("nextBtn").textContent=session.idx===questions.length-1?t("complete"):t("next");
+q.opts.forEach((o,i)=>{const b=document.createElement("button");b.className="option";b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${esc(o.label)}</span>`;b.addEventListener("click",()=>answer(i));$("options").appendChild(b)});
+clearInterval(timerId);updateTimer();timerId=setInterval(()=>{remaining--;updateTimer();if(remaining<=0){clearInterval(timerId);if(!answered)timeOut()}},1000);
+}
+function updateTimer(){$("timer").textContent="00:"+String(Math.max(0,remaining)).padStart(2,"0");$("timer").style.color=remaining<=8?"var(--red)":"var(--text)"}
+function answer(i){
+if(answered)return;answered=true;clearInterval(timerId);
+const q=questions[session.idx],ok=q.opts[i].original===q.correctIndex;
+session.answers.push({q,chosen:i,ok});if(ok){session.correct++;session.xp+=10}
+const fb=$("feedback");fb.className="feedback show "+(ok?"good":"bad");fb.innerHTML=`<strong>${ok?"✓ "+esc(t("correct")):"✕ "+esc(t("wrong"))}</strong>${esc(q.explainText||local(q.q))}`;
+[...$("options").children].forEach((b,j)=>{b.disabled=true;if(q.opts[j].original===q.correctIndex)b.classList.add("correct");if(j===i&&!ok)b.classList.add("wrong")});
+if(!ok)addMistake(q,i);$("questionXP").textContent=session.xp+" XP";$("nextBtn").disabled=false;$("hintBtn").disabled=true;
+}
+function timeOut(){
+answered=true;const q=questions[session.idx];session.answers.push({q,chosen:-1,ok:false});addMistake(q,-1);
+[...$("options").children].forEach((b,i)=>{b.disabled=true;if(q.opts[i].original===q.correctIndex)b.classList.add("correct")});
+$("feedback").className="feedback show bad";$("feedback").innerHTML=`<strong>⏱ ${esc(t("timeUp"))}</strong>${esc(q.explainText)}`;$("nextBtn").disabled=false;$("hintBtn").disabled=true;
+}
+function addMistake(q,chosen){
+const key=q.id||q.qText;state.mistakes=state.mistakes.filter(m=>(m.question.id||m.question.qText)!==key);
+state.mistakes.unshift({question:q,chosen,at:Date.now()});state.mistakes=state.mistakes.slice(0,100);save();
+}
+function nextQuestion(){if(!session||!answered)return;if(session.idx<questions.length-1){session.idx++;showQuestion()}else finishQuiz()}
+function finishQuiz(){
+clearInterval(timerId);const total=questions.length,correct=session.correct,percent=Math.round(correct/total*100),elapsed=Math.round((Date.now()-session.start)/1000);
+let earned=session.xp;
+if(session.daily&&!(state.dailyDate===dateKey()&&state.dailyDone)){state.dailyDate=dateKey();state.dailyDone=true;earned+=50;toast(t("dailyDone"))}
+state.xp+=earned;state.totalAnswered+=total;state.totalCorrect+=correct;
+if(state.lastStudy!==dateKey()){state.streak=state.lastStudy===yesterday()?state.streak+1:1;state.lastStudy=dateKey()}
+const subject=session.daily?"daily":mistakeMode?"review":session.subject;
+state.history.unshift({subject,date:new Date().toLocaleDateString(),correct,total,percent,xp:earned,elapsed});state.history=state.history.slice(0,100);
+save();$("questionCard").hidden=true;$("resultCard").hidden=false;$("quizProgress").style.width="100%";
+$("resultEmoji").textContent=percent===100?"🏆":percent>=60?"🎉":"💪";$("resultTitle").textContent=t("resultTitle");$("resultDesc").textContent=percent>=60?t("wellDone"):t("keepGoing");$("resultPercent").textContent=percent+"%";$("resultCorrect").textContent=correct+"/"+total;$("resultXP").textContent="+"+earned;$("resultTime").textContent=String(Math.floor(elapsed/60)).padStart(2,"0")+":"+String(elapsed%60).padStart(2,"0");render();
+}
+function showMistakes(){
+showView("mistakesView");
+if(!state.mistakes.length){$("mistakesList").innerHTML=`<div class="empty">${esc(t("noMistakes"))}</div>`;$("practiceMistakes").disabled=true;return}
+$("practiceMistakes").disabled=false;
+$("mistakesList").innerHTML=state.mistakes.slice(0,30).map((m,i)=>{const q=m.question;const chosen=m.chosen>=0&&q.opts[m.chosen]?q.opts[m.chosen].label:"—";const right=q.opts.find(o=>o.original===q.correctIndex)?.label||"";return `<div class="historyitem"><div style="min-width:0"><strong>${i+1}. ${esc(q.qText||local(q.q))}</strong><small>${esc(t("wrongAnswer"))}: ${esc(chosen)}</small><small style="color:var(--green)">${esc(t("rightAnswer"))}: ${esc(right)}</small><small>${esc(q.explainText||"")}</small></div></div>`}).join("");
+}
+$("langBtn").addEventListener("click",()=>{
+lang=lang==="en"?"am":"en";state.lang=lang;render();
+if(session&&$("quizView").classList.contains("active")&&!$("resultCard").hidden){const q=questions[session.idx];if(q){q.qText=local(q.q);q.opts=q.q?q.q&&q.o?q.o.map((o,i)=>({label:local(o),original:i})):q.opts:q.opts;showQuestion()}}
+});
+document.querySelectorAll(".subject").forEach(b=>b.addEventListener("click",()=>startQuiz(b.dataset.subject)));
+$("dailyBtn").addEventListener("click",()=>startQuiz("daily"));
+$("playDaily").addEventListener("click",()=>startQuiz("daily"));
+$("dashboardBtn").addEventListener("click",()=>{clearInterval(timerId);session=null;showView("home");render()});
+$("nextBtn").addEventListener("click",nextQuestion);
+$("hintBtn").addEventListener("click",()=>{if(!session||answered)return;const q=questions[session.idx];$("feedback").className="feedback show";$("feedback").innerHTML=`<strong>💡 ${esc(t("hintTitle"))}</strong>${esc(q.hintText||local(q.h))}`;$("hintBtn").disabled=true});
+$("homeBtn").addEventListener("click",()=>{session=null;showView("home");render()});
+$("againBtn").addEventListener("click",()=>{const old=session;session=null;if(old&&old.daily)startQuiz("daily");else if(old&&!mistakeMode)startQuiz(old.subject);else showView("home")});
+$("reviewBtn").addEventListener("click",showMistakes);
+$("backMistakes").addEventListener("click",()=>{showView("home");render()});
+$("practiceMistakes").addEventListener("click",()=>startQuiz("review",true));
+$("clearMistakes").addEventListener("click",()=>{state.mistakes=[];save();showMistakes();toast(t("cleared"))});
+render();
+})();
+</script>
 </body>
-</html>
+  </html>
