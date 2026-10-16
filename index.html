@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StudyMate Quiz</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px 18px;
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: white;
+    }
+    .app { max-width: 480px; margin: auto; }
+    .brand { color: #72e6c1; font-size: 14px; font-weight: bold; }
+    h1 { font-size: 29px; margin-bottom: 8px; }
+    .muted { color: #aab7ca; line-height: 1.5; }
+    .card {
+      background: #1c293b;
+      padding: 20px;
+      border-radius: 18px;
+      margin-top: 22px;
+    }
+    .tag { color: #72e6c1; font-size: 13px; }
+    .option {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 12px;
+      padding: 15px;
+      border: 1px solid #42516a;
+      border-radius: 12px;
+      background: #26364b;
+      color: white;
+      text-align: left;
+      font-size: 16px;
+    }
+    .option:disabled { opacity: 0.8; }
+    .primary {
+      width: 100%;
+      padding: 15px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 12px;
+      background: #72e6c1;
+      color: #10221f;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    #feedback { min-height: 24px; margin-top: 14px; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="brand">STUDYMATE • DAILY LEARNING</div>
+    <h1>Daily Quiz 🎯</h1>
+    <p class="muted">Learn something new every day. Choose your answer and test your knowledge.</p>
+
+    <section class="card">
+      <div class="tag" id="progress">QUESTION 1 OF 3</div>
+      <h2 id="question">Loading question...</h2>
+      <div id="options"></div>
+      <p id="feedback" aria-live="polite"></p>
+      <button class="primary" id="next" hidden>Next question →</button>
+    </section>
+    <p class="muted" id="score">Your score: 0</p>
+  </main>
+
+  <script>
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    const questions = [
+      {
+        q: "Which planet is known as the Red Planet?",
+        a: ["Venus", "Mars", "Jupiter"],
+        correct: 1
+      },
+      {
+        q: "What is 8 × 7?",
+        a: ["54", "56", "64"],
+        correct: 1
+      },
+      {
+        q: "Which language is mainly used to structure web pages?",
+        a: ["HTML", "SQL", "Python"],
+        correct: 0
+      }
+    ];
+
+    let current = 0;
+    let points = 0;
+    let answered = false;
+
+    const question = document.getElementById("question");
+    const options = document.getElementById("options");
+    const feedback = document.getElementById("feedback");
+    const next = document.getElementById("next");
+    const progress = document.getElementById("progress");
+    const score = document.getElementById("score");
+
+    function renderQuestion() {
+      answered = false;
+      const item = questions[current];
+      progress.textContent = `QUESTION ${current + 1} OF ${questions.length}`;
+      question.textContent = item.q;
+      feedback.textContent = "";
+      options.innerHTML = "";
+      next.hidden = true;
+
+      item.a.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
+        button.onclick = () => chooseAnswer(index);
+        options.appendChild(button);
+      });
+    }
+
+    function chooseAnswer(index) {
+      if (answered) return;
+      answered = true;
+
+      const correct = questions[current].correct;
+      if (index === correct) {
+        points++;
+        feedback.textContent = "✅ Correct! Well done.";
+      } else {
+        feedback.textContent =
+          `❌ Not quite. Correct answer: ${questions[current].a[correct]}`;
+      }
+
+      [...options.children].forEach(button => button.disabled = true);
+      score.textContent = `Your score: ${points}`;
+      next.hidden = false;
+      next.textContent = current === questions.length - 1
+        ? "See results →" : "Next question →";
+    }
+
+    next.onclick = () => {
+      if (current < questions.length - 1) {
+        current++;
+        renderQuestion();
+      } else {
+        question.textContent = `Quiz complete! ${points}/${questions.length}`;
+        progress.textContent = "DAILY CHALLENGE COMPLETE";
+        options.innerHTML = "";
+        feedback.textContent = points === questions.length
+          ? "Excellent work! You got every answer right."
+          : "Good effort! Try again to improve your score.";
+        next.textContent = "Try again";
+        next.hidden = false;
+        next.onclick = () => {
+          current = 0;
+          points = 0;
+          score.textContent = "Your score: 0";
+          next.onclick = advance;
+          renderQuestion();
+        };
+      }
+    };
+
+    function advance() {
+      if (current < questions.length - 1) {
+        current++;
+        renderQuestion();
+      } else {
+        renderQuestion();
+      }
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
