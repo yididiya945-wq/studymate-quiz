@@ -1,156 +1,223 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101a36">
-<meta name="description" content="StudyMate Quiz starter learning platform with English and Amharic interface, sample lessons, practice, and textbook-source links.">
-<title>StudyMate Quiz | Ethiopian Secondary Learning</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="TechMate Academy — Technology, made understandable. Learn computer skills, networking, cybersecurity, programming and web development.">
+<title>TechMate Academy — Technology, made understandable</title>
 <style>
-:root{--bg:#f4f7fc;--card:#fff;--ink:#17213b;--muted:#64708b;--line:#e3e9f3;--navy:#101a36;--blue:#4263eb;--cyan:#18a6b8;--purple:#7b61ff;--green:#138a62;--gold:#f4b740;--red:#d94b5b;--shadow:0 12px 30px #14244b0c}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5}button,select,input{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:16px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--navy);color:#fff;padding:17px 20px;border-radius:22px;box-shadow:var(--shadow)}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;display:grid;place-items:center;background:linear-gradient(135deg,#5a7cff,#19c1c8);border-radius:15px;font-size:24px}.brand h1{font-size:19px;margin:0}.brand p{margin:2px 0 0;color:#bfc9e3;font-size:12px}.top-actions{display:flex;gap:8px;align-items:center}.select,.btn{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;color:var(--ink)}.top .select{border-color:#3d4968;background:#1b2748;color:#fff}.btn{font-weight:700}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.soft{background:#edf1ff;color:#3152ce;border-color:#e2e8ff}.btn.dark{background:var(--navy);color:#fff;border-color:var(--navy)}.hero{margin:18px 0;padding:24px;border-radius:22px;background:linear-gradient(120deg,#243c8f,#4b61db 58%,#18a6b8);color:#fff;position:relative;overflow:hidden}.hero:after{content:"✦";position:absolute;right:26px;top:-20px;font-size:150px;opacity:.13}.eyebrow{font-size:11px;letter-spacing:1.7px;font-weight:800;opacity:.8}.hero h2{font-size:clamp(23px,4vw,34px);line-height:1.18;max-width:650px;margin:8px 0}.hero p{max-width:650px;color:#e4eaff;margin:8px 0 16px}.hero .btn{position:relative;z-index:1}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 20px}.stat,.panel,.subject-card,.lesson-card,.resource{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.stat{padding:15px}.stat .label{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:24px;margin-top:3px}.stat small{color:var(--green);font-weight:700}.layout{display:grid;grid-template-columns:260px 1fr;gap:16px}.panel{padding:17px}.panel h3{font-size:15px;margin:0 0 13px}.field{margin-bottom:13px}.field label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:6px}.field select,.field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}.stream-note{font-size:12px;color:var(--muted);background:#f5f7ff;border-radius:11px;padding:10px}.navlist{display:grid;gap:7px;margin-top:14px}.navitem{text-align:left;border:0;border-radius:11px;padding:11px 12px;background:transparent;color:var(--muted);font-weight:700}.navitem.active,.navitem:hover{background:#edf1ff;color:#3152ce}.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 14px}.section-head h2{font-size:21px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:3px 0 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.subject-card{padding:16px;text-align:left;transition:.15s;border-color:var(--line);width:100%;color:var(--ink)}.subject-card:hover{transform:translateY(-2px);border-color:#b9c6ff}.subject-top{display:flex;align-items:center;gap:11px}.subject-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#edf1ff;font-size:22px}.subject-card h3{margin:0;font-size:15px}.subject-card p{font-size:12px;color:var(--muted);margin:3px 0}.progress{height:6px;background:#edf0f6;border-radius:99px;margin-top:13px;overflow:hidden}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0}.subject-foot{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)}.notice{margin:14px 0;padding:12px 14px;border-radius:13px;background:#fff8e6;border:1px solid #f7e5ae;color:#73540b;font-size:12px}.content{margin-top:16px}.hidden{display:none!important}.lesson-card{padding:19px;margin-bottom:12px}.lesson-card h3{margin:0 0 6px}.tag{display:inline-flex;padding:4px 8px;border-radius:7px;background:#edf1ff;color:#3152ce;font-size:11px;font-weight:800}.lesson-text{white-space:pre-wrap;color:#34405c}.language-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}.language-tabs button{border:1px solid var(--line);background:#fff;color:var(--muted);padding:8px 11px;border-radius:9px;font-weight:700}.language-tabs button.active{background:var(--navy);color:#fff;border-color:var(--navy)}.quiz-options{display:grid;gap:9px;margin:14px 0}.option{padding:12px;text-align:left;border:1px solid var(--line);background:#fff;border-radius:11px;color:var(--ink)}.option.chosen{border-color:var(--blue);background:#edf1ff}.option.correct{border-color:var(--green);background:#e9f8f1}.option.wrong{border-color:var(--red);background:#fff0f1}.feedback{padding:12px;border-radius:11px;margin:12px 0;background:#f4f7fc}.resource{padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}.resource h4{margin:0;font-size:14px}.resource p{margin:3px 0 0;color:var(--muted);font-size:12px}.resource a{color:#3152ce;font-weight:800;text-decoration:none;white-space:nowrap}.empty{padding:26px;text-align:center;border:1px dashed #cbd4e5;border-radius:16px;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 8px}dialog{border:0;border-radius:20px;max-width:520px;width:calc(100% - 24px);padding:22px;box-shadow:0 24px 80px #0004;color:var(--ink)}dialog::backdrop{background:#111a35a6}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
-@media(max-width:760px){.app{padding:10px}.top{padding:13px;border-radius:17px;align-items:flex-start}.brand h1{font-size:16px}.top-actions{flex-direction:column;align-items:stretch}.top .select{max-width:130px}.hero{padding:20px}.stats{grid-template-columns:repeat(2,1fr);gap:9px}.layout{grid-template-columns:1fr}.layout aside{display:block}.navlist{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.section-head{align-items:flex-start}.resource{align-items:flex-start}.resource a{white-space:normal}.stat strong{font-size:21px}}
+:root{color-scheme:dark;--bg:#08111f;--panel:#101c2e;--panel2:#16243a;--text:#edf5ff;--muted:#9eb0c8;--line:#293a52;--accent:#48d6c8;--blue:#6aa8ff;--good:#67dda1;--bad:#ff8491;--shadow:0 12px 35px #0002}
+[data-theme=light]{color-scheme:light;--bg:#f2f6fc;--panel:#fff;--panel2:#edf3fb;--text:#16243a;--muted:#61738a;--line:#dbe4ef;--accent:#087f80;--blue:#2368c4;--good:#148a55;--bad:#c43c54;--shadow:0 12px 35px #1d35570d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+.sidebar{height:100vh;position:sticky;top:0;border-right:1px solid var(--line);padding:24px 16px;background:var(--bg);display:flex;flex-direction:column;gap:25px}
+.brand{display:flex;align-items:center;gap:11px;padding:0 5px}
+.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--blue));display:grid;place-items:center;color:#071321;font-weight:950;font-size:23px}
+.brand strong{display:block;font-size:15px}.brand small{color:var(--muted);font-size:11px}
+.navlabel{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1.5px;padding:0 12px;text-transform:uppercase}
+.nav{display:grid;gap:5px}
+.nav button{border:0;border-radius:11px;padding:11px 12px;text-align:left;background:transparent;color:var(--muted);display:flex;gap:12px;align-items:center}
+.nav button:hover,.nav button.active{background:var(--panel2);color:var(--text)}
+.nav button.active{box-shadow:inset 3px 0 var(--accent)}
+.ico{width:21px;text-align:center;font-size:17px}
+.sidebar-note{margin-top:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--muted);font-size:12px}
+.sidebar-note strong{display:block;color:var(--text);margin-bottom:5px}
+main{min-width:0;width:100%;max-width:1600px;margin:auto;padding:27px clamp(15px,3vw,42px) 65px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:25px}
+.eyebrow{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:1.7px;font-weight:850}
+h1{font-size:clamp(25px,3vw,34px);line-height:1.2;letter-spacing:-.7px;margin:5px 0 8px}
+.subtitle{margin:0;color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:8px}
+.search{position:relative;width:min(340px,35vw)}
+.search input{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px 11px 37px;background:var(--panel);color:var(--text)}
+.search span{position:absolute;left:12px;top:7px;font-size:19px;color:var(--muted)}
+.btn,.iconbtn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:11px;padding:10px 13px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#061521;font-weight:850}
+.btn.secondary{background:var(--panel2)}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.iconbtn{min-width:42px}
+.btn:hover,.iconbtn:hover{filter:brightness(1.1)}
+.page{display:none}.page.active{display:block;animation:show .18s ease}
+@keyframes show{from{opacity:.6;transform:translateY(3px)}to{opacity:1;transform:none}}
+.hero{border:1px solid #34516a;border-radius:22px;padding:clamp(22px,4vw,40px);background:linear-gradient(115deg,#12364a,#152846 65%,#253b5d);display:grid;grid-template-columns:1.6fr .6fr;align-items:center;gap:20px;overflow:hidden}
+.hero h2{font-size:clamp(27px,3.4vw,41px);line-height:1.15;letter-spacing:-1px;margin:9px 0 12px;color:#f4f8ff}
+.hero p{color:#c5d5e7;max-width:590px;margin:0 0 20px}
+.heroart{width:min(100%,205px);aspect-ratio:1;border-radius:36px;background:linear-gradient(145deg,#48d6c8,#6aa8ff);display:grid;place-items:center;color:#08111f;font-size:76px;justify-self:center;transform:rotate(4deg)}
+.grid{display:grid;gap:16px}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:21px 0}
+.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
+.stat{padding:16px;min-width:0}
+.statlabel{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:7px}
+.stat strong{display:block;font-size:27px;letter-spacing:-.7px;margin:8px 0 0}
+.stat small{font-size:11px;color:var(--muted)}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:29px 0 14px}
+.sectionhead h2{margin:0;font-size:20px}.sectionhead p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.textbtn{border:0;background:transparent;color:var(--accent);font-weight:800;padding:8px}
+.courses{grid-template-columns:repeat(3,minmax(0,1fr))}
+.course{padding:18px;display:flex;flex-direction:column;gap:11px;min-width:0}
+.coursehead{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.courseicon{width:47px;height:47px;border-radius:14px;display:grid;place-items:center;background:var(--panel2);font-size:23px}
+.tag{border:1px solid var(--line);border-radius:99px;padding:3px 8px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+.course h3{margin:0;font-size:17px;line-height:1.35}
+.course p{color:var(--muted);font-size:13px;margin:0;flex:1}
+.meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:11px}
+.track{height:6px;border-radius:99px;background:var(--panel2);overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));border-radius:99px}
+.coursefoot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.small{font-size:12px}.muted{color:var(--muted)}
+.empty{padding:28px;text-align:center;border:1px dashed var(--line);border-radius:15px;color:var(--muted)}
+.contentlayout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:17px}
+.lessonbody{padding:clamp(20px,3vw,35px);min-width:0}
+.lessonbody h1{margin:9px 0 12px}.lessonbody h2{font-size:21px;margin-top:27px}
+.lessonbody h3{font-size:17px;margin-top:22px}
+.lessonbody p,.lessonbody li{color:var(--muted)}
+.lessonbody strong{color:var(--text)}
+.lessonbody code{background:var(--panel2);padding:2px 5px;border-radius:5px}
+.callout{padding:14px 16px;border-left:3px solid var(--accent);border-radius:0 10px 10px 0;background:var(--panel2);margin:18px 0}
+.lessonaside{padding:17px;height:max-content;position:sticky;top:15px}
+.lessonaside h3{margin:0 0 12px}
+.lessonlist{display:grid;gap:5px}
+.lessonitem{background:transparent;border:0;text-align:left;color:var(--muted);border-radius:9px;padding:9px;font-size:12px}
+.lessonitem:hover,.lessonitem.active{background:var(--panel2);color:var(--text)}
+.lessonitem.done:before{content:"✓ ";color:var(--good)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:21px}
+.quizwrap{max-width:850px;margin:auto}
+.quizcard{padding:clamp(20px,4vw,35px)}
+.quizprogress{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:13px}
+.question{font-size:clamp(20px,3vw,27px);line-height:1.4;margin:18px 0}
+.answers{display:grid;gap:10px}
+.answer{display:flex;align-items:center;gap:12px;text-align:left;padding:13px 14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;color:var(--text)}
+.answer:hover:not(:disabled){border-color:var(--accent)}
+.answer:disabled{cursor:default}
+.letter{width:29px;height:29px;border:1px solid var(--line);border-radius:8px;display:grid;place-items:center;flex-shrink:0}
+.answer.correct{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--panel))}
+.answer.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--panel))}
+.feedback{margin-top:16px;padding:14px;background:var(--panel2);border-radius:12px;color:var(--muted)}
+.feedback strong{color:var(--text)}
+.result{text-align:center;padding:20px}
+.score{font-size:60px;font-weight:900;color:var(--accent);letter-spacing:-2px}
+.list{display:grid;gap:10px}
+.listrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px;background:var(--panel);border:1px solid var(--line);border-radius:13px}
+.listrow h3{font-size:15px;margin:0 0 3px}.listrow p{font-size:12px;color:var(--muted);margin:3px 0}
+.field{display:grid;gap:7px;margin:15px 0}
+.field label{font-weight:750;font-size:13px}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--panel2);color:var(--text)}
+.field textarea{min-height:150px;resize:vertical}
+.adslot{border:1px dashed var(--line);border-radius:11px;padding:13px;margin-top:26px;text-align:center;font-size:11px;color:var(--muted)}
+.mobile-nav{display:none}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);border-radius:11px;padding:10px 16px;z-index:100;font-weight:750;box-shadow:var(--shadow);transition:.2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.hidden{display:none!important}
+hr{border:0;border-top:1px solid var(--line);margin:25px 0}
+@media(max-width:1100px){.courses{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.contentlayout{grid-template-columns:minmax(0,1fr) 225px}}
+@media(max-width:740px){.app{display:block}.sidebar{display:none}main{padding:18px 13px 95px}.topbar{align-items:flex-start}.top-actions{gap:5px}.topbar .search{display:none}.hero{grid-template-columns:1fr}.heroart{display:none}.courses{grid-template-columns:1fr}.contentlayout{grid-template-columns:1fr}.lessonaside{position:static;order:-1}.lessonlist{grid-template-columns:repeat(2,minmax(0,1fr))}.mobile-nav{display:grid;position:fixed;z-index:30;left:0;right:0;bottom:0;grid-template-columns:repeat(5,1fr);padding:7px 4px calc(7px + env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--line)}.mobile-nav button{display:grid;justify-items:center;gap:2px;border:0;background:transparent;color:var(--muted);font-size:10px;padding:4px 1px}.mobile-nav button span{font-size:18px}.mobile-nav button.active{color:var(--accent)}.hero h2{font-size:30px}.listrow{align-items:flex-start;flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="top">
-  <div class="brand"><div class="logo">🎓</div><div><h1>StudyMate Quiz</h1><p>Learn smarter · Practice confidently</p></div></div>
-  <div class="top-actions">
-    <select id="uiLang" class="select" aria-label="Interface language"><option value="en">English</option><option value="am">አማርኛ</option></select>
-    <button class="btn" id="resetBtn">Reset progress</button>
-  </div>
-</header>
-<section class="hero">
-  <div class="eyebrow">ETHIOPIAN SECONDARY LEARNING · ONLINE · STARTER EDITION</div>
-  <h2 id="heroTitle">Your learning journey, organized in one place.</h2>
-  <p id="heroDesc">Choose your grade, explore subjects, study lesson notes in English and Amharic, and prepare for exams step by step.</p>
-  <button class="btn" id="continueBtn">▶ Continue learning</button>
-</section>
-<section class="stats">
-  <div class="stat"><span class="label" id="xpLabel">Total XP</span><strong id="xpVal">0</strong><small>✦ Keep learning</small></div>
-  <div class="stat"><span class="label" id="streakLabel">Study streak</span><strong id="streakVal">0 days</strong><small>Daily practice</small></div>
-  <div class="stat"><span class="label" id="doneLabel">Questions answered</span><strong id="doneVal">0</strong><small>Practice makes progress</small></div>
-  <div class="stat"><span class="label" id="accuracyLabel">Accuracy</span><strong id="accuracyVal">—</strong><small>Based on answered questions</small></div>
-</section>
-<div class="layout">
-<aside class="panel">
-  <h3 id="learningPath">Learning path</h3>
-  <div class="field"><label id="gradeLabel" for="grade">GRADE</label><select id="grade"><option value="9">Grade 9</option><option value="10">Grade 10</option><option value="11">Grade 11</option><option value="12">Grade 12</option></select></div>
-  <div class="field" id="streamField"><label id="streamLabel" for="stream">STREAM</label><select id="stream"><option value="all">All / Common subjects</option><option value="natural">Natural Science</option><option value="social">Social Science</option></select></div>
-  <div class="stream-note" id="streamNote">Grades 9–10: choose from the available general secondary subjects. Grades 11–12: select your stream for specialized subjects.</div>
-  <div class="navlist">
-    <button class="navitem active" data-view="subjects" id="navSubjects">▦ Subjects</button>
-    <button class="navitem" data-view="daily" id="navDaily">⚡ Daily challenge</button>
-    <button class="navitem" data-view="review" id="navReview">↻ Review mistakes</button>
-    <button class="navitem" data-view="books" id="navBooks">▤ Textbook library</button>
-    <button class="navitem" data-view="matric" id="navMatric">🏆 Matric prep</button>
-  </div>
+<aside class="sidebar">
+ <div class="brand"><div class="logo">T</div><div><strong>TechMate Academy</strong><small>Technology, made understandable</small></div></div>
+ <div class="navlabel">Workspace</div>
+ <nav class="nav" aria-label="Main navigation">
+  <button class="active" data-page="dashboard"><span class="ico">⌂</span>Dashboard</button>
+  <button data-page="courses"><span class="ico">▤</span>Learning library</button>
+  <button data-page="quizzes"><span class="ico">✓</span>Knowledge checks</button>
+  <button data-page="bookmarks"><span class="ico">☆</span>Saved lessons</button>
+  <button data-page="notes"><span class="ico">✎</span>My notes</button>
+  <button data-page="settings"><span class="ico">⚙</span>Settings</button>
+ </nav>
+ <div class="sidebar-note"><strong>Learn at your own pace.</strong>Your progress and notes are saved in this browser. No account is required.</div>
 </aside>
 <main>
-  <div id="mainView">
-    <div class="section-head"><div><h2 id="viewTitle">Your subjects</h2><p id="viewSubtitle">Choose a subject to open lessons and practice.</p></div><span class="tag" id="gradeTag">GRADE 9</span></div>
-    <div class="grid" id="subjectGrid"></div>
-    <div class="notice" id="contentNotice">Curriculum note: this build includes a structured learning framework and sample lessons. Confirm each textbook edition and add its verified chapter content before calling the library complete.</div>
-  </div>
-  <div id="contentView" class="content hidden"></div>
+<header class="topbar">
+ <div><div class="eyebrow" id="eyebrow">YOUR LEARNING SPACE</div><h1 id="pageTitle">Welcome to TechMate</h1><p class="subtitle" id="pageSubtitle">Build useful technology skills at your own pace.</p></div>
+ <div class="top-actions"><div class="search"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search lessons…" aria-label="Search lessons"></div><button class="iconbtn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">☼</button></div>
+</header>
+
+<section class="page active" id="page-dashboard">
+ <div class="hero"><div><div class="eyebrow">YOUR NEXT SKILL STARTS HERE</div><h2>Technology is easier when you learn it step by step.</h2><p>Explore computer basics, networks, cybersecurity, programming and the digital skills used every day.</p><button class="btn primary" id="continueBtn">Start learning →</button></div><div class="heroart" aria-hidden="true">⌘</div></div>
+ <div class="grid stats">
+  <div class="stat"><div class="statlabel">Lessons completed <span>✓</span></div><strong id="statCompleted">0</strong><small>Keep building your knowledge</small></div>
+  <div class="stat"><div class="statlabel">Learning progress <span>◴</span></div><strong id="statProgress">0%</strong><small>Across all lessons</small></div>
+  <div class="stat"><div class="statlabel">Quiz average <span>✳</span></div><strong id="statScore">—</strong><small>Based on your attempts</small></div>
+  <div class="stat"><div class="statlabel">Saved lessons <span>☆</span></div><strong id="statSaved">0</strong><small>Your reading list</small></div>
+ </div>
+ <div class="sectionhead"><div><h2>Recommended for you</h2><p>Choose a course to start learning.</p></div><button class="textbtn" data-goto="courses">All courses →</button></div>
+ <div class="grid courses" id="featuredCourses"></div>
+ <div class="adslot">Advertisement placeholder · No advertising service is connected.</div>
+</section>
+
+<section class="page" id="page-courses">
+ <div class="sectionhead"><div><h2>Learning library</h2><p>Choose a course, then open any lesson.</p></div></div>
+ <div class="field"><input id="courseSearch" type="search" placeholder="Search courses, topics and lessons…" aria-label="Filter courses"></div>
+ <div class="grid courses" id="allCourses"></div><div class="empty hidden" id="courseEmpty">No matching courses. Try another keyword.</div>
+</section>
+
+<section class="page" id="page-lesson">
+ <div class="contentlayout"><article class="card lessonbody" id="lessonContent"></article><aside class="card lessonaside"><h3>Course lessons</h3><div class="lessonlist" id="lessonList"></div><p class="small muted" id="lessonProgressText"></p></aside></div>
+</section>
+
+<section class="page" id="page-quizzes">
+ <div class="quizwrap"><div class="sectionhead"><div><h2>Knowledge checks</h2><p>Practice and read explanations for your answers.</p></div></div><div id="quizArea" class="card quizcard"></div></div>
+</section>
+
+<section class="page" id="page-bookmarks">
+ <div class="sectionhead"><div><h2>Saved lessons</h2><p>Return to lessons you want to revisit.</p></div></div><div id="bookmarksList" class="list"></div>
+</section>
+
+<section class="page" id="page-notes">
+ <div class="sectionhead"><div><h2>My notes</h2><p>Keep your own reminders and learning notes.</p></div></div>
+ <div class="card" style="padding:22px;max-width:850px"><div class="field"><label for="noteLesson">Attach notes to a lesson</label><select id="noteLesson"></select></div><div class="field"><label for="noteText">Your notes</label><textarea id="noteText" placeholder="Write definitions, examples, questions or reminders…"></textarea></div><button class="btn primary" id="saveNote">Save notes</button> <span id="noteStatus" class="small muted" aria-live="polite"></span></div>
+ <div class="sectionhead"><div><h2>Saved notes</h2><p>Stored locally in this browser.</p></div></div><div id="notesList" class="list"></div>
+</section>
+
+<section class="page" id="page-settings">
+ <div class="sectionhead"><div><h2>Settings and data</h2><p>Manage appearance and your saved learning information.</p></div></div>
+ <div class="card" style="padding:22px;max-width:850px">
+  <h3 style="margin-top:0">Appearance</h3><p class="muted">Choose your preferred reading theme.</p><div class="actions"><button class="btn secondary" id="darkTheme">Dark theme</button><button class="btn secondary" id="lightTheme">Light theme</button></div>
+  <hr><h3>Export your data</h3><p class="muted">Download a JSON backup of progress, bookmarks, quiz scores, preferences and notes.</p><button class="btn primary" id="exportBtn">Export my data</button>
+  <hr><h3>Reset learning data</h3><p class="muted">This clears locally saved progress, bookmarks, notes and quiz history. This action cannot be undone.</p><button class="btn danger" id="resetBtn">Reset my data</button>
+  <hr><h3>About TechMate Academy</h3><p class="muted">TechMate Academy is a self-study interface with beginner-friendly technology lessons. Content is educational and may not cover every device, operating system or professional standard. Follow trusted guidance for security-sensitive tasks.</p><p class="muted small">Privacy: this version saves your learning information in this browser. It does not create an account or send your notes to a server. Clearing browser data may remove saved information. Advertising spaces are placeholders only; no ad service is connected.</p>
+ </div>
+</section>
 </main>
 </div>
-<footer>StudyMate Quiz · Starter edition · English + Amharic · Progress is saved on this device. Textbook links require internet access.</footer>
-</div>
-<dialog id="confirmDialog"><h3>Reset all progress?</h3><p>This removes locally saved XP, streak, answers and mistake history on this device.</p><div class="modal-actions"><button class="btn" id="cancelReset">Cancel</button><button class="btn primary" id="confirmReset">Reset progress</button></div></dialog>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+<button class="active" data-page="dashboard"><span>⌂</span>Home</button><button data-page="courses"><span>▤</span>Courses</button><button data-page="quizzes"><span>✓</span>Quiz</button><button data-page="bookmarks"><span>☆</span>Saved</button><button data-page="settings"><span>⚙</span>Settings</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-const subjects = {
-  common:[
-    {id:'english',name:'English',icon:'📘',desc:'Reading, writing, grammar and vocabulary'},
-    {id:'math',name:'Mathematics',icon:'📐',desc:'Concepts, worked examples and problem solving'},
-    {id:'amharic',name:'Amharic',icon:'📝',desc:'Language, reading and writing'},
-    {id:'afaanoromo',name:'Afaan Oromo',icon:'🌿',desc:'Afaan, dubbisuu fi barreessuu'},
-    {id:'physics',name:'Physics',icon:'⚡',desc:'Motion, forces, energy and matter'},
-    {id:'chemistry',name:'Chemistry',icon:'🧪',desc:'Matter, atoms, reactions and materials'},
-    {id:'biology',name:'Biology',icon:'🧬',desc:'Life, cells, organisms and ecology'},
-    {id:'geography',name:'Geography',icon:'🌍',desc:'People, places, environment and maps'},
-    {id:'history',name:'History',icon:'🏺',desc:'Ethiopian, African and world history'},
-    {id:'civics',name:'Citizenship / Civics',icon:'⚖️',desc:'Citizenship, rights, duties and governance'},
-    {id:'ict',name:'ICT',icon:'💻',desc:'Digital literacy, information and technology'},
-    {id:'pe',name:'Physical Education',icon:'🏃',desc:'Movement, health and physical activity'},
-    {id:'economics',name:'Economics',icon:'📈',desc:'Resources, markets and economic systems'},
-    {id:'business',name:'General Business',icon:'💼',desc:'Business concepts and enterprise'},
-    {id:'technical',name:'Technical Drawing',icon:'📏',desc:'Drawing principles and visual communication'}
-  ],
-  natural:['biology','chemistry','physics','technical'],
-  social:['geography','history','economics','business']
-};
-const textbookLinks = [
- {grade:'9',name:'Grade 9 textbook collection',url:'https://lts.stjohn.edu.et/find-borrow-request/moe-textbooks',desc:'Browse the textbook library by grade and subject.'},
- {grade:'10',name:'Grade 10 textbook collection',url:'https://lts.stjohn.edu.et/find-borrow-request/moe-textbooks',desc:'Check available titles and editions.'},
- {grade:'11',name:'Grade 11 textbook collection',url:'https://lts.stjohn.edu.et/find-borrow-request/moe-textbooks',desc:'Check specialized stream subjects and common courses.'},
- {grade:'12',name:'Grade 12 textbook collection',url:'https://lts.stjohn.edu.et/find-borrow-request/moe-textbooks',desc:'Find books to support final-year study and exam preparation.'},
- {grade:'all',name:'Ethiopian Ministry of Education curriculum framework',url:'https://www.moe.gov.et/storage/Books/Curriculum%20Framework%20for%20Ethiopian%20Education%20%28KG%20%E2%80%93%20Grade%2012%29.pdf',desc:'Reference framework for secondary subjects and streams.'}
-];
-const lessons = {
- english:{title:'Reading for meaning',en:'A good reader identifies the main idea, supporting details, unfamiliar vocabulary, and the author’s purpose. Read the whole passage first, then return to the evidence before answering.',am:'ጥሩ አንባቢ ዋና ሐሳብን፣ ደጋፊ ዝርዝሮችን፣ ያልተለመዱ ቃላትን እና የጸሐፊውን ዓላማ ይለያል። መጀመሪያ ጽሑፉን በሙሉ አንብብ፤ ከዚያ መልስ ከመስጠትህ በፊት ማስረጃውን እንደገና ፈልግ።',om:'Dubbisaan gaariin yaada ijoo, ragaa deeggaru, jechoota hin beekamne fi kaayyoo barreessaa adda baasa. Jalqaba barruu guutuu dubbisi; deebii kennuu dura ragaa keessa jiru mirkaneessi.',quiz:{q:'What is the main idea of a passage?',opts:['A minor example','The central point or message','The longest word','The title only'],a:1,why:'The main idea is the central point the passage communicates.'}},
- math:{title:'Linear equations',en:'A linear equation has a variable whose highest power is 1. To solve it, perform the same operation on both sides to isolate the variable. Example: 2x + 3 = 11 → 2x = 8 → x = 4.',am:'መስመራዊ እኩልታ ተለዋዋጩ ከፍተኛ ኃይል 1 የሆነው እኩልታ ነው። ተለዋዋጩን ብቻ ለማስቀረት በሁለቱም ወገኖች ላይ ተመሳሳይ ስሌት አድርግ። ምሳሌ፦ 2x + 3 = 11 → 2x = 8 → x = 4።',om:'Himni sararaawaa jijjiiramaan isaa humni guddaan 1 ta’e dha. Jijjiiramaa kophaa baasuuf gama lamaan irratti hojii wal-fakkaataa raawwadhu. Fakkeenya: 2x + 3 = 11 → 2x = 8 → x = 4.',quiz:{q:'Solve: 2x + 3 = 11',opts:['x = 3','x = 4','x = 7','x = 14'],a:1,why:'Subtract 3 from both sides: 2x = 8. Divide by 2: x = 4.'}},
- physics:{title:'Speed and velocity',en:'Speed is distance travelled per unit time. Average speed = total distance ÷ total time. Velocity includes direction as well as magnitude, so it is a vector quantity.',am:'ፍጥነት (speed) በአንድ የጊዜ ክፍል የተጓዘ ርቀት ነው። አማካይ ፍጥነት = ጠቅላላ ርቀት ÷ ጠቅላላ ጊዜ። Velocity አቅጣጫንም ያካትታል።',om:'Saffisni fageenya yeroo tokko keessatti deemame dha. Saffisa giddu-galeessaa = fageenya waliigalaa ÷ yeroo waliigalaa. Velocity immoo kallattii dabalata.',quiz:{q:'A car travels 100 km in 2 hours. Its average speed is…',opts:['25 km/h','50 km/h','100 km/h','200 km/h'],a:1,why:'Average speed = 100 km ÷ 2 h = 50 km/h.'}},
- chemistry:{title:'Atoms and elements',en:'An atom is the smallest unit of an element that retains its chemical identity. The nucleus contains protons and neutrons; electrons occupy regions around the nucleus. An element contains one type of atom.',am:'አቶም የአንድ ንጥረ ነገር ኬሚካላዊ መለያነቱን የሚጠብቅ ትንሹ ክፍል ነው። ኒውክሊየሱ ፕሮቶንና ኒውትሮን ይይዛል፤ ኤሌክትሮኖች በዙሪያው ይገኛሉ።',om:'Atoomiin kutaa elementii amala keemikaalaa isaa eegu keessaa isa xiqqaa dha. Niwukilasii keessatti protonii fi neutroniin jiru; elektiroononni naannoo isaa jiru.',quiz:{q:'Which particles are found in an atomic nucleus?',opts:['Only electrons','Protons and neutrons','Only neutrons','Electrons and protons'],a:1,why:'The nucleus contains protons and, in most atoms, neutrons.'}},
- biology:{title:'Cells: the basic unit of life',en:'The cell is the basic structural and functional unit of living organisms. Many cells have a cell membrane, cytoplasm, and genetic material. Plant cells usually also have a cell wall and chloroplasts.',am:'ሴል የሕያዋን ፍጥረታት መሠረታዊ መዋቅራዊና ተግባራዊ ክፍል ነው። ብዙ ሴሎች የሴል ሽፋን፣ ሳይቶፕላዝም እና የዘረመል መረጃ አላቸው። የተክል ሴሎች ብዙውን ጊዜ የሴል ግድግዳና ክሎሮፕላስት ይኖራቸዋል።',om:'Seeliin bu’uura caasaa fi hojii lubbu-qabeeyyii ti. Seelonni hedduun membrane, cytoplasm fi odeeffannoo dhaalaa qabu. Seeliin biqiltuu yeroo baay’ee dallaa seelii fi chloroplast qaba.',quiz:{q:'What is the basic unit of life?',opts:['Organ','Cell','Tissue','Organ system'],a:1,why:'The cell is the basic structural and functional unit of life.'}},
- geography:{title:'Reading maps and scale',en:'A map represents an area of the Earth on a flat surface. A map scale compares distance on the map with real distance. Always check the scale, legend, orientation and title before interpreting a map.',am:'ካርታ የምድርን ክፍል በጠፍጣፋ ወለል ላይ ይወክላል። የካርታ ሚዛን በካርታው ላይ ያለውን ርቀት ከእውነተኛው ርቀት ጋር ያነጻጽራል። ካርታን ከመተርጎም በፊት ሚዛኑን፣ ቁልፉን፣ አቅጣጫውንና ርዕሱን ተመልከት።',om:'Kaartaan lafa irratti bakka tokko fuula diriiraa irratti agarsiisa. Madaalliin kaartaa fageenya kaartaa irratti jiru fageenya dhugaa waliin walbira qaba. Hiikuu dura madaallii, mallattoo, kallattii fi mata-duree ilaali.',quiz:{q:'What does a map scale show?',opts:['Weather only','Map distance compared with real distance','Population only','Direction only'],a:1,why:'A scale expresses the relationship between map distance and ground distance.'}},
- history:{title:'Using historical evidence',en:'History studies the past using evidence such as documents, oral accounts, objects and archaeological findings. Compare sources, consider who created them, and distinguish evidence from interpretation.',am:'ታሪክ ያለፈውን ጊዜ በሰነዶች፣ በቃል ትረካዎች፣ በቁሳቁሶችና በአርኪዮሎጂ ግኝቶች ያጠናል። ምንጮችን አነጻጽር፣ ማን እንደፈጠራቸው አስብ፣ ማስረጃንም ከትርጓሜ ለይ።',om:'Seenaa ragaa akka sanadoota, afoola, meeshaalee fi argannoo arkiyooloojii fayyadamuun darbe qorata. Maddoota walbira qabi; eenyu akka uumee yaadi; ragaa fi hiika adda baasi.',quiz:{q:'Which is an example of historical evidence?',opts:['A documented letter from the past','A random guess','An unsupported rumour','A fictional future story'],a:0,why:'A documented letter can provide evidence about past events, though it must be assessed critically.'}},
- economics:{title:'Scarcity and choice',en:'Scarcity means resources are limited while human wants are many. Because of scarcity, people and societies make choices. Opportunity cost is the next best alternative given up when a choice is made.',am:'እጥረት ማለት ሀብቶች ውስን ሲሆኑ የሰው ፍላጎቶች ግን ብዙ መሆናቸው ነው። ስለዚህ ሰዎች ምርጫ ያደርጋሉ። የአማራጭ ወጪ አንድን ምርጫ ሲያደርጉ የተተወው ቀጣይ ምርጥ አማራጭ ነው።',om:'Hanqinni jechuun qabeenyi daangeffamaa ta’ee fedhiin namaa baay’ee ta’uu dha. Kanaaf namoonni filannoo godhu. Baasiin carraa filannoo tokko yeroo goonu filannoo gaarii itti aanu dhiisnu dha.',quiz:{q:'Opportunity cost is…',opts:['Every possible option added together','The next best alternative given up','Only money spent','A free gift'],a:1,why:'Opportunity cost is the value of the next best alternative forgone.'}},
- civics:{title:'Rights and responsibilities',en:'Rights protect people’s freedoms and dignity. Responsibilities are duties people have toward others and their community. A healthy civic society respects rights while following fair laws and participating peacefully.',am:'መብቶች የሰዎችን ነፃነትና ክብር ይጠብቃሉ። ኃላፊነቶች ሰዎች ለሌሎችና ለማህበረሰባቸው ያለባቸው ግዴታዎች ናቸው። ጤናማ የዜግነት ማህበረሰብ መብቶችን ያከብራል፣ ፍትሃዊ ሕጎችንም ይከተላል።',om:'Mirgoonni bilisummaa fi kabaja namaa eegu. Itti gaafatamummaan dirqama namni namoota biroo fi hawaasaaf qabu dha. Hawaasni gaariin mirga kabaja, seera haqa qabeessa hordofa.',quiz:{q:'Which action shows civic responsibility?',opts:['Ignoring every community rule','Respecting others and following fair laws','Preventing others from speaking','Damaging public property'],a:1,why:'Civic responsibility includes respecting others, the community and fair laws.'}},
- ict:{title:'Digital safety and privacy',en:'Use strong unique passwords, enable multi-factor authentication where possible, keep software updated, and do not share verification codes. Think carefully before posting personal information online.',am:'ጠንካራና የተለያዩ የይለፍ ቃላትን ተጠቀም፣ ከተቻለ ባለብዙ ደረጃ ማረጋገጫን አብራ፣ ሶፍትዌርን አዘምን፣ የማረጋገጫ ኮዶችንም ለማንም አትስጥ። የግል መረጃ ከመለጠፍህ በፊት በጥንቃቄ አስብ።',om:'Jecha iccitii cimaa fi adda addaa fayyadami; yoo danda’ame mirkaneessa sadarkaa hedduu banu; software haaromsi; koodii mirkaneessaa namaaf hin kennin. Odeeffannoo dhuunfaa interneetii irratti maxxansuu dura sirriitti yaadi.',quiz:{q:'Which is a safer online practice?',opts:['Sharing one password with everyone','Posting verification codes publicly','Using unique passwords and keeping codes private','Clicking every unknown link'],a:2,why:'Unique passwords and private verification codes reduce account-compromise risks.'}},
- afaanoromo:{title:'Afaan and communication',en:'Language learning improves through reading, listening, speaking and writing. Learn vocabulary in context, practise complete sentences, and review mistakes regularly.',am:'ቋንቋን በማንበብ፣ በማዳመጥ፣ በመናገርና በመጻፍ መማር ይጠናከራል። ቃላትን በአውድ ተማር፣ ሙሉ ዓረፍተ ነገሮችን ተለማመድ፣ ስህተቶችንም በየጊዜው ገምግም።',om:'Barnoonni afaanii dubbisuu, dhaggeeffachuu, dubbachuu fi barreessuun ni cimina. Jechoota haala keessatti baradhu, himoota guutuu shaakali, dogoggora kee yeroo yeroon irra deebi’i.',quiz:{q:'What helps language learning most?',opts:['Never practising','Reading, listening, speaking and writing','Memorizing without context only','Avoiding feedback'],a:1,why:'Balanced practice in the four skills helps develop language ability.'}},
- amharic:{title:'የንባብ ግንዛቤ',en:'Reading comprehension means understanding the meaning of a text, identifying its main point and supporting details, and explaining the writer’s message in your own words.',am:'የንባብ ግንዛቤ የጽሑፉን ትርጉም መረዳት፣ ዋና ሐሳቡንና ደጋፊ ዝርዝሮቹን መለየት፣ የጸሐፊውን መልእክት በራስህ ቃላት ማብራራት ማለት ነው።',om:'Hubannoon dubbisaa jechuun hiika barruu hubachuu, yaada ijoo fi ragaa deeggaru adda baasuu, ergaa barreessaa jechoota ofiitiin ibsuu dha.',quiz:{q:'የንባብ ግንዛቤ ምንን ያካትታል?',opts:['ቃላትን ብቻ መቁጠር','የጽሑፉን ትርጉም መረዳት','ርዕሱን ብቻ ማንበብ','ጽሑፉን ሳያነቡ መመለስ'],a:1,why:'ግንዛቤ የጽሑፉን ትርጉምና መልእክት መረዳት ነው።'}},
- pe:{title:'Physical fitness basics',en:'Physical fitness includes endurance, strength, flexibility and coordination. Regular activity, gradual progress, hydration, rest and safe technique help maintain health.',am:'አካላዊ ብቃት ጽናትን፣ ጥንካሬን፣ ተለዋዋጭነትንና ቅንጅትን ያካትታል። መደበኛ እንቅስቃሴ፣ ቀስ በቀስ መጨመር፣ ውሃ መጠጣት፣ እረፍትና ደህንነቱ የተጠበቀ ቴክኒክ ጤናን ይጠብቃሉ።',om:'Dandeettiin qaamaa obsaa, humna, laafina fi qindoomina of keessatti qaba. Sochii idilee, suuta guddachuu, bishaan dhuguu, boqonnaa fi tooftaa nageenya qabu fayyaa eegu.',quiz:{q:'Which is a component of physical fitness?',opts:['Endurance','Rumour','Inflation','Syntax'],a:0,why:'Endurance is a recognized component of physical fitness.'}},
- business:{title:'Entrepreneurship basics',en:'A business identifies a need, offers a product or service, and manages costs and income. A simple business plan explains the customer, value offered, resources, pricing and risks.',am:'ንግድ ፍላጎትን ይለያል፣ ምርት ወይም አገልግሎት ያቀርባል፣ ወጪና ገቢንም ያስተዳድራል። ቀላል የንግድ እቅድ ደንበኛውን፣ የሚሰጠውን ጥቅም፣ ሀብቶችን፣ ዋጋንና አደጋዎችን ይገልጻል።',om:'Daldalli fedhii adda baasa, oomisha ykn tajaajila dhiyeessa, baasii fi galii bulcha. Karoora daldalaa salphaan maamila, gatii kennamu, qabeenya, gatii gurgurtaa fi balaa ibsa.',quiz:{q:'What should a basic business plan identify?',opts:['Only a business name','Customer, value, resources, price and risks','Only the owner’s favourite colour','No costs or customers'],a:1,why:'A useful plan explains the customer, value proposition, resources, pricing and risks.'}},
- technical:{title:'Technical drawing: precision',en:'Technical drawing communicates shapes and dimensions clearly. Use suitable views, scale, line types and measurements. Accuracy and neatness make drawings easier to interpret.',am:'ቴክኒካዊ ስዕል ቅርጾችንና መጠኖችን በግልጽ ያሳያል። ተስማሚ እይታዎችን፣ ሚዛንን፣ የመስመር ዓይነቶችንና መለኪያዎችን ተጠቀም። ትክክለኛነትና ንጽህና ስዕሉን ለመረዳት ያስችላሉ።',om:'Fakkiin teeknikaa boca fi safara ifatti ibsa. Ilaalcha, madaallii, gosa sararaa fi safara sirrii fayyadami. Sirrummaa fi qulqullinni fakkii hubachuuf gargaara.',quiz:{q:'Why are dimensions important in a technical drawing?',opts:['They decorate the page','They communicate exact measurements','They replace all views','They make it less readable'],a:1,why:'Dimensions communicate the intended measurements precisely.'}}
-};
-// Amharic translations for the sample practice items. These are translations of the sample concepts, not official textbook questions.
-const quizAm = {
- english:{q:'የአንድ ጽሑፍ ዋና ሐሳብ ምንድን ነው?',opts:['ትንሽ ምሳሌ','ዋናው ነጥብ ወይም መልእክት','ረጅሙ ቃል','ርዕሱ ብቻ'],why:'ዋና ሐሳብ ጽሑፉ የሚያስተላልፈው ማዕከላዊ ነጥብ ነው።'},
- math:{q:'2x + 3 = 11 ን ፍታ።',opts:['x = 3','x = 4','x = 7','x = 14'],why:'ከሁለቱም ወገኖች 3 ቀንስ፦ 2x = 8። ከዚያ በ2 አካፍል፦ x = 4።'},
- physics:{q:'መኪና በ2 ሰዓት 100 ኪ.ሜ ተጓዘች። አማካይ ፍጥነቷ ስንት ነው?',opts:['25 ኪ.ሜ/ሰዓት','50 ኪ.ሜ/ሰዓት','100 ኪ.ሜ/ሰዓት','200 ኪ.ሜ/ሰዓት'],why:'አማካይ ፍጥነት = ጠቅላላ ርቀት ÷ ጠቅላላ ጊዜ = 100 ÷ 2 = 50 ኪ.ሜ/ሰዓት።'},
- chemistry:{q:'በአቶም ኒውክሊየስ ውስጥ የሚገኙት የትኞቹ ቅንጣቶች ናቸው?',opts:['ኤሌክትሮኖች ብቻ','ፕሮቶኖችና ኒውትሮኖች','ኒውትሮኖች ብቻ','ኤሌክትሮኖችና ፕሮቶኖች'],why:'የአቶም ኒውክሊየስ ፕሮቶኖችንና በአብዛኛው አቶሞች ኒውትሮኖችን ይይዛል።'},
- biology:{q:'የሕይወት መሠረታዊ ክፍል ምንድን ነው?',opts:['አካል','ሴል','ሕብረ ሕዋስ','የአካላት ሥርዓት'],why:'ሴል የሕያዋን ፍጥረታት መሠረታዊ መዋቅራዊና ተግባራዊ ክፍል ነው።'},
- geography:{q:'የካርታ ሚዛን ምንን ያሳያል?',opts:['የአየር ሁኔታን ብቻ','በካርታ ላይ ያለውን ርቀት ከእውነተኛ ርቀት ጋር ያለውን ግንኙነት','የሕዝብ ብዛትን ብቻ','አቅጣጫን ብቻ'],why:'የካርታ ሚዛን በካርታ ላይ ያለውን ርቀት ከመሬት ላይ ካለው እውነተኛ ርቀት ጋር ያነጻጽራል።'},
- history:{q:'ከሚከተሉት ውስጥ የታሪክ ማስረጃ የሆነው የትኛው ነው?',opts:['ከያለፈው ጊዜ የተጻፈ ደብዳቤ','ያልተመሠረተ ግምት','ማስረጃ የሌለው ወሬ','ስለወደፊቱ የተፈጠረ ታሪክ'],why:'የተጻፈ ደብዳቤ ስለ ያለፉ ክስተቶች ማስረጃ ሊሰጥ ይችላል፤ ሆኖም በጥንቃቄ መመርመር አለበት።'},
- economics:{q:'የአማራጭ ወጪ ምንድን ነው?',opts:['ሁሉንም አማራጮች በአንድ ላይ መደመር','ምርጫ ሲደረግ የሚተወው ቀጣይ ምርጥ አማራጭ','የተከፈለ ገንዘብ ብቻ','ነፃ ስጦታ'],why:'የአማራጭ ወጪ ምርጫ ሲደረግ የሚተወው ቀጣይ ምርጥ አማራጭ ዋጋ ነው።'},
- civics:{q:'የዜግነት ኃላፊነትን የሚያሳየው የትኛው ተግባር ነው?',opts:['ሁሉንም የማህበረሰብ ሕጎች መተው','ሌሎችን ማክበርና ፍትሃዊ ሕጎችን መከተል','ሌሎች እንዳይናገሩ ማድረግ','የሕዝብ ንብረትን ማበላሸት'],why:'የዜግነት ኃላፊነት ሌሎችን፣ ማህበረሰቡንና ፍትሃዊ ሕጎችን ማክበርን ያካትታል።'},
- ict:{q:'ከሚከተሉት ውስጥ የተሻለ የመስመር ላይ ደህንነት ልምድ የትኛው ነው?',opts:['አንድ የይለፍ ቃል ከሁሉም ጋር መጋራት','የማረጋገጫ ኮዶችን በይፋ መለጠፍ','የተለያዩ የይለፍ ቃላትን መጠቀምና ኮዶችን ሚስጥር ማድረግ','የማይታወቁ ሊንኮችን ሁሉ መጫን'],why:'የተለያዩ የይለፍ ቃላትና ሚስጥር የተደረጉ የማረጋገጫ ኮዶች መለያ እንዳይጠለፍ ይረዳሉ።'},
- afaanoromo:{q:'ቋንቋን ለመማር በጣም የሚረዳው ምንድን ነው?',opts:['ፈጽሞ አለመለማመድ','ማንበብ፣ ማዳመጥ፣ መናገርና መጻፍ','አውድ ሳይኖር በቃል መያዝ ብቻ','አስተያየትን መተው'],why:'በአራቱም የቋንቋ ክህሎቶች ሚዛናዊ ልምምድ የቋንቋ ችሎታን ያጠናክራል።'},
- amharic:{q:'የንባብ ግንዛቤ ምንን ያካትታል?',opts:['ቃላትን ብቻ መቁጠር','የጽሑፉን ትርጉም መረዳት','ርዕሱን ብቻ ማንበብ','ጽሑፉን ሳያነቡ መመለስ'],why:'ግንዛቤ የጽሑፉን ትርጉምና መልእክት መረዳት ነው።'},
- pe:{q:'ከሚከተሉት ውስጥ የአካላዊ ብቃት አንዱ ክፍል የትኛው ነው?',opts:['ጽናት','ወሬ','የዋጋ ግሽበት','ሰዋሰው'],why:'ጽናት ከታወቁት የአካላዊ ብቃት ክፍሎች አንዱ ነው።'},
- business:{q:'መሠረታዊ የንግድ እቅድ ምንን መለየት አለበት?',opts:['የንግዱን ስም ብቻ','ደንበኛ፣ የሚሰጠው ጥቅም፣ ሀብቶች፣ ዋጋና አደጋዎች','የባለቤቱን ተወዳጅ ቀለም ብቻ','ወጪና ደንበኞችን ሳይመለከት'],why:'ጠቃሚ የንግድ እቅድ ደንበኛውን፣ የሚሰጠውን ጥቅም፣ ሀብቶችን፣ ዋጋንና አደጋዎችን ይገልጻል።'},
- technical:{q:'በቴክኒካዊ ስዕል ውስጥ መጠኖች ለምን አስፈላጊ ናቸው?',opts:['ገጹን ለማስዋብ','ትክክለኛ መለኪያዎችን ለማሳየት','ሁሉንም እይታዎች ለመተካት','ስዕሉን ለማይነበብ ለማድረግ'],why:'መጠኖች የታሰቡትን መለኪያዎች በትክክል ያሳያሉ።'}
-};
-function getQuiz(id,lang){const base=(lessons[id]||lessons.english).quiz;return lang==='am'?(quizAm[id]||base):base;}
-const subjectNames=Object.fromEntries(subjects.common.map(s=>[s.id,s]));
-let state={xp:0,answered:0,correct:0,streak:0,lastDay:'',mistakes:[],completed:{},lastSubject:'math',lastGrade:'9',uiLang:'en'};
-try{const saved=JSON.parse(localStorage.getItem('studymate-v2')||'{}');state={...state,...saved}}catch(e){}
-const $=id=>document.getElementById(id);
-let currentView='subjects', currentSubject='math', currentLang='en', quizAnswered=false, timerId=null, seconds=0;
-function save(){try{localStorage.setItem('studymate-v2',JSON.stringify(state))}catch(e){}renderStats()}
-function renderStats(){$('xpVal').textContent=state.xp;$('streakVal').textContent=state.streak+' days';$('doneVal').textContent=state.answered;$('accuracyVal').textContent=state.answered?Math.round(state.correct/state.answered*100)+'%':'—'}
-function getGrade(){return $('grade').value}
-function getStream(){return $('stream').value}
-function visibleSubjects(){let g=+getGrade(), stream=getStream();if(g<=10)return subjects.common.filter(s=>!['economics','business','technical'].includes(s.id)||g===10);if(stream==='natural')return subjects.common.filter(s=>!subjects.social.includes(s.id)&&!['amharic','afaanoromo','geography','history','economics','business'].includes(s.id));if(stream==='social')return subjects.common.filter(s=>!subjects.natural.includes(s.id)&&!['biology','chemistry','physics','technical'].includes(s.id));return subjects.common}
-function renderSubjects(){currentView='subjects';$('mainView').classList.remove('hidden');$('contentView').classList.add('hidden');$('viewTitle').textContent='Your subjects';$('viewSubtitle').textContent='Choose a subject to open lesson notes and practice.';$('gradeTag').textContent='GRADE '+getGrade();const list=visibleSubjects();$('subjectGrid').innerHTML=list.map(s=>{let done=state.completed[getGrade()+'-'+s.id]||0;return `<button class="subject-card" data-subject="${s.id}"><div class="subject-top"><div class="subject-icon">${s.icon}</div><div><h3>${s.name}</h3><p>${s.desc}</p></div></div><div class="progress"><span style="width:${Math.min(100,done*20)}%"></span></div><div class="subject-foot"><span>${done} lesson quiz${done===1?'':'zes'} completed</span><span>Open →</span></div></button>`}).join('');$('subjectGrid').querySelectorAll('[data-subject]').forEach(b=>b.onclick=()=>openSubject(b.dataset.subject));$('contentNotice').classList.remove('hidden');$('contentNotice').textContent='ACCURACY NOTICE: This is a starter edition with general concept lessons and sample questions, not a complete grade-by-grade textbook course. Questions are checked for valid answer-option structure, but factual correctness still requires review against the exact textbook edition. Use Textbook Library to verify source books.'}
-function openSubject(id){currentSubject=id;quizAnswered=false;currentLang=state.uiLang==='am'?'am':'en';state.lastSubject=id;state.lastGrade=getGrade();save();renderLesson()}
-function renderLesson(){currentView='lesson';$('mainView').classList.add('hidden');$('contentView').classList.remove('hidden');const s=subjectNames[currentSubject],l=lessons[currentSubject]||lessons.english,q=getQuiz(currentSubject,currentLang);const text=l[currentLang]||l.en; $('contentView').innerHTML=`<div class="section-head"><div><h2>${s.icon} ${s.name}</h2><p>Grade ${getGrade()} · ${getStream()==='all'?'Common / all subjects':getStream()==='natural'?'Natural Science':'Social Science'}</p></div><button class="btn" id="backSubjects">← Subjects</button></div><article class="lesson-card"><span class="tag">SAMPLE LESSON · ${getGrade()}</span><h3 style="margin-top:10px">${l.title}</h3><div class="language-tabs"><button data-lang="en" class="${currentLang==='en'?'active':''}">English</button><button data-lang="am" class="${currentLang==='am'?'active':''}">አማርኛ</button></div><div class="lesson-text" id="lessonText">${text}</div><div class="notice">Study note: this is an illustrative learning explanation, not a full transcription of the official textbook chapter.</div></article><article class="lesson-card"><span class="tag">PRACTICE</span><h3>${q.q}</h3><div class="quiz-options" id="quizOptions">${q.opts.map((o,i)=>`<button class="option" data-opt="${i}">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div><div id="quizFeedback"></div><button class="btn primary" id="nextQuestion">Finish & return to subjects</button></article>`;$('backSubjects').onclick=renderSubjects;$('contentView').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{currentLang=b.dataset.lang;renderLesson()});$('quizOptions').querySelectorAll('[data-opt]').forEach(b=>b.onclick=()=>answerQuiz(+b.dataset.opt));$('nextQuestion').onclick=()=>{renderSubjects();window.scrollTo({top:0,behavior:'smooth'})}}
-function answerQuiz(chosen){if(quizAnswered)return;quizAnswered=true;const l=lessons[currentSubject],q=getQuiz(currentSubject,currentLang),correct=chosen===l.quiz.a;state.answered++;if(correct){state.correct++;state.xp+=10}else{state.mistakes.unshift({grade:getGrade(),subject:currentSubject,q:q.q,chosen:q.opts[chosen],correct:q.opts[l.quiz.a],why:q.why});state.mistakes=state.mistakes.slice(0,100)}const today=new Date().toISOString().slice(0,10);if(state.lastDay!==today){let yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);state.streak=state.lastDay===yesterday?state.streak+1:1;state.lastDay=today}let key=getGrade()+'-'+currentSubject;state.completed[key]=(state.completed[key]||0)+1;save();$('quizOptions').querySelectorAll('[data-opt]').forEach((b,i)=>{b.disabled=true;if(i===l.quiz.a)b.classList.add('correct');if(i===chosen&&!correct)b.classList.add('wrong')});$('quizFeedback').innerHTML=`<div class="feedback"><strong>${correct?(currentLang==='am'?'✓ ትክክል! +10 XP':'✓ Correct! +10 XP'):(currentLang==='am'?'አልተሳካም — ማብራሪያውን እንደገና ተመልከት።':'Not quite — review the explanation.')}</strong><p>${q.why}</p></div>`;$('nextQuestion').textContent='Return to subjects'}
-function renderBooks(){currentView='books';$('mainView').classList.add('hidden');$('contentView').classList.remove('hidden');$('contentView').innerHTML=`<div class="section-head"><div><h2>📚 Textbook library</h2><p>Find textbooks and verify the edition used by your school.</p></div><button class="btn" id="backSubjects">← Subjects</button></div><div class="notice">The official-linked catalogue below lists 2023 student textbooks for Grades 9–12 by grade and subject. Use it to verify the exact book and chapter titles. This app does not yet contain every verified chapter, and it does not reproduce full copyrighted textbooks.</div>${textbookLinks.filter(x=>x.grade==='all'||x.grade===getGrade()).map(x=>`<div class="resource"><div><h4>${x.name}</h4><p>${x.desc}</p></div><a href="${x.url}" target="_blank" rel="noopener">Open source ↗</a></div>`).join('')}<div class="lesson-card"><h3>Content verification checklist</h3><p><strong>Source catalogue:</strong> the linked catalogue lists student books for Grades 9–12, including books marked 2023. Confirm that the subject and edition match the book used at your school.</p><p><strong>Current app status:</strong> sample concept lessons and sample multiple-choice questions only. The full chapter titles, chapter-by-chapter explanations, and a complete official Matric question bank are not yet included.</p><p><strong>Before publishing a question:</strong> record the grade, subject, exact unit/chapter, source page, answer key, and a short explanation; independently re-check calculations and ambiguous options.</p><p><a href="https://lts.stjohn.edu.et/find-borrow-request/moe-textbooks" target="_blank" rel="noopener">Open Grade 9–12 textbook catalogue ↗</a></p><p><a href="https://www.moe.gov.et/storage/Books/Curriculum%20Framework%20for%20Ethiopian%20Education%20%28KG%20%E2%80%93%20Grade%2012%29.pdf" target="_blank" rel="noopener">Read Ministry curriculum framework ↗</a></p></div><div class="lesson-card"><h3>Automatic question-structure check</h3><p id="questionAudit">Checking question structure…</p><p class="lesson-text">This check can detect missing text or an answer index outside the available options. It cannot prove that a fact or answer matches the official textbook; source review is still required.</p></div>`;$('backSubjects').onclick=renderSubjects;const audit=Object.entries(lessons).map(([id,l])=>({id,ok:!!(l.title&&l.en&&l.am&&l.quiz&&l.quiz.q&&Array.isArray(l.quiz.opts)&&l.quiz.opts.length>=2&&Number.isInteger(l.quiz.a)&&l.quiz.a>=0&&l.quiz.a<l.quiz.opts.length&&l.quiz.why)}));const bad=audit.filter(x=>!x.ok);$('questionAudit').textContent=bad.length?`${bad.length} lesson question(s) have missing or invalid structure: ${bad.map(x=>x.id).join(', ')}.`:`Structure check passed for ${audit.length} sample lesson question(s). Factual verification against textbook pages is still pending.`}
-function renderReview(){currentView='review';$('mainView').classList.add('hidden');$('contentView').classList.remove('hidden');$('contentView').innerHTML=`<div class="section-head"><div><h2>↻ Review mistakes</h2><p>Use mistakes as a study plan.</p></div><button class="btn" id="backSubjects">← Subjects</button></div>${state.mistakes.length?state.mistakes.map((m,i)=>`<article class="lesson-card"><span class="tag">GRADE ${m.grade} · ${subjectNames[m.subject]?.name||m.subject}</span><h3>${m.q}</h3><p><strong>Your answer:</strong> ${m.chosen}</p><p><strong>Correct answer:</strong> ${m.correct}</p><p>${m.why}</p></article>`).join(''):'<div class="empty">No mistakes saved yet. Answer a practice question and any incorrect answer will appear here.</div>'}`;$('backSubjects').onclick=renderSubjects}
-function renderDaily(){currentView='daily';$('mainView').classList.add('hidden');$('contentView').classList.remove('hidden');const ids=Object.keys(lessons),index=(new Date().getDate()+new Date().getMonth())%ids.length;const id=ids[index],q=getQuiz(id,state.uiLang);$('contentView').innerHTML=`<div class="section-head"><div><h2>⚡ Daily challenge</h2><p>One question a day keeps your revision moving.</p></div><button class="btn" id="backSubjects">← Subjects</button></div><div class="lesson-card"><span class="tag">DAILY CHALLENGE</span><h3>${subjectNames[id].name}: ${q.q}</h3><div class="quiz-options" id="dailyOptions">${q.opts.map((o,i)=>`<button class="option" data-opt="${i}">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div><div id="dailyFeedback"></div><p class="lesson-text">${lessons[id][state.uiLang==='am'?'am':'en']}</p></div>`;$('backSubjects').onclick=renderSubjects;$('dailyOptions').querySelectorAll('[data-opt]').forEach(b=>b.onclick=()=>{if(b.disabled)return;const chosen=+b.dataset.opt,l=lessons[id],ok=chosen===l.quiz.a;state.answered++;if(ok){state.correct++;state.xp+=15}else{state.mistakes.unshift({grade:getGrade(),subject:id,q:q.q,chosen:q.opts[chosen],correct:q.opts[l.quiz.a],why:q.why})}save();$('dailyOptions').querySelectorAll('button').forEach((x,i)=>{x.disabled=true;if(i===l.quiz.a)x.classList.add('correct');if(i===chosen&&!ok)x.classList.add('wrong')});$('dailyFeedback').innerHTML=`<div class="feedback"><strong>${ok?'Correct! +15 XP':'Review this answer'}</strong><p>${q.why}</p></div>`})}
-function renderMatric(){currentView='matric';$('mainView').classList.add('hidden');$('contentView').classList.remove('hidden');$('contentView').innerHTML=`<div class="section-head"><div><h2>🏆 Grade 12 Matric preparation</h2><p>Build a routine, practise under time limits, and review weak areas.</p></div><button class="btn" id="backSubjects">← Subjects</button></div><div class="grid"><article class="lesson-card"><h3>1. Choose your stream</h3><p>Use the stream selector on the left to focus on Natural Science or Social Science subjects.</p><button class="btn soft" id="chooseStream">Set stream</button></article><article class="lesson-card"><h3>2. Timed practice</h3><p>Use a 25-minute study block. Answer questions without checking notes, then review mistakes.</p><div style="font-size:28px;font-weight:800" id="timer">25:00</div><button class="btn primary" id="startTimer">Start 25-minute timer</button> <button class="btn" id="stopTimer">Stop</button></article><article class="lesson-card"><h3>3. Review weak subjects</h3><p>Open Review mistakes to identify concepts that need more work. Revisit the lesson before trying again.</p><button class="btn soft" id="openReview">Review mistakes</button></article><article class="lesson-card"><h3>4. Exam readiness</h3><p>Official exam patterns and complete Grade 12 question banks must be added from verified, authorized materials. The sample questions here are not a complete official matric mock exam.</p><a href="https://www.moe.gov.et/" target="_blank" rel="noopener">Ministry of Education ↗</a></article></div>`;$('backSubjects').onclick=renderSubjects;$('chooseStream').onclick=()=>{$('stream').focus();$('stream').scrollIntoView({behavior:'smooth',block:'center'})};$('openReview').onclick=renderReview;let left=1500;const update=()=>{$('timer').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0')};update();$('startTimer').onclick=()=>{if(timerId)return;timerId=setInterval(()=>{left--;update();if(left<=0){clearInterval(timerId);timerId=null;alert('Study session complete. Take a short break and review what you learned.')}},1000)};$('stopTimer').onclick=()=>{if(timerId)clearInterval(timerId);timerId=null;left=1500;update()}}
-function setView(view){document.querySelectorAll('.navitem').forEach(b=>b.classList.toggle('active',b.dataset.view===view));if(view==='subjects')renderSubjects();if(view==='books')renderBooks();if(view==='review')renderReview();if(view==='daily')renderDaily();if(view==='matric')renderMatric()}
-document.querySelectorAll('.navitem').forEach(b=>b.onclick=()=>setView(b.dataset.view));
-$('grade').onchange=()=>{state.lastGrade=getGrade();save();if(currentView==='lesson')renderLesson();else renderSubjects();updateStreamNote()};
-$('stream').onchange=()=>{if(currentView==='lesson')renderLesson();else renderSubjects();updateStreamNote()};
-function updateStreamNote(){const g=+getGrade();$('streamField').classList.toggle('hidden',g<11);$('streamNote').textContent=g<11?'Grades 9–10: general secondary subjects are shown. Subject availability can vary by curriculum and region.':'Grades 11–12: choose Natural Science or Social Science to filter specialized subjects. Common courses may also be available.'}
-$('uiLang').onchange=()=>{state.uiLang=$('uiLang').value;save();const labels={en:['Your learning journey, organized in one place.','Choose your grade, explore subjects, study lesson notes in English and Amharic, and prepare for exams step by step.','Learning path','GRADE','STREAM','Subjects','Daily challenge','Review mistakes','Textbook library','Matric prep'],am:['የትምህርት ጉዞህን በአንድ ቦታ አደራጅ።','ክፍልህን ምረጥ፣ ትምህርቶችን ተመልከት፣ በእንግሊዝኛ ወይም በአማርኛ አጥና እና ለፈተና ተዘጋጅ።','የትምህርት መንገድ','ክፍል','ዘርፍ','ትምህርቶች','የዕለቱ ፈተና','ስህተቶችን ገምግም','የመጽሐፍት ቤተ-መዘክር','የMatric ዝግጅት'],om:null};const a=labels[state.uiLang]||labels.en;$('heroTitle').textContent=a[0];$('heroDesc').textContent=a[1];$('learningPath').textContent=a[2];$('gradeLabel').textContent=a[3];$('streamLabel').textContent=a[4];$('navSubjects').textContent='▦ '+a[5];$('navDaily').textContent='⚡ '+a[6];$('navReview').textContent='↻ '+a[7];$('navBooks').textContent='▤ '+a[8];$('navMatric').textContent='🏆 '+a[9];if(currentView==='lesson')renderLesson();};
-$('continueBtn').onclick=()=>openSubject(state.lastSubject||'math');
-$('resetBtn').onclick=()=>$('confirmDialog').showModal();$('cancelReset').onclick=()=>$('confirmDialog').close();$('confirmReset').onclick=()=>{state={xp:0,answered:0,correct:0,streak:0,lastDay:'',mistakes:[],completed:{},lastSubject:'math',lastGrade:'9',uiLang:'en'};localStorage.removeItem('studymate-v2');$('uiLang').value='en';$('grade').value='9';$('stream').value='all';$('confirmDialog').close();$('uiLang').dispatchEvent(new Event('change'));renderStats();renderSubjects();updateStreamNote()};
-$('grade').value=state.lastGrade||'9';if(!['en','am'].includes(state.uiLang))state.uiLang='en';$('uiLang').value=state.uiLang;updateStreamNote();renderStats();renderSubjects();if(state.uiLang!=='en')$('uiLang').dispatchEvent(new Event('change'));
-</script>
-</body>
-</html>
+'use strict';
+const STORAGE_KEY='techmate_academy_v1';
+
+const COURSES=[
+{id:'basics',title:'Computer Fundamentals',icon:'💻',level:'Beginner',description:'Understand computers, data, hardware, software and operating systems.',lessons:[
+{title:'What Is a Computer?',minutes:5,body:`<p>A <strong>computer</strong> is an electronic device that accepts data, processes it according to instructions, stores it and produces information. Computers are used in education, business, communication, science and entertainment.</p><h2>The information-processing cycle</h2><ol><li><strong>Input:</strong> data is entered using a keyboard, mouse, camera or another input device.</li><li><strong>Processing:</strong> the processor follows instructions to work with the data.</li><li><strong>Output:</strong> results appear on a screen, through speakers or on paper.</li><li><strong>Storage:</strong> data and results can be saved for later use.</li></ol><div class="callout"><strong>Example:</strong> When you calculate 5 + 3, you enter the numbers, the computer processes them, and the result 8 is displayed.</div><h2>Data and information</h2><p><strong>Data</strong> is raw facts, such as individual numbers or names. <strong>Information</strong> is data processed into a useful form, such as a report showing a class average.</p><h2>Key takeaways</h2><ul><li>Input, processing, output and storage work together.</li><li>Hardware is physical equipment; software is a set of programs and instructions.</li><li>Computers follow instructions to perform tasks.</li></ul>`},
+{title:'Hardware and Peripheral Devices',minutes:6,body:`<p><strong>Hardware</strong> means the physical parts of a computer that you can touch. Peripheral devices connect to a computer to provide input, output or extra storage.</p><h2>Main components</h2><ul><li><strong>CPU:</strong> executes instructions and coordinates processing.</li><li><strong>RAM:</strong> temporary working memory used while programs run.</li><li><strong>Storage:</strong> an SSD or hard drive keeps files when power is off.</li><li><strong>Motherboard:</strong> connects key components so they can communicate.</li><li><strong>Power supply or battery:</strong> provides electrical power.</li></ul><h2>Peripheral examples</h2><p>Keyboard and mouse are input devices; monitor and speakers are output devices. A touchscreen can provide both input and output. A printer produces hard copies, while an external drive can store backups.</p><div class="callout">Remember: RAM is temporary working space. Storage keeps your files long-term.</div>`},
+{title:'Software and Operating Systems',minutes:6,body:`<p><strong>Software</strong> is a collection of programs and instructions that tell hardware what tasks to perform.</p><h2>Two broad categories</h2><ul><li><strong>System software:</strong> manages hardware and provides a platform for applications. Operating systems and drivers are examples.</li><li><strong>Application software:</strong> helps users do tasks, such as writing documents, browsing the web, editing photos or communicating.</li></ul><h2>What does an operating system do?</h2><p>An <strong>operating system (OS)</strong> manages memory, files, running programs, devices, user accounts and system security. Examples include Windows, macOS, Linux, Android and iOS.</p><h2>Safe software habits</h2><ul><li>Install apps from trusted sources.</li><li>Keep your operating system and applications updated.</li><li>Review permissions before granting access to camera, contacts or location.</li><li>Uninstall apps you no longer need using the normal process.</li></ul>`}
+]},
+{id:'internet',title:'Internet & Digital Skills',icon:'🌐',level:'Beginner',description:'Learn the web, browsers, search skills, email and responsible online habits.',lessons:[
+{title:'The Internet and the Web',minutes:5,body:`<p>The <strong>internet</strong> is a global network of connected networks. The <strong>World Wide Web</strong> is one service that uses the internet to access linked pages and media.</p><h2>Important terms</h2><ul><li><strong>Browser:</strong> software used to visit websites, such as Chrome, Firefox, Safari or Edge.</li><li><strong>Website:</strong> a collection of related web pages.</li><li><strong>URL:</strong> the address used to locate a resource.</li><li><strong>Server:</strong> a computer or service that provides resources to other devices.</li><li><strong>Search engine:</strong> a service that helps find pages using keywords.</li></ul><p>When you visit a website, your device requests information from a server, and your browser displays the response.</p><div class="callout">The internet is the underlying network; the web is one service that runs on it.</div>`},
+{title:'Searching and Evaluating Information',minutes:5,body:`<p>Effective searching means using precise keywords and checking whether sources are trustworthy.</p><h2>Search techniques</h2><ul><li>Use specific phrases, such as “how to create a strong password”.</li><li>Put quotation marks around exact phrases when supported.</li><li>Add context such as the device model or software version.</li><li>Compare information from more than one reliable source.</li></ul><h2>Check a source</h2><p>Look at the author, publication date, evidence and purpose. A polished website or high search ranking does not automatically make a claim true. Be careful with sensational headlines and urgent requests.</p>`},
+{title:'Email and Digital Communication',minutes:5,body:`<p>Email is an electronic messaging system. A typical message includes a recipient, subject, message body and sometimes attachments.</p><h2>Good communication habits</h2><ul><li>Write a clear subject and respectful greeting.</li><li>Keep your message focused and check spelling.</li><li>Check recipient addresses before sharing information.</li><li>Do not open unexpected attachments or links from unknown senders.</li><li>Never share passwords or verification codes in response to an unexpected message.</li></ul><p><strong>Phishing</strong> is an attempt to trick people into revealing information or taking unsafe actions. Verify suspicious requests through a separate, trusted channel.</p>`}
+]},
+{id:'networking',title:'Computer Networking',icon:'📡',level:'Beginner',description:'Explore networks, routers, IP addresses, Wi-Fi and troubleshooting.',lessons:[
+{title:'Network Basics',minutes:6,body:`<p>A <strong>computer network</strong> is a group of connected devices that can communicate and share resources such as files, printers or internet access.</p><h2>Common network types</h2><ul><li><strong>LAN:</strong> local area network, often used in a home, school or office.</li><li><strong>WAN:</strong> wide area network connecting devices across larger distances.</li><li><strong>WLAN:</strong> a local network using wireless communication, commonly Wi-Fi.</li></ul><h2>Network equipment</h2><p>A <strong>router</strong> forwards traffic between networks. A <strong>switch</strong> connects devices within a local wired network. A <strong>modem</strong> connects to an internet service over the provider's access technology. Some home devices combine several functions.</p>`},
+{title:'IP Addresses, DNS and Wi-Fi',minutes:7,body:`<p>An <strong>IP address</strong> identifies a network interface for communication. IPv4 addresses commonly look like four numbers separated by dots; IPv6 uses a longer hexadecimal format.</p><p><strong>DNS</strong> (Domain Name System) helps translate human-readable domain names into IP addresses used to reach services.</p><h2>Wi-Fi safety</h2><p>Use WPA2 or WPA3 security when available, set a unique router administrator password and update router firmware. Avoid sharing your Wi-Fi password publicly.</p><h2>Simple troubleshooting</h2><ol><li>Check whether Wi-Fi is enabled and airplane mode is off.</li><li>See whether other devices can connect.</li><li>Move closer to the router if the signal is weak.</li><li>Reconnect to the network and restart equipment if appropriate.</li><li>If the problem continues, contact your provider or network administrator.</li></ol>`},
+{title:'Bandwidth and Latency',minutes:5,body:`<p><strong>Bandwidth</strong> describes how much data a connection can carry over time. <strong>Latency</strong> is the time data takes to travel between points. A connection can have high bandwidth but still feel slow if latency or packet loss is high.</p><ul><li>Video calls benefit from stable connections and low latency.</li><li>Large downloads benefit from higher bandwidth.</li><li>Distance, walls, interference and active devices can affect Wi-Fi.</li></ul><p>When reporting a network problem, describe what fails, when it began, which devices are affected and any error message. This makes troubleshooting more systematic.</p>`}
+]},
+{id:'security',title:'Cybersecurity & Privacy',icon:'🛡️',level:'Essential',description:'Build safer habits for passwords, authentication, scams and privacy.',lessons:[
+{title:'Passwords and Multi-Factor Authentication',minutes:6,body:`<p>Cybersecurity is the practice of protecting devices, accounts, networks and information from unauthorized access or damage.</p><h2>Protect your accounts</h2><ul><li>Use long, unique passwords or passphrases for different accounts.</li><li>Consider a reputable password manager.</li><li>Enable <strong>multi-factor authentication (MFA)</strong> when available. It requires another proof of identity beyond the password.</li><li>Never share verification codes with someone who contacts you unexpectedly.</li></ul><div class="callout">MFA improves protection, but you should still watch for fake sign-in pages and unexpected approval prompts.</div><h2>If an account may be compromised</h2><p>Use the service's official app or website to change the password, sign out other sessions if possible, review recovery methods and contact official support when needed.</p>`},
+{title:'Recognizing Scams and Phishing',minutes:6,body:`<p>Scams often create urgency, fear, excitement or trust so that a person acts without checking. Phishing messages may imitate a bank, delivery service, school, social network or someone you know.</p><h2>Warning signs</h2><ul><li>Unexpected requests for passwords, codes or money.</li><li>Links with misspelled or unusual domain names.</li><li>Threats that an account will close immediately.</li><li>Prizes or offers that seem too good to be true.</li><li>Requests to keep a transaction secret or bypass normal procedures.</li></ul><p>Do not use a suspicious message's link to verify its claim. Open the official app or type a known address yourself. Ask a trusted person or organization through a separate channel if uncertain.</p>`},
+{title:'Privacy, Updates and Backups',minutes:5,body:`<p>Privacy means having appropriate control over personal information. Before posting, consider who can see it and whether it reveals information you want to keep private.</p><h2>Everyday protection</h2><ul><li>Review privacy and app permission settings.</li><li>Install security updates from official sources.</li><li>Use a screen lock and keep recovery details current.</li><li>Back up important files to a separate trusted location.</li><li>Sign out when finished using shared devices.</li></ul><p>A backup is useful only if it can be restored. Periodically check that important files are present and readable.</p>`}
+]},
+{id:'programming',title:'Programming Fundamentals',icon:'⌨️',level:'Beginner',description:'Understand algorithms, variables, conditions, loops and problem-solving.',lessons:[
+{
