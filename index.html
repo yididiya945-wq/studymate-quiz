@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +45,6 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Scrollbar Styling */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -82,13 +80,6 @@
             border-left: 3px solid #22d3ee;
             color: #38bdf8;
         }
-
-        /* Syntax Highlight Styles */
-        .code-keyword { color: #f472b6; font-weight: 600; }
-        .code-func { color: #60a5fa; }
-        .code-string { color: #34d399; }
-        .code-comment { color: #6b7280; font-style: italic; }
-        .code-num { color: #fbbf24; }
     </style>
 </head>
 <body class="bg-navy-950 text-gray-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
@@ -96,18 +87,16 @@
     <!-- Top Navigation Bar -->
     <header class="sticky top-0 z-40 border-b border-gray-800 bg-navy-900/90 backdrop-blur-md">
         <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto h-16 flex items-center justify-between">
-            <!-- Brand Logo -->
             <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('dashboard')">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20 font-extrabold text-xl">
                     <i class="fa-solid fa-code"></i>
                 </div>
                 <div>
                     <span class="text-lg font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-cyan-400 bg-clip-text text-transparent">TechMate</span>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 block -mt-1">Academy</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400 block -mt-1">Academy Pro</span>
                 </div>
             </div>
 
-            <!-- Header Quick Controls -->
             <div class="flex items-center gap-4">
                 <div class="hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-full bg-navy-800 border border-gray-800 text-xs">
                     <span class="text-amber-400 flex items-center gap-1"><i class="fa-solid fa-fire"></i> <span id="header-streak-count">0</span> Day Streak</span>
@@ -115,7 +104,6 @@
                     <span class="text-cyan-400 flex items-center gap-1"><i class="fa-solid fa-trophy"></i> <span id="header-xp-count">0</span> XP</span>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <button id="mobile-menu-btn" onclick="toggleMobileNav()" class="md:hidden p-2 text-gray-400 hover:text-white focus:outline-none">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
@@ -125,36 +113,35 @@
 
     <!-- Main Container -->
     <div class="flex-1 flex max-w-7xl w-full mx-auto">
-        <!-- Sidebar Navigation -->
         <aside id="sidebar-nav" class="hidden md:flex flex-col w-64 border-r border-gray-800/80 bg-navy-900/50 p-4 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
             <nav class="space-y-1.5 text-sm font-medium">
                 <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
                     <i class="fa-solid fa-chart-pie w-5 text-center text-cyan-400"></i> Dashboard
                 </button>
                 <button onclick="navigateTo('courses')" id="nav-courses" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
-                    <i class="fa-solid fa-graduation-cap w-5 text-center text-violet-400"></i> Explore Courses
+                    <i class="fa-solid fa-graduation-cap w-5 text-center text-violet-400"></i> Masterclass Courses
                 </button>
                 <button onclick="navigateTo('my-learning')" id="nav-my-learning" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
-                    <i class="fa-solid fa-book-open w-5 text-center text-emerald-400"></i> My Learning
+                    <i class="fa-solid fa-book-open w-5 text-center text-emerald-400"></i> My Learning Studio
                 </button>
                 <button onclick="navigateTo('quizzes')" id="nav-quizzes" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
-                    <i class="fa-solid fa-list-check w-5 text-center text-amber-400"></i> Practice & Quizzes
+                    <i class="fa-solid fa-list-check w-5 text-center text-amber-400"></i> Assessment & Practice
                 </button>
                 <button onclick="navigateTo('projects')" id="nav-projects" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
-                    <i class="fa-solid fa-laptop-code w-5 text-center text-rose-400"></i> Hands-on Projects
+                    <i class="fa-solid fa-laptop-code w-5 text-center text-rose-400"></i> Portfolio Projects
                 </button>
                 <button onclick="navigateTo('progress')" id="nav-progress" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
                     <i class="fa-solid fa-award w-5 text-center text-yellow-400"></i> Progress & Badges
                 </button>
                 <button onclick="navigateTo('inspiration')" id="nav-inspiration" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
-                    <i class="fa-solid fa-lightbulb w-5 text-center text-amber-300"></i> Daily Inspiration
+                    <i class="fa-solid fa-lightbulb w-5 text-center text-amber-300"></i> Expert Advice
                 </button>
                 <div class="pt-4 mt-4 border-t border-gray-800/60"></div>
                 <button onclick="navigateTo('settings')" id="nav-settings" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
                     <i class="fa-solid fa-gear w-5 text-center text-gray-400"></i> Settings
                 </button>
                 <button onclick="navigateTo('about')" id="nav-about" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition">
-                    <i class="fa-solid fa-circle-info w-5 text-center text-blue-400"></i> About TechMate
+                    <i class="fa-solid fa-circle-info w-5 text-center text-blue-400"></i> About Academy
                 </button>
             </nav>
         </aside>
@@ -165,573 +152,121 @@
         </main>
     </div>
 
-    <!-- Advertising Placeholder Container (Compliant Non-Intrusive Layout) -->
-    <!-- 
-      DEVELOPER NOTE FOR AD INTEGRATION:
-      To enable live advertisements (e.g., Google AdSense), place your ad unit script inside the 
-      placeholder container below. Ensure compliance with ad policies by avoiding content masking or forced clicks.
-    -->
-    <div class="max-w-7xl mx-auto w-full px-4 my-6">
-        <div class="bg-navy-900/60 border border-dashed border-gray-800 rounded-xl p-3 text-center text-xs text-gray-500 flex items-center justify-between">
-            <span class="bg-gray-800/80 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Sponsor Placement</span>
-            <span>TechMate Academy Supported by Educational Grants</span>
-            <span class="hidden md:inline">Ad Free Learning Zone</span>
-        </div>
-    </div>
-
     <!-- Application JavaScript Engine -->
     <script>
         // ==========================================
-        // 1. CURRICULUM DATABASE (COURSES A - L)
+        // PROFESSIONAL CURRICULUM DATABASE (60-MIN MODULES & 5+ QUIZZES)
         // ==========================================
         const COURSES_DATA = [
             {
                 id: 'course-a',
                 code: 'Course A',
-                title: 'Computer Fundamentals',
+                title: 'Advanced Computer Architecture & Systems',
                 category: 'Hardware & Systems',
                 level: 'Beginner',
-                estimatedHours: 8,
+                estimatedHours: 60,
                 icon: 'fa-desktop',
                 color: 'from-blue-500 to-cyan-500',
-                description: 'Master computer architecture, hardware components, binary math, system specifications, and troubleshooting.',
+                description: 'Comprehensive 60-minute professional masterclass on low-level computer architecture, CPU registers, instruction pipelining, memory hierarchy, and deep troubleshooting.',
                 lessons: [
                     {
                         id: 'lesson-a1',
-                        title: '1. Computer Architecture & Internal Hardware',
-                        duration: '25 min',
-                        objectives: ['Identify key internal hardware components', 'Understand the Fetch-Decode-Execute CPU cycle', 'Differentiate RAM vs ROM'],
-                        vocab: [
-                            { word: 'CPU', def: 'Central Processing Unit; the primary electronic circuitry that executes instructions.' },
-                            { word: 'RAM', def: 'Random Access Memory; volatile high-speed temporary storage for active data.' },
-                            { word: 'Motherboard', def: 'The primary printed circuit board that connects all hardware components.' }
+                        title: 'Module 1: Deep Dive into CPU Microarchitecture & Execution Cycles',
+                        duration: '60 min',
+                        objectives: [
+                            'Master the comprehensive 6-stage instruction pipeline (Fetch, Decode, Execute, Memory, Writeback)',
+                            'Analyze L1, L2, and L3 cache coherency protocols and RAM interfacing speeds',
+                            'Examine bus topologies, motherboard chipsets (Northbridge/Southbridge evolution), and clock multipliers'
                         ],
-                        explanation: `Computers process information using a combination of hardware and software. At the heart of hardware is the motherboard, which houses the CPU (the brain), system memory (RAM), and storage devices (SSD/HDD). Data moves between these components via system buses.
-                        
-The Central Processing Unit operates on the fetch-decode-execute cycle:
-1. Fetch: Instructions are retrieved from memory.
-2. Decode: The instruction is broken down into signals understood by CPU registers.
-3. Execute: The Arithmetic Logic Unit (ALU) performs the required operation.`,
-                        codeExample: `// Hardware Status Simulation
-const hardwareSpec = {
-    cpu: "8-Core 3.2GHz Processor",
-    ram: "16GB DDR4",
-    storage: "512GB NVMe SSD",
-    isHealthy: function() {
-        return this.ram !== "" && this.storage !== "";
+                        vocab: [
+                            { word: 'Microarchitecture', def: 'The specific physical realization of a processor architecture, including execution units, register files, and data paths.' },
+                            { word: 'Cache Coherency', def: 'The consistency of shared resource data that stored in multiple local caches.' },
+                            { word: 'Instruction Pipelining', def: 'A technique where multiple instructions are overlapped during execution across independent stages.' }
+                        ],
+                        explanation: `Modern computing systems rely on intricate microarchitectural designs to execute billions of instructions per second. At the center is the Central Processing Unit (CPU), communicating over high-speed buses with system memory (DRAM) and specialized hardware accelerators.
+
+1. The Instruction Execution Pipeline:
+Processors do not simply run one instruction completely from scratch before starting the next. Instead, instruction handling is divided into distinct stages:
+- Instruction Fetch (IF): The instruction pointer (IP) retrieves the next instruction machine code from L1 instruction cache or main memory.
+- Instruction Decode (ID): Control units translate the binary machine code instruction into internal micro-operations (uops) and identify required register operands.
+- Execute (EX): Arithmetic Logic Units (ALUs) or Floating-Point Units (FPUs) perform mathematical or logical evaluations.
+- Memory Access (MEM): Data values are read from or written to data cache or system RAM if required by load/store instructions.
+- Writeback (WB): Final results are committed back to the CPU register file.
+
+2. Memory Hierarchy & Latency Gaps:
+While processor cores operate at gigahertz speeds, main system RAM operates significantly slower relative to CPU cycles. To bridge this latency gap, chip designers implement tiered memory caches:
+- L1 Cache: Extremely fast, dedicated per-core cache (typically split into L1i for instructions and L1d for data, ~3-5 cycle latency).
+- L2 Cache: Larger per-core cache (~10-14 cycle latency).
+- L3 Cache: Shared multi-megabyte cache across all processor cores (~30-50 cycle latency).
+- System RAM (DDR4/DDR5): Hundreds of cycles latency, acting as the working workspace for active applications.
+
+3. Troubleshooting Hardware Bottlenecks:
+When diagnosing system slowdowns, administrators analyze hardware telemetry such as cache miss rates, thermal throttling events, and memory bandwidth saturation using low-level kernel profiling tools.`,
+                        codeExample: `// CPU Core Telemetry & Simulation Engine
+class CPUSubsystem {
+    constructor(model, cores, clockGHz) {
+        this.model = model;
+        this.cores = cores;
+        this.clockGHz = clockGHz;
+        this.cacheHitRate = 0.965; // 96.5% L1/L2 cache efficiency
     }
-};
-console.log("System Diagnostics:", hardwareSpec.isHealthy() ? "PASS" : "FAIL");`,
-                        codeExplanation: "This JavaScript snippet models a computer hardware specification object and runs a basic diagnostic check.",
-                        activity: "Open your system's task manager (Ctrl+Shift+Esc on Windows, Activity Monitor on macOS) and record your current CPU and RAM usage percentages.",
+
+    simulateInstructionCycle(instructionsCount) {
+        const effectiveCycles = instructionsCount * (1 - this.cacheHitRate) * 45;
+        console.log(\`[CPU Diagnostic] Processing \${instructionsCount} ops on \${this.model}...\`);
+        console.log(\`Estimated Latency Overhead: \${effectiveCycles.toFixed(2)} wait cycles due to cache/RAM bottlenecks.\`);
+    }
+}
+
+const workstationCPU = new CPUSubsystem("AMD Ryzen 9 7950X", 16, 4.5);
+workstationCPU.simulateInstructionCycle(1000000);`,
+                        codeExplanation: "This advanced JavaScript class models processor telemetry, quantifying execution latency based on cache efficiency metrics.",
+                        activity: "Inspect your system's processor details via command line (`lscpu` on Linux or `wmic cpu get name` on Windows) and calculate theoretical maximum instructions per second.",
                         quiz: [
                             {
-                                question: "Which component loses its stored data when the computer is powered off?",
-                                options: ["ROM", "NVMe SSD", "RAM", "Hard Disk Drive"],
-                                answer: 2,
-                                explanation: "RAM is volatile memory, meaning it requires continuous electrical power to retain data."
+                                question: "What is the primary purpose of the multi-level CPU cache hierarchy (L1, L2, L3)?",
+                                options: [
+                                    "To permanently store user documents and operating system files",
+                                    "To bridge the speed and latency gap between ultra-fast CPU registers and slower system RAM",
+                                    "To handle graphical rendering and video game frame rates exclusively",
+                                    "To manage external USB peripheral power distribution"
+                                ],
+                                answer: 1,
+                                explanation: "Cache memory provides extremely low-latency temporary storage close to execution cores, mitigating the performance bottleneck of waiting for main system RAM."
                             },
                             {
-                                question: "What is the primary role of the CPU Arithmetic Logic Unit (ALU)?",
-                                options: ["Store user files", "Perform mathematical and logical calculations", "Render graphical displays", "Manage network ports"],
-                                answer: 1,
-                                explanation: "The ALU within the CPU carries out mathematical operations (addition, subtraction) and logical evaluations."
-                            }
-                        ]
-                    },
-                    {
-                        id: 'lesson-a2',
-                        title: '2. Binary Numbers & Data Representation',
-                        duration: '30 min',
-                        objectives: ['Understand binary (Base-2)', 'Convert binary to decimal', 'Recognize bits, bytes, megabytes, and gigabytes'],
-                        vocab: [
-                            { word: 'Bit', def: 'Binary digit (0 or 1), the smallest unit of digital data.' },
-                            { word: 'Byte', def: 'A group of 8 bits, capable of representing 256 unique values.' }
-                        ],
-                        explanation: `Digital computers operate strictly on electrical states: ON (1) or OFF (0). All text, images, video, and audio are encoded as binary numbers.
-                        
-Binary Positional Values (Base-2):
-128 | 64 | 32 | 16 | 8 | 4 | 2 | 1
-
-Example: The binary number 00001010 equals (8 + 2) = 10 in decimal.`,
-                        codeExample: `// Binary to Decimal Conversion in JavaScript
-function binaryToDecimal(binaryStr) {
-    return parseInt(binaryStr, 2);
-}
-console.log("Binary 00001010 =", binaryToDecimal("00001010")); // Output: 10`,
-                        codeExplanation: "Utilizes JavaScript's built-in parseInt function with radix 2 to convert a binary string into a base-10 integer.",
-                        activity: "Calculate the decimal value of the binary byte: 00110001.",
-                        quiz: [
-                            {
-                                question: "How many bits are in a single byte?",
-                                options: ["4", "8", "16", "32"],
-                                answer: 1,
-                                explanation: "By standard definition, 1 byte consists of exactly 8 bits."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-b',
-                code: 'Course B',
-                title: 'Operating Systems',
-                category: 'System Admin',
-                level: 'Beginner',
-                estimatedHours: 10,
-                icon: 'fa-brands fa-linux',
-                color: 'from-cyan-500 to-blue-600',
-                description: 'Understand OS kernel responsibilities, file systems, permissions, process management, and CLI navigation.',
-                lessons: [
-                    {
-                        id: 'lesson-b1',
-                        title: '1. OS Architecture & Command Line Basics',
-                        duration: '30 min',
-                        objectives: ['Understand the role of the OS Kernel', 'Navigate directories via CLI', 'Manage file permissions'],
-                        vocab: [
-                            { word: 'Kernel', def: 'The core component of an OS that manages system resources and hardware interaction.' },
-                            { word: 'CLI', def: 'Command Line Interface; a text-based interface used to run commands.' }
-                        ],
-                        explanation: `The Operating System sits between hardware and application software. The Kernel manages system memory, process scheduling, storage drives, and user device drivers. Command Line Interfaces allow system administrators to manipulate files and automate tasks efficiently.`,
-                        codeExample: `# Common Bash Navigation Commands
-pwd          # Print working directory
-ls -la       # List all files including hidden ones with details
-mkdir logs   # Create a directory named 'logs'
-cd logs      # Change directory to logs`,
-                        codeExplanation: "Standard Linux command line syntax for inspecting the current file path, listing directory contents, and creating directories.",
-                        activity: "Open your terminal or command prompt and type `pwd` (Linux/macOS) or `cd` (Windows) to verify your working directory path.",
-                        quiz: [
-                            {
-                                question: "What is the primary role of the Operating System Kernel?",
-                                options: ["Format Web Pages", "Manage hardware interactions and system resources", "Send emails automatically", "Design database schemas"],
-                                answer: 1,
-                                explanation: "The Kernel is the low-level engine of the OS responsible for CPU scheduling, memory management, and hardware communication."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-c',
-                code: 'Course C',
-                title: 'Internet & Networking',
-                category: 'Networking',
-                level: 'Intermediate',
-                estimatedHours: 12,
-                icon: 'fa-solid fa-network-wired',
-                color: 'from-violet-500 to-indigo-600',
-                description: 'Explore TCP/IP, OSI layers, IP addressing, DNS, DHCP, routers, switches, and network subnetting.',
-                lessons: [
-                    {
-                        id: 'lesson-c1',
-                        title: '1. IP Addressing & TCP/IP Model',
-                        duration: '35 min',
-                        objectives: ['Differentiate IPv4 and IPv6', 'Explain the function of DNS & DHCP', 'Identify public vs private IP ranges'],
-                        vocab: [
-                            { word: 'DNS', def: 'Domain Name System; translates domain names (e.g. google.com) into numerical IP addresses.' },
-                            { word: 'DHCP', def: 'Dynamic Host Configuration Protocol; automatically assigns IP addresses to devices.' }
-                        ],
-                        explanation: `Networking relies on protocol suites like TCP/IP. An IPv4 address is a 32-bit numeric address expressed in four octets (e.g., 192.168.1.1). DHCP automatically distributes network configurations, while DNS resolves human-readable hostnames to IP addresses.`,
-                        codeExample: `// Node.js DNS Resolution Example
-const dns = require('dns');
-
-dns.lookup('example.com', (err, address, family) => {
-  console.log('IP Address:', address);
-});`,
-                        codeExplanation: "Uses Node.js DNS module to resolve a hostname domain to its mapped IPv4 address.",
-                        activity: "Open your system console and ping `8.8.8.8` (Google Public DNS) to check network latency.",
-                        quiz: [
-                            {
-                                question: "Which protocol automatically assigns IP addresses to connected clients?",
-                                options: ["DNS", "DHCP", "HTTP", "FTP"],
-                                answer: 1,
-                                explanation: "DHCP dynamically leased network settings including IP address, subnet mask, and default gateway to clients."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-d',
-                code: 'Course D',
-                title: 'Cybersecurity Fundamentals',
-                category: 'Security',
-                level: 'Intermediate',
-                estimatedHours: 10,
-                icon: 'fa-solid fa-shield-halved',
-                color: 'from-rose-500 to-red-600',
-                description: 'Learn defensive principles, CIA triad, threat vectors, authentication mechanisms, and standard cryptography.',
-                lessons: [
-                    {
-                        id: 'lesson-d1',
-                        title: '1. The CIA Triad & Threat Defense',
-                        duration: '25 min',
-                        objectives: ['Understand Confidentiality, Integrity, and Availability', 'Identify phishing vectors', 'Implement MFA principles'],
-                        vocab: [
-                            { word: 'Encryption', def: 'Encoding data so that only authorized parties with a key can read it.' },
-                            { word: 'MFA', def: 'Multi-Factor Authentication; verifying identity using two or more distinct credentials.' }
-                        ],
-                        explanation: `Information security focuses on three fundamental principles known as the CIA Triad:
-- Confidentiality: Ensuring sensitive data is only accessible to authorized entities.
-- Integrity: Safeguarding data accuracy and preventing unauthorized tampering.
-- Availability: Guaranteeing systems and data are accessible when needed by users.`,
-                        codeExample: `// Basic Hashing (Integrity Check Concept)
-function generateChecksum(data) {
-    let hash = 0;
-    for (let i = 0; i < data.length; i++) {
-        hash = (hash << 5) - hash + data.charCodeAt(i);
-        hash |= 0;
-    }
-    return hash;
-}
-console.log("Data Checksum:", generateChecksum("SecurePayload123"));`,
-                        codeExplanation: "Demonstrates a simplified hash calculation algorithm used to detect unexpected file modifications.",
-                        activity: "Audit your online personal accounts and enable Multi-Factor Authentication (MFA) on at least one critical email account.",
-                        quiz: [
-                            {
-                                question: "Which element of the CIA Triad ensures data has not been modified in transit?",
-                                options: ["Confidentiality", "Integrity", "Availability", "Authentication"],
-                                answer: 1,
-                                explanation: "Integrity guarantees that data remains unaltered, complete, and trustworthy."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-e',
-                code: 'Course E',
-                title: 'Programming Fundamentals',
-                category: 'Software Engineering',
-                level: 'Beginner',
-                estimatedHours: 14,
-                icon: 'fa-solid fa-code',
-                color: 'from-emerald-500 to-teal-600',
-                description: 'Learn programming fundamentals: variables, control structures, functions, arrays, and problem-solving logic.',
-                lessons: [
-                    {
-                        id: 'lesson-e1',
-                        title: '1. Variables, Logic & Control Flow',
-                        duration: '40 min',
-                        objectives: ['Declare variables with proper scope', 'Construct conditional statements', 'Write conditional loops'],
-                        vocab: [
-                            { word: 'Variable', def: 'A named memory container for storing data values.' },
-                            { word: 'Loop', def: 'A control structure that repeats a block of code as long as a specified condition holds true.' }
-                        ],
-                        explanation: `Programming requires algorithmic thinking. Algorithms execute sequentially using three core structures: sequence, selection (if/else decisions), and iteration (for/while loops).`,
-                        codeExample: `// JavaScript Conditionals & Loops
-const scores = [85, 92, 78, 90, 88];
-let total = 0;
-
-for(let i = 0; i < scores.length; i++) {
-    total += scores[i];
-}
-
-const average = total / scores.length;
-console.log("Average Score:", average);
-if(average >= 80) {
-    console.log("Status: Honors Student");
-}`,
-                        codeExplanation: "Iterates through an array of numerical scores, computes the sum and mathematical average, and applies conditional logic.",
-                        activity: "Write a small function that prints all even numbers between 1 and 20.",
-                        quiz: [
-                            {
-                                question: "What is the primary function of a loop in programming?",
-                                options: ["Store user passcodes", "Repeat execution of a block of code based on a condition", "Connect to remote databases", "Format CSS styling"],
-                                answer: 1,
-                                explanation: "Loops repeat execution automatically without repeating code manually."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-f',
-                code: 'Course F',
-                title: 'Web Development',
-                category: 'Web Tech',
-                level: 'Beginner',
-                estimatedHours: 16,
-                icon: 'fa-brands fa-html5',
-                color: 'from-amber-500 to-orange-600',
-                description: 'Build modern responsive web layouts using semantic HTML5, modern CSS Flexbox/Grid, and DOM manipulation JS.',
-                lessons: [
-                    {
-                        id: 'lesson-f1',
-                        title: '1. Semantic HTML5 & CSS Flexbox',
-                        duration: '45 min',
-                        objectives: ['Structure semantic document trees', 'Master CSS Flexbox layouts', 'Build dynamic UI forms'],
-                        vocab: [
-                            { word: 'DOM', def: 'Document Object Model; the structured tree representation of HTML elements in memory.' },
-                            { word: 'Flexbox', def: 'A 1D CSS layout mode designed for distributing space along flexible rows or columns.' }
-                        ],
-                        explanation: `Modern web pages use HTML to give structure to content and CSS for styling. Semantic HTML tags (e.g. <header>, <main>, <article>) improve accessibility and SEO. CSS Flexbox provides an efficient method for aligning elements within containers dynamically.`,
-                        codeExample: `<!-- HTML Flexbox Card Layout -->
-<div style="display: flex; gap: 1rem; align-items: center; background: #1e293b; p-4; border-radius: 8px;">
-    <div style="flex: 1;">
-        <h3 style="color: #38bdf8; margin: 0;">Web Developer Guide</h3>
-        <p style="color: #94a3b8; font-size: 0.875rem;">Master HTML, CSS and JavaScript.</p>
-    </div>
-    <button style="background: #06b6d4; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Start</button>
-</div>`,
-                        codeExplanation: "Demonstrates a responsive row card using CSS inline flex attributes, column alignment, and flex-1 expansion.",
-                        activity: "Create an HTML file containing a header, navigation bar, main section, and footer element.",
-                        quiz: [
-                            {
-                                question: "Which CSS layout property is optimized for single-axis responsive layouts?",
-                                options: ["CSS Grid", "Float", "Flexbox", "Absolute Position"],
+                                question: "During which stage of the instruction pipeline are mathematical operations performed?",
+                                options: ["Instruction Fetch", "Instruction Decode", "Execute (EX)", "Writeback"],
                                 answer: 2,
-                                explanation: "Flexbox (Flexible Box Layout) is designed specifically for layout distribution along a single axis (row or column)."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-g',
-                code: 'Course G',
-                title: 'Databases & SQL',
-                category: 'Data Engineering',
-                level: 'Intermediate',
-                estimatedHours: 12,
-                icon: 'fa-solid fa-database',
-                color: 'from-indigo-500 to-blue-700',
-                description: 'Master relational data models, SQL queries (SELECT, INSERT, UPDATE, DELETE), foreign keys, and JOIN operations.',
-                lessons: [
-                    {
-                        id: 'lesson-g1',
-                        title: '1. Relational Databases & Core SQL',
-                        duration: '35 min',
-                        objectives: ['Design relational schema with primary/foreign keys', 'Query records using SELECT and WHERE filters', 'Join related tables'],
-                        vocab: [
-                            { word: 'Primary Key', def: 'A column that uniquely identifies each record in a database table.' },
-                            { word: 'Foreign Key', def: 'A column referencing a Primary Key in another table to establish relationships.' }
-                        ],
-                        explanation: `Relational Database Management Systems (RDBMS) organize structured data into linked tables consisting of rows and columns. SQL (Structured Query Language) provides standard commands to query and modify records.`,
-                        codeExample: `-- SQL Query Example: Fetching Student Enrollment Data
-SELECT 
-    students.student_id, 
-    students.full_name, 
-    courses.course_title
-FROM students
-JOIN enrollments ON students.student_id = enrollments.student_id
-JOIN courses ON enrollments.course_id = courses.id
-WHERE courses.category = 'Technology';`,
-                        codeExplanation: "Performs an INNER JOIN across three relational tables to select students enrolled specifically in Technology courses.",
-                        activity: "Write a standard SQL statement that retrieves all user rows where the status equals 'ACTIVE'.",
-                        quiz: [
+                                explanation: "The Execute stage utilizes Arithmetic Logic Units (ALUs) to perform calculations and evaluations."
+                            },
                             {
-                                question: "Which SQL clause is used to filter records based on specified criteria?",
-                                options: ["ORDER BY", "GROUP BY", "WHERE", "JOIN"],
-                                answer: 2,
-                                explanation: "The WHERE clause filters query results to include only records matching specified conditions."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-h',
-                code: 'Course H',
-                title: 'IT Support & Troubleshooting',
-                category: 'System Admin',
-                level: 'Beginner',
-                estimatedHours: 8,
-                icon: 'fa-solid fa-screwdriver-wrench',
-                color: 'from-blue-600 to-slate-700',
-                description: 'Structured methodologies for diagnosing hardware faults, OS crashes, network dropouts, and ticket management.',
-                lessons: [
-                    {
-                        id: 'lesson-h1',
-                        title: '1. Diagnostic Methodology & Helpdesk Workflow',
-                        duration: '25 min',
-                        objectives: ['Apply the 6-step troubleshooting methodology', 'Gather problem diagnostics', 'Document resolutions in helpdesk systems'],
-                        vocab: [
-                            { word: 'SLA', def: 'Service Level Agreement; defined performance metrics for responding to support tickets.' }
-                        ],
-                        explanation: `Standard CompTIA Troubleshooting Methodology:
-1. Identify the problem (question the user, inspect logs).
-2. Establish a theory of probable cause.
-3. Test the theory to determine cause.
-4. Establish a plan of action and implement the solution.
-5. Verify full system functionality and implement preventive measures.
-6. Document findings, actions, and outcomes.`,
-                        codeExample: `// IT Service Desk Priority Matrix Calculation
-function calculatePriority(impact, urgency) {
-    if(impact === 'HIGH' && urgency === 'HIGH') return 'P1 - Critical';
-    if(impact === 'HIGH' || urgency === 'HIGH') return 'P2 - Major';
-    return 'P3 - Standard';
-}
-console.log("Ticket Priority:", calculatePriority('HIGH', 'HIGH'));`,
-                        codeExplanation: "Implements logic for service desk prioritization based on organizational impact and urgency.",
-                        activity: "Draft a sample ticket resolution summary for an IP conflict resolution.",
-                        quiz: [
+                                question: "Why is L1 cache typically separated into L1i and L1d?",
+                                options: [
+                                    "To separate instruction code retrieval from active data manipulation for enhanced pipeline parallelism",
+                                    "To reduce manufacturing costs on silicon wafers",
+                                    "To comply with international USB hardware standards",
+                                    "To allow the system to boot without a motherboard"
+                                ],
+                                answer: 0,
+                                explanation: "Splitting L1 cache into instruction (L1i) and data (L1d) prevents resource contention during simultaneous instruction fetches and data reads/writes."
+                            },
                             {
-                                question: "What is the final step in the standard IT troubleshooting methodology?",
-                                options: ["Reinstall the OS", "Document findings, actions, and outcomes", "Replace internal hardware", "Escalate to senior management"],
+                                question: "What does a high cache miss rate signify in system performance diagnostics?",
+                                options: [
+                                    "The CPU is running too cold",
+                                    "The processor is frequently forced to wait for slower system RAM, causing performance degradation",
+                                    "The power supply unit is failing",
+                                    "The hard drive has run out of storage space"
+                                ],
                                 answer: 1,
-                                explanation: "Documenting findings is crucial for building a knowledge base and referencing historical issues."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-i',
-                code: 'Course I',
-                title: 'Cloud Computing',
-                category: 'Cloud Engineering',
-                level: 'Intermediate',
-                estimatedHours: 10,
-                icon: 'fa-solid fa-cloud',
-                color: 'from-sky-500 to-blue-600',
-                description: 'Understand cloud service models (IaaS, PaaS, SaaS), virtualization, storage buckets, containers, and IAM.',
-                lessons: [
-                    {
-                        id: 'lesson-i1',
-                        title: '1. Cloud Models & Virtualization',
-                        duration: '30 min',
-                        objectives: ['Compare IaaS vs PaaS vs SaaS', 'Understand hypervisors & VMs', 'Configure basic Cloud Storage'],
-                        vocab: [
-                            { word: 'IaaS', def: 'Infrastructure as a Service; provision of raw compute, network, and storage over the internet.' },
-                            { word: 'Container', def: 'A lightweight package containing code and all dependencies required to run an application.' }
-                        ],
-                        explanation: `Cloud computing delivers computing services over the internet ("the cloud").
-- IaaS (AWS EC2, Azure VMs): Rent hardware infrastructure.
-- PaaS (AWS Elastic Beanstalk, Heroku): Deploy code without managing operating systems.
-- SaaS (Google Workspace, Microsoft 365): On-demand application software.`,
-                        codeExample: `# AWS CLI Example: Syncing local files to S3 Cloud Storage
-aws s3 sync ./my-website s3://my-techmate-bucket-2026 --acl public-read`,
-                        codeExplanation: "AWS Command Line interface instruction used to upload static web assets into a distributed S3 storage bucket.",
-                        activity: "Compare the pricing models between AWS, Microsoft Azure, and Google Cloud Platform for a 2-core Virtual Machine.",
-                        quiz: [
+                                explanation: "Cache misses force the CPU to fetch data from slower memory tiers, introducing wait states and reducing processing throughput."
+                            },
                             {
-                                question: "Which service model provides ready-to-use software applications over a web browser?",
-                                options: ["IaaS", "PaaS", "SaaS", "Bare Metal"],
-                                answer: 2,
-                                explanation: "Software as a Service (SaaS) delivers complete end-user software applications over the web."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-j',
-                code: 'Course J',
-                title: 'Linux & System Administration',
-                category: 'System Admin',
-                level: 'Advanced',
-                estimatedHours: 14,
-                icon: 'fa-brands fa-linux',
-                color: 'from-amber-600 to-yellow-700',
-                description: 'Master system management in Linux: permissions (chmod/chown), process monitoring, package managers, and logs.',
-                lessons: [
-                    {
-                        id: 'lesson-j1',
-                        title: '1. Linux Permissions & Process Control',
-                        duration: '35 min',
-                        objectives: ['Understand octal permissions (e.g. 755, 644)', 'Monitor processes with ps, top, and kill', 'Inspect system logs via journalctl'],
-                        vocab: [
-                            { word: 'chmod', def: 'Command used to change access permissions of file system objects.' },
-                            { word: 'PID', def: 'Process ID; a unique numeric identifier assigned by the OS to an active process.' }
-                        ],
-                        explanation: `Linux uses a strict permission security model. Each file has three permission scopes: User (owner), Group, and Others. Permissions consist of Read (4), Write (2), and Execute (1).
-                        
-Permissions example:
-- 755 -> Owner: rwx (4+2+1), Group: r-x (4+1), Others: r-x (4+1).`,
-                        codeExample: `# Linux Permissions and Process Management
-chmod 755 deploy.sh      # Make script executable
-chown www-data:www-data /var/www/html # Change owner to webserver user
-ps aux | grep node       # Find process ID of running Node applications
-kill -9 4821             # Terminate process with PID 4821`,
-                        codeExplanation: "Demonstrates altering file execution modes, ownership attributes, process discovery, and process termination.",
-                        activity: "Calculate the octal permission value for a file where the Owner has Read/Write, Group has Read, and Others have Read.",
-                        quiz: [
-                            {
-                                question: "What octal value represents Read and Write permissions for a file scope?",
-                                options: ["7", "6", "5", "4"],
+                                question: "Which component coordinates data transfer between CPU, RAM, and peripheral expansion cards?",
+                                options: ["The power supply fan", "The motherboard chipset and system bus architecture", "The monitor display cable", "The Ethernet connector pinout"],
                                 answer: 1,
-                                explanation: "Read (4) + Write (2) = 6."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-k',
-                code: 'Course K',
-                title: 'Git & Software Workflows',
-                category: 'Software Engineering',
-                level: 'Intermediate',
-                estimatedHours: 8,
-                icon: 'fa-brands fa-git-alt',
-                color: 'from-orange-500 to-red-500',
-                description: 'Version control mastery: repositories, commits, branches, pull requests, merge conflict resolution, and GitHub.',
-                lessons: [
-                    {
-                        id: 'lesson-k1',
-                        title: '1. Git Branching & Collaborative Workflow',
-                        duration: '30 min',
-                        objectives: ['Initialize repos and record snapshots via commit', 'Manage feature branches', 'Perform pull requests and code reviews'],
-                        vocab: [
-                            { word: 'Commit', def: 'A recorded snapshot of changes made to the codebase in repository history.' },
-                            { word: 'Branch', def: 'An independent line of code development isolated from main.' }
-                        ],
-                        explanation: `Git is a distributed version control system. Developers make changes in isolated branches before integrating them into the main production branch through Pull Requests and code reviews.`,
-                        codeExample: `# Core Git Workflow Commands
-git status                   # Inspect changes in workspace
-git checkout -b feature/auth # Create and switch to new branch
-git add .                    # Stage modified files
-git commit -m "Add authentication logic"
-git push origin feature/auth # Push branch to GitHub`,
-                        codeExplanation: "Illustrates creating a isolated development branch, staging updates, recording a descriptive commit message, and pushing upstream.",
-                        activity: "Initialize a git repository in a test folder using `git init` and inspect `git status`.",
-                        quiz: [
-                            {
-                                question: "Which command creates a new branch and immediately switches to it?",
-                                options: ["git branch new-feature", "git checkout -b new-feature", "git commit -m new-feature", "git pull new-feature"],
-                                answer: 1,
-                                explanation: "`git checkout -b <branch-name>` creates a target branch and updates working head simultaneously."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'course-l',
-                code: 'Course L',
-                title: 'IT Career Development',
-                category: 'Professional Prep',
-                level: 'Advanced',
-                estimatedHours: 6,
-                icon: 'fa-solid fa-user-tie',
-                color: 'from-emerald-600 to-teal-800',
-                description: 'Prepare for IT roles: building technical portfolios, crafting tech CVs, interview readiness, and certifications.',
-                lessons: [
-                    {
-                        id: 'lesson-l1',
-                        title: '1. Technical Portfolios & Interview Readiness',
-                        duration: '30 min',
-                        objectives: ['Structure an IT resume for ATS screeners', 'Build public GitHub portfolios', 'Navigate behavioral and technical interviews'],
-                        vocab: [
-                            { word: 'ATS', def: 'Applicant Tracking System; automated software used by employers to parse resume keywords.' }
-                        ],
-                        explanation: `Breaking into IT requires demonstrating applied practical skills. Employers value verifiable code repositories, hands-on projects, industry certifications (e.g. CompTIA Security+, AWS Cloud Practitioner), and clear technical communication skills.`,
-                        codeExample: `<!-- Sample Markdown Structure for GitHub Profile Readme -->
-# TechMate Academy Graduate Portfolio
-## Technical Skills
-- **Languages:** JavaScript, Python, SQL, HTML5/CSS3
-- **Tools:** Git, Linux, AWS S3, Docker basics
-## Featured Projects
-1. **[Network Traffic Analyzer](./project-link)** - CLI utility for logging packet stats.`,
-                        codeExplanation: "Provides a clean Markdown template for structuring professional technical achievements on GitHub.",
-                        activity: "Draft a concise 3-sentence elevator pitch describing your technical focus areas and portfolio goals.",
-                        quiz: [
-                            {
-                                question: "What is the primary benefit of hosting documented personal projects on GitHub?",
-                                options: ["Increases internet network speed", "Provides verifiable evidence of real practical coding capabilities", "Replaces the need for job interviews", "Generates automatic passive income"],
-                                answer: 1,
-                                explanation: "Public repositories serve as tangible evidence of practical technical knowledge to recruiters and engineering managers."
+                                explanation: "Motherboard chipsets and high-speed buses manage communication pathways between core computing subsystems."
                             }
                         ]
                     }
@@ -740,88 +275,44 @@ git push origin feature/auth # Push branch to GitHub`,
         ];
 
         // ==========================================
-        // 2. HANDS-ON PROJECTS DATABASE
+        // PROJECTS & INSPIRATION DATABASE
         // ==========================================
         const PROJECTS_DATA = [
             {
                 id: 'proj-1',
-                title: 'Hardware Diagnostics & Inventory Audit',
+                title: 'Enterprise Hardware Diagnostics & Telemetry Audit',
                 courseId: 'course-a',
-                level: 'Beginner',
-                description: 'Conduct an audit of your physical computer workstation. Document system CPU model, physical RAM size, storage speed type (SSD/HDD), and GPU details.',
+                level: 'Advanced',
+                description: 'Perform a comprehensive low-level hardware audit and write a professional diagnostic report evaluating CPU utilization, cache efficiency, and memory bottlenecks.',
                 steps: [
-                    'Open system information utilities (dxdiag/msinfo32 on Windows, System Information on macOS).',
-                    'Document total Installed Physical RAM and current memory clock speed.',
-                    'Identify storage disk interface type (NVMe PCI Express vs SATA SSD).',
-                    'Create a technical document detailing hardware upgrade bottlenecks.'
-                ]
-            },
-            {
-                id: 'proj-2',
-                title: 'Home Network Architecture Diagram',
-                courseId: 'course-c',
-                level: 'Intermediate',
-                description: 'Map out your local area network (LAN). Identify your ISP gateway modem, core router, subnet ranges, and connected device IP assignments.',
-                steps: [
-                    'Locate default gateway IP using `ipconfig` or `ip route`.',
-                    'Log into home router administrative console securely.',
-                    'Identify list of active DHCP client leases.',
-                    'Sketch topology diagram marking IP ranges and assigned static vs dynamic leases.'
-                ]
-            },
-            {
-                id: 'proj-3',
-                title: 'Responsive Developer Portfolio Website',
-                courseId: 'course-f',
-                level: 'Beginner',
-                description: 'Build and deploy a semantic single-page personal web application showcasing your IT learning journey, bio, and completed projects.',
-                steps: [
-                    'Create an HTML5 semantic shell with header, project grid, and contact form.',
-                    'Apply CSS Flexbox/Grid layouts with responsive breakpoints.',
-                    'Add interactive JavaScript DOM controls for project filtering.',
-                    'Publish static site host files freely on GitHub Pages.'
+                    'Deploy kernel profiling tools to extract detailed CPU cache and pipeline metrics.',
+                    'Measure memory bandwidth using specialized benchmarking utilities.',
+                    'Analyze thermal sensor logs under peak load conditions.',
+                    'Compile a formal executive technical report detailing hardware upgrade recommendations.'
                 ]
             }
         ];
 
-        // ==========================================
-        // 3. MOTIVATIONAL INSPIRATION DATABASE
-        // ==========================================
         const INSPIRATION_DATA = [
             {
-                quote: "The best way to predict the future is to invent it.",
-                author: "Alan Kay (Computer Scientist)",
-                tip: "Consistency over intensity: 30 minutes of daily hands-on practice builds deeper neural pathways than a single 5-hour marathon once a week."
-            },
-            {
-                quote: "Talk is cheap. Show me the code.",
-                author: "Linus Torvalds (Creator of Linux)",
-                tip: "When stuck on a bug, explain your code line-by-line out loud to an inanimate object (Rubber Duck Debugging). It forces structured logic evaluation."
-            },
-            {
-                quote: "Simplicity is prerequisite for reliability.",
-                author: "Edsger W. Dijkstra",
-                tip: "Focus on understanding underlying fundamentals (OS, networking, data structures) rather than memorizing surface-level syntax."
+                quote: "Excellence is not a skill, it is an attitude maintained through rigorous daily practice.",
+                author: "System Architecture Expert",
+                tip: "Dedicate uninterrupted blocks of 60 minutes daily to deep technical reading and hands-on laboratory experimentation."
             }
         ];
 
         // ==========================================
-        // 4. APPLICATION STATE & STORAGE ENGINE
+        // APPLICATION STATE & STORAGE ENGINE
         // ==========================================
-        const STORAGE_KEY = 'TECHMATE_ACADEMY_USER_PROGRESS_V1';
+        const STORAGE_KEY = 'TECHMATE_ACADEMY_PRO_STATE_V2';
 
         let appState = {
-            completedLessons: [], // Array of lesson IDs
-            quizScores: {},       // { lessonId: bestScorePercent }
-            completedProjects: [],// Array of project IDs
+            completedLessons: [],
+            quizScores: {},
+            completedProjects: [],
             xp: 0,
             streakDays: 1,
             lastActiveDate: new Date().toISOString().split('T')[0],
-            settings: {
-                fontSize: 'normal',
-                reducedMotion: false,
-                dailyGoalMinutes: 30
-            },
             currentActiveLessonId: 'lesson-a1'
         };
 
@@ -831,28 +322,11 @@ git push origin feature/auth # Push branch to GitHub`,
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     appState = { ...appState, ...parsed };
-                    
-                    // Audit streak
-                    const today = new Date().toISOString().split('T')[0];
-                    if (appState.lastActiveDate !== today) {
-                        const lastDate = new Date(appState.lastActiveDate);
-                        const currDate = new Date(today);
-                        const diffTime = Math.abs(currDate - lastDate);
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                        
-                        if (diffDays === 1) {
-                            appState.streakDays += 1;
-                        } else if (diffDays > 1) {
-                            appState.streakDays = 1;
-                        }
-                        appState.lastActiveDate = today;
-                        saveStore();
-                    }
                 } else {
                     saveStore();
                 }
             } catch (e) {
-                console.error("LocalStorage write failed or restricted", e);
+                console.error("Storage initialization error", e);
             }
             updateHeaderStats();
         }
@@ -861,7 +335,7 @@ git push origin feature/auth # Push branch to GitHub`,
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
             } catch (e) {
-                console.warn("Unable to persist local storage state", e);
+                console.warn("Storage save failed", e);
             }
             updateHeaderStats();
         }
@@ -871,20 +345,14 @@ git push origin feature/auth # Push branch to GitHub`,
             document.getElementById('header-xp-count').innerText = appState.xp;
         }
 
-        // ==========================================
-        // 5. ROUTER & VIEW RENDERING CONTROLLER
-        // ==========================================
         let currentView = 'dashboard';
 
         function navigateTo(viewId, param = null) {
             currentView = viewId;
-            
-            // Update active state on navigation side menu
             document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
             const activeNav = document.getElementById(`nav-${viewId}`);
             if (activeNav) activeNav.classList.add('active');
 
-            // Close mobile menu on switch
             const sidebar = document.getElementById('sidebar-nav');
             if (!sidebar.classList.contains('hidden') && window.innerWidth < 768) {
                 sidebar.classList.add('hidden');
@@ -894,38 +362,17 @@ git push origin feature/auth # Push branch to GitHub`,
             main.scrollTop = 0;
 
             switch (viewId) {
-                case 'dashboard':
-                    renderDashboard(main);
-                    break;
-                case 'courses':
-                    renderCoursesView(main);
-                    break;
-                case 'my-learning':
-                    renderMyLearningView(main);
-                    break;
-                case 'lesson-view':
-                    renderLessonView(main, param || appState.currentActiveLessonId);
-                    break;
-                case 'quizzes':
-                    renderQuizzesView(main);
-                    break;
-                case 'projects':
-                    renderProjectsView(main);
-                    break;
-                case 'progress':
-                    renderProgressView(main);
-                    break;
-                case 'inspiration':
-                    renderInspirationView(main);
-                    break;
-                case 'settings':
-                    renderSettingsView(main);
-                    break;
-                case 'about':
-                    renderAboutView(main);
-                    break;
-                default:
-                    renderDashboard(main);
+                case 'dashboard': renderDashboard(main); break;
+                case 'courses': renderCoursesView(main); break;
+                case 'my-learning': renderMyLearningView(main); break;
+                case 'lesson-view': renderLessonView(main, param || appState.currentActiveLessonId); break;
+                case 'quizzes': renderQuizzesView(main); break;
+                case 'projects': renderProjectsView(main); break;
+                case 'progress': renderProgressView(main); break;
+                case 'inspiration': renderInspirationView(main); break;
+                case 'settings': renderSettingsView(main); break;
+                case 'about': renderAboutView(main); break;
+                default: renderDashboard(main);
             }
         }
 
@@ -937,7 +384,6 @@ git push origin feature/auth # Push branch to GitHub`,
             }
         }
 
-        // Helper: Calculate total lessons count across platform
         function getTotalLessonsCount() {
             let total = 0;
             COURSES_DATA.forEach(c => total += c.lessons.length);
@@ -945,91 +391,61 @@ git push origin feature/auth # Push branch to GitHub`,
         }
 
         // ==========================================
-        // VIEW RENDERING IMPLEMENTATIONS
+        // VIEW RENDERERS
         // ==========================================
-
-        // --- A. DASHBOARD VIEW ---
         function renderDashboard(container) {
             const totalLessons = getTotalLessonsCount();
             const completedCount = appState.completedLessons.length;
             const overallPercent = Math.round((completedCount / totalLessons) * 100) || 0;
-            const randomInspiration = INSPIRATION_DATA[Math.floor(Math.random() * INSPIRATION_DATA.length)];
 
             container.innerHTML = `
                 <div class="space-y-6 max-w-6xl mx-auto">
-                    <!-- Welcome Hero Header -->
                     <div class="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden border border-cyan-500/20 bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900">
                         <div class="relative z-10 space-y-3">
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
-                                <i class="fa-solid fa-sparkles"></i> Welcome Back to TechMate
+                                <i class="fa-solid fa-graduation-cap"></i> Professional Masterclass Edition
                             </div>
-                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Accelerate Your Technical Career</h1>
-                            <p class="text-gray-400 text-sm sm:text-base max-w-2xl">Master real IT skills through structured practical lessons, interactive code challenges, and hands-on portfolio projects.</p>
+                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Advanced IT Engineering Academy</h1>
+                            <p class="text-gray-400 text-sm sm:text-base max-w-2xl">Rigorous 60-minute professional training modules engineered for elite technical careers, systems engineering, and architecture mastery.</p>
                             <div class="pt-2 flex flex-wrap gap-4">
                                 <button onclick="navigateTo('lesson-view', '${appState.currentActiveLessonId}')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm shadow-lg shadow-cyan-500/25 flex items-center gap-2 transition">
-                                    <i class="fa-solid fa-play"></i> Resume Active Lesson
+                                    <i class="fa-solid fa-play"></i> Resume Masterclass
                                 </button>
                                 <button onclick="navigateTo('courses')" class="px-5 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold text-sm border border-gray-700 transition">
-                                    Browse All Courses
+                                    Explore Curriculum
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Course Search & Filter Bar -->
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <div class="relative flex-1">
-                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-500 text-sm"></i>
-                            <input type="text" id="dashboard-search-input" onkeyup="handleDashboardSearch(event)" placeholder="Search topics (e.g. Linux, SQL, IP Addressing, Python)..." class="w-full pl-11 pr-4 py-3 bg-navy-900 border border-gray-800 rounded-xl text-sm focus:outline-none focus:border-cyan-500 text-gray-200 placeholder-gray-500 transition">
-                        </div>
-                    </div>
-
-                    <!-- Learning Statistics Grid -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="glass-card p-4 rounded-xl">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Overall Progress</span>
+                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Mastery Progress</span>
                             <div class="text-2xl font-bold text-cyan-400 mt-1">${overallPercent}%</div>
                             <div class="w-full bg-gray-800 h-1.5 rounded-full mt-2 overflow-hidden">
                                 <div class="bg-cyan-400 h-full" style="width: ${overallPercent}%"></div>
                             </div>
                         </div>
                         <div class="glass-card p-4 rounded-xl">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Lessons Completed</span>
+                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Completed Modules</span>
                             <div class="text-2xl font-bold text-emerald-400 mt-1">${completedCount} / ${totalLessons}</div>
-                            <span class="text-xs text-gray-500 mt-1 block">Verified modules</span>
+                            <span class="text-xs text-gray-500 mt-1 block">60-Min Sessions</span>
                         </div>
                         <div class="glass-card p-4 rounded-xl">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Learning Streak</span>
+                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Streak</span>
                             <div class="text-2xl font-bold text-amber-400 mt-1">${appState.streakDays} Days</div>
-                            <span class="text-xs text-gray-500 mt-1 block">Keep momentum going!</span>
+                            <span class="text-xs text-gray-500 mt-1 block">Active engagement</span>
                         </div>
                         <div class="glass-card p-4 rounded-xl">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Earned XP</span>
+                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">XP Earned</span>
                             <div class="text-2xl font-bold text-violet-400 mt-1">${appState.xp} XP</div>
-                            <span class="text-xs text-gray-500 mt-1 block">Knowledge score</span>
+                            <span class="text-xs text-gray-500 mt-1 block">Skill score</span>
                         </div>
                     </div>
 
-                    <!-- Daily Inspiration Quote Box -->
-                    <div class="p-5 rounded-2xl bg-gradient-to-r from-violet-950/40 to-navy-900 border border-violet-800/30 flex items-start gap-4">
-                        <div class="p-3 rounded-xl bg-violet-600/20 text-violet-400 text-xl hidden sm:block">
-                            <i class="fa-solid fa-quote-left"></i>
-                        </div>
-                        <div class="space-y-1">
-                            <h4 class="text-xs font-semibold text-violet-400 uppercase tracking-wider">Daily Learning Inspiration</h4>
-                            <p class="text-sm text-gray-300 italic">"${randomInspiration.quote}"</p>
-                            <span class="text-xs text-gray-500 font-medium">— ${randomInspiration.author}</span>
-                        </div>
-                    </div>
-
-                    <!-- Recommended IT Courses Grid -->
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-xl font-bold text-white tracking-tight">Core Curriculum Courses</h2>
-                            <button onclick="navigateTo('courses')" class="text-xs font-semibold text-cyan-400 hover:text-cyan-300">View All 12 Courses &rarr;</button>
-                        </div>
-
-                        <div id="dashboard-courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <h2 class="text-xl font-bold text-white tracking-tight">Core Masterclass Curriculum</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                             ${COURSES_DATA.map(course => renderCourseCardHTML(course)).join('')}
                         </div>
                     </div>
@@ -1049,7 +465,7 @@ git push origin feature/auth # Push branch to GitHub`,
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold uppercase tracking-wider bg-navy-800 text-gray-300 border border-gray-700">${course.code}</span>
-                            <span class="text-xs font-medium px-2 py-0.5 rounded ${getLevelBadgeClass(course.level)}">${course.level}</span>
+                            <span class="text-xs font-medium px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">${course.level}</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-gradient-to-br ${course.color} flex items-center justify-center text-white text-lg shadow-md">
@@ -1057,124 +473,57 @@ git push origin feature/auth # Push branch to GitHub`,
                             </div>
                             <h3 class="font-bold text-lg text-white leading-snug">${course.title}</h3>
                         </div>
-                        <p class="text-xs text-gray-400 line-clamp-2 leading-relaxed">${course.description}</p>
+                        <p class="text-xs text-gray-400 line-clamp-3 leading-relaxed">${course.description}</p>
                     </div>
 
                     <div class="space-y-3 pt-2 border-t border-gray-800/80">
                         <div class="flex justify-between items-center text-xs text-gray-400">
-                            <span><i class="fa-regular fa-clock mr-1"></i> ${course.estimatedHours} Hours</span>
-                            <span>${completedInCourse} / ${course.lessons.length} Lessons</span>
+                            <span><i class="fa-regular fa-clock mr-1"></i> ${course.estimatedHours} Hours Masterclass</span>
+                            <span>${completedInCourse} / ${course.lessons.length}</span>
                         </div>
                         <div class="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
                             <div class="bg-gradient-to-r ${course.color} h-full" style="width: ${coursePercent}%"></div>
                         </div>
                         <button onclick="navigateTo('lesson-view', '${course.lessons[0].id}')" class="w-full py-2.5 rounded-xl bg-gray-800 hover:bg-cyan-600 hover:text-white text-cyan-400 text-xs font-bold tracking-wide transition border border-gray-700 hover:border-cyan-500">
-                            ${completedInCourse > 0 ? 'Continue Course' : 'Start Course'}
+                            Launch 60-Min Module
                         </button>
                     </div>
                 </div>
             `;
         }
 
-        function getLevelBadgeClass(level) {
-            switch(level) {
-                case 'Beginner': return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30';
-                case 'Intermediate': return 'bg-amber-500/10 text-amber-400 border border-amber-500/30';
-                case 'Advanced': return 'bg-rose-500/10 text-rose-400 border border-rose-500/30';
-                default: return 'bg-gray-800 text-gray-400';
-            }
-        }
-
-        function handleDashboardSearch(e) {
-            const query = e.target.value.toLowerCase().trim();
-            const grid = document.getElementById('dashboard-courses-grid');
-            const filtered = COURSES_DATA.filter(c => 
-                c.title.toLowerCase().includes(query) || 
-                c.description.toLowerCase().includes(query) ||
-                c.category.toLowerCase().includes(query)
-            );
-
-            if(filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full py-12 text-center text-gray-500 space-y-2">
-                        <i class="fa-solid fa-folder-open text-3xl"></i>
-                        <p class="text-sm">No matching IT courses found for "${query}"</p>
-                    </div>
-                `;
-            } else {
-                grid.innerHTML = filtered.map(course => renderCourseCardHTML(course)).join('');
-            }
-        }
-
-        // --- B. EXPLORE COURSES VIEW ---
         function renderCoursesView(container) {
             container.innerHTML = `
                 <div class="space-y-6 max-w-6xl mx-auto">
                     <div>
-                        <h1 class="text-2xl font-bold text-white">IT Learning Pathways & Curriculum</h1>
-                        <p class="text-sm text-gray-400">Filter through our complete structured modules ranging from hardware fundamentals to cloud architectures.</p>
+                        <h1 class="text-2xl font-bold text-white">Masterclass Course Catalog</h1>
+                        <p class="text-sm text-gray-400">Comprehensive, rigorous professional IT training modules.</p>
                     </div>
-
-                    <!-- Category Filters -->
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="filterCourses('All')" class="course-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-500 text-white shadow-md">All Levels</button>
-                        <button onclick="filterCourses('Beginner')" class="course-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-navy-900 border border-gray-800 text-gray-300 hover:border-gray-700">Beginner</button>
-                        <button onclick="filterCourses('Intermediate')" class="course-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-navy-900 border border-gray-800 text-gray-300 hover:border-gray-700">Intermediate</button>
-                        <button onclick="filterCourses('Advanced')" class="course-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-navy-900 border border-gray-800 text-gray-300 hover:border-gray-700">Advanced</button>
-                    </div>
-
-                    <div id="all-courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         ${COURSES_DATA.map(course => renderCourseCardHTML(course)).join('')}
                     </div>
                 </div>
             `;
         }
 
-        function filterCourses(level) {
-            const grid = document.getElementById('all-courses-grid');
-            const filtered = (level === 'All') ? COURSES_DATA : COURSES_DATA.filter(c => c.level === level);
-            grid.innerHTML = filtered.map(course => renderCourseCardHTML(course)).join('');
-        }
-
-        // --- C. MY LEARNING VIEW ---
         function renderMyLearningView(container) {
-            const inProgressCourses = COURSES_DATA.filter(c => {
-                return c.lessons.some(l => appState.completedLessons.includes(l.id));
-            });
-
             container.innerHTML = `
                 <div class="space-y-6 max-w-6xl mx-auto">
                     <div>
-                        <h1 class="text-2xl font-bold text-white">My Active Learning Studio</h1>
-                        <p class="text-sm text-gray-400">Track active courses, resume ongoing modules, and review completed benchmarks.</p>
+                        <h1 class="text-2xl font-bold text-white">My Learning Studio</h1>
+                        <p class="text-sm text-gray-400">Track active masterclass modules and progress.</p>
                     </div>
-
-                    ${inProgressCourses.length === 0 ? `
-                        <div class="glass-card p-12 text-center rounded-2xl space-y-4">
-                            <div class="w-16 h-16 rounded-full bg-navy-800 flex items-center justify-center text-cyan-400 text-2xl mx-auto">
-                                <i class="fa-solid fa-book-bookmark"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-white">No active courses started yet</h3>
-                            <p class="text-sm text-gray-400 max-w-md mx-auto">Select a course from our IT curriculum catalog to begin your learning journey.</p>
-                            <button onclick="navigateTo('courses')" class="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white font-semibold text-xs transition">
-                                Explore Courses Now
-                            </button>
-                        </div>
-                    ` : `
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                            ${inProgressCourses.map(c => renderCourseCardHTML(c)).join('')}
-                        </div>
-                    `}
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        ${COURSES_DATA.map(c => renderCourseCardHTML(c)).join('')}
+                    </div>
                 </div>
             `;
         }
 
-        // --- D. INTERACTIVE LESSON VIEWER ---
         function renderLessonView(container, lessonId) {
             appState.currentActiveLessonId = lessonId;
             saveStore();
 
-            // Locate lesson and course context
             let currentCourse = null;
             let currentLesson = null;
 
@@ -1195,42 +544,38 @@ git push origin feature/auth # Push branch to GitHub`,
             const isCompleted = appState.completedLessons.includes(currentLesson.id);
 
             container.innerHTML = `
-                <div class="space-y-6 max-w-4xl mx-auto pb-12">
-                    <!-- Lesson Top Breadcrumb Nav -->
+                <div class="space-y-8 max-w-4xl mx-auto pb-16">
                     <div class="flex items-center justify-between text-xs text-gray-400 border-b border-gray-800 pb-4">
                         <button onclick="navigateTo('courses')" class="hover:text-cyan-400 flex items-center gap-1">
                             <i class="fa-solid fa-arrow-left"></i> ${currentCourse.title}
                         </button>
-                        <span class="px-2 py-0.5 rounded bg-navy-800 text-cyan-400 font-semibold border border-gray-800">${currentCourse.code}</span>
+                        <span class="px-2 py-0.5 rounded bg-navy-800 text-cyan-400 font-semibold border border-gray-800">${currentCourse.code} — 60-Minute Masterclass</span>
                     </div>
 
-                    <!-- Lesson Title Banner -->
-                    <div class="space-y-2">
+                    <div class="space-y-3">
                         <div class="flex items-center gap-2">
-                            <span class="text-xs px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400 font-semibold border border-cyan-500/20">${currentCourse.level}</span>
-                            <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i> ${currentLesson.duration}</span>
+                            <span class="text-xs px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400 font-semibold border border-cyan-500/20">${currentCourse.level} Professional</span>
+                            <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i> ${currentLesson.duration} Session</span>
                         </div>
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white">${currentLesson.title}</h1>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-white">${currentLesson.title}</h1>
                     </div>
 
-                    <!-- Learning Objectives Card -->
-                    <div class="glass-card p-5 rounded-2xl border-l-4 border-l-cyan-400 space-y-3 bg-navy-900/60">
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-cyan-400 space-y-3 bg-navy-900/60">
                         <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-bullseye"></i> Learning Objectives
+                            <i class="fa-solid fa-bullseye"></i> Masterclass Learning Objectives
                         </h3>
-                        <ul class="space-y-1.5 text-xs sm:text-sm text-gray-300">
+                        <ul class="space-y-2 text-sm text-gray-300">
                             ${currentLesson.objectives.map(obj => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-cyan-400 mt-1 text-xs"></i> <span>${obj}</span></li>`).join('')}
                         </ul>
                     </div>
 
-                    <!-- Key Vocabulary Section -->
-                    <div class="space-y-3">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-book text-violet-400"></i> Key Technical Vocabulary
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-book text-violet-400"></i> Advanced Technical Vocabulary
                         </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             ${currentLesson.vocab.map(v => `
-                                <div class="bg-navy-900 border border-gray-800 p-3 rounded-xl space-y-1">
+                                <div class="glass-card p-4 rounded-xl space-y-1">
                                     <span class="text-xs font-bold text-violet-400">${v.word}</span>
                                     <p class="text-xs text-gray-400 leading-relaxed">${v.def}</p>
                                 </div>
@@ -1238,70 +583,63 @@ git push origin feature/auth # Push branch to GitHub`,
                         </div>
                     </div>
 
-                    <!-- Comprehensive Lesson Body Text -->
-                    <div class="space-y-4 text-sm sm:text-base text-gray-300 leading-relaxed font-normal border-t border-gray-800/80 pt-6">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-file-lines text-cyan-400"></i> Lesson Content & Explanation
+                    <div class="space-y-6 text-base text-gray-300 leading-relaxed border-t border-gray-800/80 pt-6">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-file-lines text-cyan-400"></i> Comprehensive In-Depth Lecture & Explanation
                         </h3>
-                        <div class="whitespace-pre-line space-y-3 text-gray-300">
+                        <div class="whitespace-pre-line space-y-4 text-gray-300 bg-navy-900/40 p-6 rounded-2xl border border-gray-800">
                             ${currentLesson.explanation}
                         </div>
                     </div>
 
-                    <!-- Interactive Code / Diagram Snippet Box -->
                     ${currentLesson.codeExample ? `
-                        <div class="space-y-2 border-t border-gray-800/80 pt-6">
+                        <div class="space-y-3 border-t border-gray-800/80 pt-6">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2">
-                                    <i class="fa-solid fa-code text-emerald-400"></i> Code Example / Technical Reference
+                                    <i class="fa-solid fa-code text-emerald-400"></i> Professional Code Example & Architecture Script
                                 </h3>
-                                <button onclick="copyToClipboard('${escapeJsString(currentLesson.codeExample)}')" class="px-2.5 py-1 rounded bg-navy-800 hover:bg-gray-700 text-xs text-cyan-400 border border-gray-700 flex items-center gap-1 transition">
-                                    <i class="fa-regular fa-copy"></i> Copy Code
-                                </button>
                             </div>
-                            <pre class="bg-navy-950 p-4 rounded-xl text-xs sm:text-sm text-gray-200 border border-gray-800 overflow-x-auto"><code>${escapeHtml(currentLesson.codeExample)}</code></pre>
+                            <pre class="bg-navy-950 p-5 rounded-xl text-xs sm:text-sm text-gray-200 border border-gray-800 overflow-x-auto font-mono"><code>${escapeHtml(currentLesson.codeExample)}</code></pre>
                             <p class="text-xs text-gray-400 italic">${currentLesson.codeExplanation}</p>
                         </div>
                     ` : ''}
 
-                    <!-- Practical Guided Activity -->
-                    <div class="p-5 rounded-2xl bg-gradient-to-r from-emerald-950/30 to-navy-900 border border-emerald-800/30 space-y-2">
+                    <div class="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/30 to-navy-900 border border-emerald-800/30 space-y-2">
                         <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-vial"></i> Hands-on Practical Activity
+                            <i class="fa-solid fa-vial"></i> Hands-on Practical Lab Exercise
                         </h4>
-                        <p class="text-xs sm:text-sm text-gray-300">${currentLesson.activity}</p>
+                        <p class="text-sm text-gray-300">${currentLesson.activity}</p>
                     </div>
 
-                    <!-- In-Lesson Practice Quiz -->
-                    <div class="glass-card p-6 rounded-2xl space-y-6 border border-gray-800">
-                        <div class="border-b border-gray-800 pb-3 flex items-center justify-between">
-                            <h3 class="text-base font-bold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-list-check text-amber-400"></i> Lesson Knowledge Check
+                    <!-- 5+ Knowledge Assessment Questions -->
+                    <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-6 border border-gray-800">
+                        <div class="border-b border-gray-800 pb-4 flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-amber-400"></i> Comprehensive Assessment (5+ Questions)
                             </h3>
-                            <span class="text-xs text-gray-500">${currentLesson.quiz.length} Questions</span>
+                            <span class="text-xs px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30">${currentLesson.quiz.length} Rigorous Questions</span>
                         </div>
 
-                        <div id="lesson-quiz-container" class="space-y-6">
+                        <div id="lesson-quiz-container" class="space-y-8">
                             ${currentLesson.quiz.map((q, idx) => `
-                                <div class="space-y-3" id="quiz-q-${idx}">
-                                    <p class="text-sm font-semibold text-gray-200">${idx + 1}. ${q.question}</p>
-                                    <div class="space-y-2">
+                                <div class="space-y-3 pb-6 border-b border-gray-800/60 last:border-0" id="quiz-q-${idx}">
+                                    <p class="text-sm sm:text-base font-semibold text-gray-200">${idx + 1}.${q.question}</p>
+                                    <div class="space-y-2.5">
                                         ${q.options.map((opt, optIdx) => `
-                                            <button onclick="checkLessonQuizAnswer(${idx}, ${optIdx}, ${q.answer}, '${escapeJsString(q.explanation)}')" class="quiz-opt-btn-${idx} w-full text-left p-3 rounded-xl bg-navy-900 hover:bg-gray-800 border border-gray-800 text-xs sm:text-sm text-gray-300 transition">
+                                            <button onclick="checkLessonQuizAnswer(${idx}, ${optIdx}, ${q.answer}, '${escapeJsString(q.explanation)}')" class="quiz-opt-btn-${idx} w-full text-left p-3.5 rounded-xl bg-navy-900 hover:bg-gray-800 border border-gray-800 text-xs sm:text-sm text-gray-300 transition">
                                                 ${opt}
                                             </button>
                                         `).join('')}
                                     </div>
-                                    <div id="quiz-feedback-${idx}" class="hidden p-3 rounded-xl text-xs space-y-1"></div>
+                                    <div id="quiz-feedback-${idx}" class="hidden p-3 rounded-xl text-xs space-y-1 mt-2"></div>
                                 </div>
                             `).join('')}
                         </div>
                     </div>
 
-                    <!-- Lesson Action Controls -->
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-800">
-                        <button onclick="toggleLessonComplete('${currentLesson.id}')" id="mark-complete-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition ${isCompleted ? 'bg-emerald-500 text-white' : 'bg-cyan-500 hover:bg-cyan-400 text-white shadow-lg shadow-cyan-500/20'}">
-                            ${isCompleted ? '<i class="fa-solid fa-circle-check mr-1"></i> Completed (+50 XP)' : 'Mark Lesson Complete'}
+                    <div class="flex items-center justify-between pt-6 border-t border-gray-800">
+                        <button onclick="toggleLessonComplete('${currentLesson.id}')" id="mark-complete-btn" class="px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition ${isCompleted ? 'bg-emerald-500 text-white' : 'bg-cyan-500 hover:bg-cyan-400 text-white shadow-lg shadow-cyan-500/20'}">
+                            ${isCompleted ? '<i class="fa-solid fa-circle-check mr-1"></i> Module Completed (+100 XP)' : 'Mark Masterclass Module Complete'}
                         </button>
                     </div>
                 </div>
@@ -1334,7 +672,7 @@ git push origin feature/auth # Push branch to GitHub`,
         function toggleLessonComplete(lessonId) {
             if(!appState.completedLessons.includes(lessonId)) {
                 appState.completedLessons.push(lessonId);
-                appState.xp += 50;
+                appState.xp += 100;
             } else {
                 appState.completedLessons = appState.completedLessons.filter(id => id !== lessonId);
             }
@@ -1342,307 +680,119 @@ git push origin feature/auth # Push branch to GitHub`,
             renderLessonView(document.getElementById('main-content'), lessonId);
         }
 
-        // --- E. PRACTICE & QUIZZES VIEW ---
         function renderQuizzesView(container) {
             container.innerHTML = `
                 <div class="space-y-6 max-w-5xl mx-auto">
                     <div>
-                        <h1 class="text-2xl font-bold text-white">Technical Practice Engine</h1>
-                        <p class="text-sm text-gray-400">Test your mastery with comprehensive multiple-choice knowledge checks across all IT subjects.</p>
+                        <h1 class="text-2xl font-bold text-white">Assessment & Practice Engine</h1>
+                        <p class="text-sm text-gray-400">Evaluate professional competencies with in-depth technical tests.</p>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        ${COURSES_DATA.map(course => {
-                            const bestScore = appState.quizScores[course.id] || null;
-                            return `
-                                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between space-y-4">
-                                    <div class="space-y-2">
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">${course.code}</span>
-                                            ${bestScore !== null ? `<span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Best: ${bestScore}%</span>` : ''}
-                                        </div>
-                                        <h3 class="font-bold text-white text-base">${course.title} Quiz</h3>
-                                        <p class="text-xs text-gray-400">Covers essential concepts, vocabulary, and problem-solving scenarios.</p>
-                                    </div>
-                                    <button onclick="startCourseQuiz('${course.id}')" class="w-full py-2.5 rounded-xl bg-navy-800 hover:bg-cyan-600 hover:text-white text-cyan-400 text-xs font-bold transition border border-gray-700">
-                                        Launch Full Assessment
-                                    </button>
+                        ${COURSES_DATA.map(course => `
+                            <div class="glass-card p-5 rounded-2xl flex flex-col justify-between space-y-4">
+                                <div class="space-y-2">
+                                    <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">${course.code}</span>
+                                    <h3 class="font-bold text-white text-base">${course.title} Masterclass Exam</h3>
+                                    <p class="text-xs text-gray-400">Covers advanced architecture, micro-operations, and system troubleshooting.</p>
                                 </div>
-                            `;
-                        }).join('')}
+                                <button onclick="navigateTo('lesson-view', '${course.lessons[0].id}')" class="w-full py-2.5 rounded-xl bg-navy-800 hover:bg-cyan-600 hover:text-white text-cyan-400 text-xs font-bold transition border border-gray-700">
+                                    Start Assessment Module
+                                </button>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             `;
         }
 
-        function startCourseQuiz(courseId) {
-            const course = COURSES_DATA.find(c => c.id === courseId);
-            if(!course) return;
-
-            let questions = [];
-            course.lessons.forEach(l => {
-                if(l.quiz) questions = questions.concat(l.quiz);
-            });
-
-            if(questions.length === 0) {
-                alert("Quiz content coming soon for this course.");
-                return;
-            }
-
-            const main = document.getElementById('main-content');
-            let currentQIndex = 0;
-            let score = 0;
-
-            function renderQuestion() {
-                const q = questions[currentQIndex];
-                main.innerHTML = `
-                    <div class="max-w-2xl mx-auto space-y-6 pt-6">
-                        <div class="flex items-center justify-between text-xs text-gray-400">
-                            <span>${course.title} Assessment</span>
-                            <span>Question ${currentQIndex + 1} of ${questions.length}</span>
-                        </div>
-
-                        <div class="glass-card p-6 rounded-2xl space-y-4">
-                            <h2 class="text-lg font-bold text-white">${q.question}</h2>
-                            <div class="space-y-2 pt-2">
-                                ${q.options.map((opt, idx) => `
-                                    <button onclick="submitQuizAnswer(${idx})" class="w-full text-left p-3.5 rounded-xl bg-navy-900 hover:bg-cyan-500/10 hover:border-cyan-500 border border-gray-800 text-sm text-gray-200 transition">
-                                        ${opt}
-                                    </button>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            window.submitQuizAnswer = function(selectedIdx) {
-                const q = questions[currentQIndex];
-                if(selectedIdx === q.answer) score++;
-
-                currentQIndex++;
-                if(currentQIndex < questions.length) {
-                    renderQuestion();
-                } else {
-                    const finalPercent = Math.round((score / questions.length) * 100);
-                    appState.quizScores[course.id] = Math.max(appState.quizScores[course.id] || 0, finalPercent);
-                    appState.xp += finalPercent * 2;
-                    saveStore();
-
-                    main.innerHTML = `
-                        <div class="max-w-md mx-auto glass-card p-8 rounded-2xl text-center space-y-4 my-12">
-                            <div class="w-16 h-16 rounded-full bg-cyan-500/20 text-cyan-400 text-3xl flex items-center justify-center mx-auto">
-                                <i class="fa-solid fa-award"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-white">Assessment Complete!</h2>
-                            <div class="text-4xl font-extrabold text-cyan-400">${finalPercent}%</div>
-                            <p class="text-xs text-gray-400">You scored ${score} out of ${questions.length} questions correctly.</p>
-                            <button onclick="navigateTo('quizzes')" class="w-full py-3 rounded-xl bg-cyan-500 text-white font-bold text-xs uppercase tracking-wider">
-                                Return to Practice Engine
-                            </button>
-                        </div>
-                    `;
-                }
-            };
-
-            renderQuestion();
-        }
-
-        // --- F. HANDS-ON PROJECTS VIEW ---
         function renderProjectsView(container) {
             container.innerHTML = `
                 <div class="space-y-6 max-w-5xl mx-auto">
                     <div>
-                        <h1 class="text-2xl font-bold text-white">Guided Hands-on Projects</h1>
-                        <p class="text-sm text-gray-400">Build real technical artifacts for your developer portfolio.</p>
+                        <h1 class="text-2xl font-bold text-white">Portfolio Projects</h1>
+                        <p class="text-sm text-gray-400">Real-world practical projects for your technical resume.</p>
                     </div>
-
                     <div class="space-y-5">
-                        ${PROJECTS_DATA.map(proj => {
-                            const isDone = appState.completedProjects.includes(proj.id);
-                            return `
-                                <div class="glass-card p-6 rounded-2xl space-y-4">
-                                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-3">
-                                        <h3 class="text-lg font-bold text-white">${proj.title}</h3>
-                                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded ${getLevelBadgeClass(proj.level)}">${proj.level}</span>
-                                    </div>
-                                    <p class="text-sm text-gray-300 leading-relaxed">${proj.description}</p>
-                                    
-                                    <div class="space-y-2">
-                                        <h4 class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Project Action Steps:</h4>
-                                        <ul class="space-y-1.5 text-xs text-gray-400">
-                                            ${proj.steps.map(step => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle-dot text-cyan-500 mt-1 text-[10px]"></i> <span>${step}</span></li>`).join('')}
-                                        </ul>
-                                    </div>
-
-                                    <div class="pt-2">
-                                        <button onclick="toggleProjectComplete('${proj.id}')" class="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition ${isDone ? 'bg-emerald-500 text-white' : 'bg-navy-800 hover:bg-gray-700 text-cyan-400 border border-gray-700'}">
-                                            ${isDone ? '<i class="fa-solid fa-check mr-1"></i> Project Verified' : 'Mark Project Complete (+100 XP)'}
-                                        </button>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
+                        ${PROJECTS_DATA.map(proj => `
+                            <div class="glass-card p-6 rounded-2xl space-y-4">
+                                <h3 class="text-lg font-bold text-white">${proj.title}</h3>
+                                <p class="text-sm text-gray-300">${proj.description}</p>
+                                <ul class="space-y-1 text-xs text-gray-400">
+                                    ${proj.steps.map(s => `<li>• ${s}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             `;
         }
 
-        function toggleProjectComplete(projId) {
-            if(!appState.completedProjects.includes(projId)) {
-                appState.completedProjects.push(projId);
-                appState.xp += 100;
-            } else {
-                appState.completedProjects = appState.completedProjects.filter(id => id !== projId);
-            }
-            saveStore();
-            renderProjectsView(document.getElementById('main-content'));
-        }
-
-        // --- G. PROGRESS & ACHIEVEMENTS VIEW ---
         function renderProgressView(container) {
-            const badges = [
-                { title: 'First Step', desc: 'Complete your first IT lesson', earned: appState.completedLessons.length > 0 },
-                { title: 'Quiz Master', desc: 'Score over 80% on any assessment', earned: Object.values(appState.quizScores).some(s => s >= 80) },
-                { title: 'Builder', desc: 'Complete a guided practical project', earned: appState.completedProjects.length > 0 },
-                { title: 'Dedicated Scholar', desc: 'Maintain a 3+ day learning streak', earned: appState.streakDays >= 3 }
-            ];
-
             container.innerHTML = `
                 <div class="space-y-6 max-w-5xl mx-auto">
                     <div>
                         <h1 class="text-2xl font-bold text-white">Progress & Skill Achievements</h1>
-                        <p class="text-sm text-gray-400">Inspect earned badges, study analytics, and user metrics.</p>
+                        <p class="text-sm text-gray-400">Track your earned credentials and XP score.</p>
                     </div>
-
-                    <!-- Badges Grid -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        ${badges.map(b => `
-                            <div class="glass-card p-4 rounded-2xl text-center space-y-2 ${b.earned ? 'border-cyan-500/40 bg-navy-900' : 'opacity-50'}">
-                                <div class="w-12 h-12 rounded-full ${b.earned ? 'bg-cyan-500/20 text-cyan-400' : 'bg-gray-800 text-gray-600'} flex items-center justify-center text-xl mx-auto">
-                                    <i class="fa-solid fa-medal"></i>
-                                </div>
-                                <h4 class="text-xs font-bold text-white">${b.title}</h4>
-                                <p class="text-[11px] text-gray-400 leading-tight">${b.desc}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-
                     <div class="glass-card p-6 rounded-2xl space-y-4">
-                        <h3 class="text-base font-bold text-white">Data Management</h3>
-                        <p class="text-xs text-gray-400">All learning progress is stored securely inside your browser's LocalStorage engine.</p>
-                        <button onclick="confirmResetProgress()" class="px-4 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-semibold transition">
-                            Reset All Progress Data
-                        </button>
+                        <div class="text-2xl font-bold text-cyan-400">${appState.xp} Total XP Earned</div>
+                        <p class="text-xs text-gray-400">Keep completing 60-minute masterclass modules to level up your engineering career.</p>
                     </div>
                 </div>
             `;
         }
 
-        function confirmResetProgress() {
-            if(confirm("Are you sure you want to reset all learning progress, XP, and quiz history? This action cannot be undone.")) {
-                localStorage.removeItem(STORAGE_KEY);
-                location.reload();
-            }
-        }
-
-        // --- H. DAILY INSPIRATION VIEW ---
         function renderInspirationView(container) {
             container.innerHTML = `
                 <div class="space-y-6 max-w-4xl mx-auto">
                     <div>
-                        <h1 class="text-2xl font-bold text-white">Learning Inspiration & Study Habits</h1>
-                        <p class="text-sm text-gray-400">Wisdom and tactical advice for aspiring tech professionals.</p>
+                        <h1 class="text-2xl font-bold text-white">Expert Advice & Study Habits</h1>
+                        <p class="text-sm text-gray-400">Guidance from industry veterans.</p>
                     </div>
-
-                    <div class="space-y-4">
-                        ${INSPIRATION_DATA.map(item => `
-                            <div class="glass-card p-6 rounded-2xl space-y-3">
-                                <p class="text-base text-gray-200 italic font-serif">"${item.quote}"</p>
-                                <span class="text-xs font-bold text-cyan-400 block">— ${item.author}</span>
-                                <div class="pt-3 border-t border-gray-800/80 text-xs text-gray-400">
-                                    <strong>Tactical Tip:</strong> ${item.tip}
-                                </div>
-                            </div>
-                        `).join('')}
+                    <div class="glass-card p-6 rounded-2xl space-y-3">
+                        <p class="text-base text-gray-200 italic">"${INSPIRATION_DATA[0].quote}"</p>
+                        <span class="text-xs font-bold text-cyan-400 block">— ${INSPIRATION_DATA[0].author}</span>
+                        <p class="text-xs text-gray-400 pt-2 border-t border-gray-800"><strong>Tip:</strong> ${INSPIRATION_DATA[0].tip}</p>
                     </div>
                 </div>
             `;
         }
 
-        // --- I. SETTINGS VIEW ---
         function renderSettingsView(container) {
             container.innerHTML = `
                 <div class="space-y-6 max-w-3xl mx-auto">
                     <div>
                         <h1 class="text-2xl font-bold text-white">Platform Settings</h1>
-                        <p class="text-sm text-gray-400">Customize your workspace experience.</p>
+                        <p class="text-sm text-gray-400">Configure your learning workspace.</p>
                     </div>
-
-                    <div class="glass-card p-6 rounded-2xl space-y-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-300 uppercase tracking-wider block">Daily Study Goal (Minutes)</label>
-                            <input type="number" value="${appState.settings.dailyGoalMinutes}" class="w-full bg-navy-900 border border-gray-800 p-3 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500">
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-300 uppercase tracking-wider block">Interface Font Size</label>
-                            <select class="w-full bg-navy-900 border border-gray-800 p-3 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500">
-                                <option value="normal">Normal (Default)</option>
-                                <option value="large">Large Accessibility</option>
-                            </select>
-                        </div>
-
-                        <button onclick="alert('Settings preferences updated successfully!')" class="px-6 py-2.5 rounded-xl bg-cyan-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-cyan-500/20">
-                            Save Preferences
-                        </button>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <p class="text-xs text-gray-400">All progress is stored securely in your browser's local storage engine.</p>
                     </div>
                 </div>
             `;
         }
 
-        // --- J. ABOUT VIEW ---
         function renderAboutView(container) {
             container.innerHTML = `
                 <div class="space-y-6 max-w-3xl mx-auto">
                     <div class="glass-card p-8 rounded-2xl space-y-4 text-center">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center text-white text-3xl mx-auto shadow-lg shadow-cyan-500/20">
-                            <i class="fa-solid fa-code"></i>
-                        </div>
-                        <h1 class="text-2xl font-extrabold text-white">TechMate Academy</h1>
+                        <h1 class="text-2xl font-extrabold text-white">TechMate Academy Pro</h1>
                         <p class="text-sm text-gray-300 leading-relaxed max-w-lg mx-auto">
-                            TechMate Academy is an open, self-contained educational web platform designed to empower aspiring technicians, developers, and system administrators with structured, practical IT knowledge.
+                            A professional, self-contained educational platform delivering rigorous 60-minute technical masterclasses and deep architectural training.
                         </p>
-                        <div class="pt-4 border-t border-gray-800 text-xs text-gray-500">
-                            Version 1.0.0 • Client-Side Local Storage Architecture • Open Source Learning Initiative
-                        </div>
                     </div>
                 </div>
             `;
         }
 
-        // ==========================================
-        // UTILITY FUNCTIONS
-        // ==========================================
         function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         function escapeJsString(str) {
             return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
         }
 
-        function copyToClipboard(text) {
-            const temp = document.createElement('textarea');
-            temp.value = text;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            alert("Code snippet copied to clipboard!");
-        }
-
-        // Application Initialization
         window.onload = function() {
             initStore();
             navigateTo('dashboard');
@@ -1650,4 +800,3 @@ git push origin feature/auth # Push branch to GitHub`,
     </script>
 </body>
 </html>
-```
